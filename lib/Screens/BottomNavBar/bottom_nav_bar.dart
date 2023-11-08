@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kfriends/Screens/CallScreen/call_screen.dart';
 import 'package:kfriends/Screens/FriendsPage/friends.dart';
 import 'package:kfriends/Screens/HomePage/home_page.dart';
+import 'package:kfriends/Screens/MyInfo/my_info.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 
@@ -16,16 +17,12 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State {
   int _selectedTab = 0;
 
-  List _pages = [
-    HomePage(),
-    Friends(),
-    Center(
-      child: Text("Products"),
-    ),
-    CallScreen(),
-    Center(
-      child: Text("Settings"),
-    ),
+  final List _pages = [
+    const HomePage(),
+    const Friends(),
+    const SizedBox(),
+    const CallScreen(),
+    const MyInfoScreen(),
   ];
 
   _changeTab(int index) {

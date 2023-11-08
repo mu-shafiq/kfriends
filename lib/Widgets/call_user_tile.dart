@@ -10,6 +10,7 @@ class CallUserTile extends StatelessWidget {
   final bool verified;
   final String status;
   final String date;
+  final String time;
 
   const CallUserTile(
       {super.key,
@@ -18,7 +19,8 @@ class CallUserTile extends StatelessWidget {
       required this.about,
       required this.verified,
       required this.status,
-      required this.date});
+      required this.date,
+      required this.time});
 
   @override
   Widget build(BuildContext context) {
@@ -104,19 +106,35 @@ class CallUserTile extends StatelessWidget {
                         ? Row(
                             children: [
                               Image.asset(Assets.incoming),
+                              3.horizontalSpace,
                               Text(
-                                'Missed Call',
+                                time,
                                 style: TextStyle(
-                                  color: textPinkColor,
+                                  color: textGreenColor,
                                   fontSize: 8.sp,
                                   fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w700,
                                   height: 0,
                                 ),
                               ),
                             ],
                           )
-                        : SizedBox()
+                        : status == 'dialed'
+                            ? Row(
+                                children: [
+                                  Image.asset(Assets.outgoing),
+                                  3.horizontalSpace,
+                                  Text(
+                                    time,
+                                    style: TextStyle(
+                                      color: textBlueColor,
+                                      fontSize: 8.sp,
+                                      fontFamily: 'Pretendard',
+                                      height: 0,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : const SizedBox()
               ],
             ),
             trailing: SizedBox(

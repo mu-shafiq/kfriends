@@ -87,10 +87,10 @@ class Friends extends StatelessWidget {
             ),
             30.verticalSpace,
             CustomTextfield(
-                height: 30.h,
+                height: 40.h,
                 width: .9.sw,
                 hint: 'Search by name',
-                hintSize: 10.sp,
+                hintSize: 12.sp,
                 trailing: Image.asset(Assets.search),
                 controller: TextEditingController()),
             30.verticalSpace,

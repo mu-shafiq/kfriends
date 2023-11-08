@@ -28,7 +28,7 @@ class CustomTextfield extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      // padding: EdgeInsets.only(left: 5.w, top: 15.h),
+      // padding: EdgeInsets.only(top: 5.h),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -42,10 +42,14 @@ class CustomTextfield extends StatelessWidget {
         ],
       ),
       child: TextFormField(
+        textAlignVertical: TextAlignVertical.top,
         controller: controller,
         keyboardType: textInputType,
         onTap: ontap,
+        expands: true,
+        maxLines: null,
         decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(8.h),
             suffixIcon: trailing ?? const SizedBox(),
             enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: bgWhiteColor)),

@@ -83,7 +83,7 @@ class _JoinFormScreenState extends State<JoinFormScreen> {
                     CustomTextfield(
                       controller: TextEditingController(),
                       width: .9.sw,
-                      height: 30.h,
+                      height: 40.h,
                       hint: ' ',
                     ),
                     10.verticalSpace,
@@ -145,7 +145,7 @@ class _JoinFormScreenState extends State<JoinFormScreen> {
                     CustomTextfield(
                       controller: TextEditingController(),
                       width: .9.sw,
-                      height: 30.h,
+                      height: 40.h,
                       hint: 'YYYY-MM-DD',
                       hintSize: 10.sp,
                       trailing: Image.asset(Assets.drop),
@@ -178,7 +178,7 @@ class _JoinFormScreenState extends State<JoinFormScreen> {
                     CustomTextfield(
                       controller: job,
                       width: .9.sw,
-                      height: 30.h,
+                      height: 40.h,
                       hint: 'Select your Job',
                       hintSize: 10.sp,
                       trailing: Image.asset(Assets.drop),
@@ -263,7 +263,7 @@ class _JoinFormScreenState extends State<JoinFormScreen> {
                     CustomTextfield(
                       controller: country,
                       width: .9.sw,
-                      height: 30.h,
+                      height: 40.h,
                       hint: 'Select your Country',
                       hintSize: 10.sp,
                       trailing: Image.asset(Assets.drop),
@@ -297,7 +297,7 @@ class _JoinFormScreenState extends State<JoinFormScreen> {
                     CustomTextfield(
                       controller: TextEditingController(),
                       width: .9.sw,
-                      height: 30.h,
+                      height: 40.h,
                       hint: '',
                       hintSize: 10.sp,
                     ),
@@ -554,7 +554,7 @@ class _JoinFormScreenState extends State<JoinFormScreen> {
                     CustomTextfield(
                       controller: TextEditingController(),
                       width: .9.sw,
-                      height: 30.h,
+                      height: 40.h,
                       hint: ' ',
                     ),
                     10.verticalSpace,

@@ -28,10 +28,13 @@ class Assets {
   static const String calender = '${pathIcons}calendar.png';
   static const String outgoing = '${pathIcons}outgoing.png';
   static const String incoming = '${pathIcons}incoming.png';
+  static const String settings = '${pathIcons}settings.png';
+  static const String reply = '${pathIcons}reply.png';
 
   //image
   static const String joinFormImage = '${pathImages}joinFormImage.png';
   static const String koreangame = '${pathImages}koreangame.png';
   static const String topikpractice = '${pathImages}topikpractice.png';
   static const String user1 = '${pathImages}user1.png';
+  static const String cover = '${pathImages}cover.png';
 }

@@ -354,7 +354,7 @@ class CallScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              30.verticalSpace,
+              20.verticalSpace,
               SizedBox(
                 width: .9.sw,
                 child: ListView.builder(
@@ -362,13 +362,18 @@ class CallScreen extends StatelessWidget {
                     itemCount: 10,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      return const CallUserTile(
+                      return CallUserTile(
                         date: '2023-06-27',
-                        status: 'recieved',
+                        status: index < 3
+                            ? 'recieved'
+                            : index.isEven
+                                ? 'dialed'
+                                : 'missed',
                         verified: true,
                         asset: Assets.user1,
                         username: '김민준',
                         about: '20 / FEMALE /  South Korea',
+                        time: '32:27',
                       );
                     }),
               )
