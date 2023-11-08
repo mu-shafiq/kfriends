@@ -26,6 +26,8 @@ class Assets {
   static const String message = '${pathIcons}message.png';
   static const String equal = '${pathIcons}equal.png';
   static const String calender = '${pathIcons}calendar.png';
+  static const String outgoing = '${pathIcons}outgoing.png';
+  static const String incoming = '${pathIcons}incoming.png';
 
   //image
   static const String joinFormImage = '${pathImages}joinFormImage.png';

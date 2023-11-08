@@ -364,7 +364,7 @@ class CallScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return const CallUserTile(
                         date: '2023-06-27',
-                        status: 'missed',
+                        status: 'recieved',
                         verified: true,
                         asset: Assets.user1,
                         username: '김민준',

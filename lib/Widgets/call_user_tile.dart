@@ -101,7 +101,21 @@ class CallUserTile extends StatelessWidget {
                         ),
                       )
                     : status == 'recieved'
-                        ? SizedBox()
+                        ? Row(
+                            children: [
+                              Image.asset(Assets.incoming),
+                              Text(
+                                'Missed Call',
+                                style: TextStyle(
+                                  color: textPinkColor,
+                                  fontSize: 8.sp,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w700,
+                                  height: 0,
+                                ),
+                              ),
+                            ],
+                          )
                         : SizedBox()
               ],
             ),
