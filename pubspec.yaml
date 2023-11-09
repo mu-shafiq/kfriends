@@ -42,6 +42,10 @@ dependencies:
   http: ^1.1.0
   dio: ^5.3.3
   shared_preferences: ^2.2.2
+  intl: ^0.18.1
+  image_picker: ^1.0.4
+  image_cropper: ^5.0.0
+  fluttertoast: ^8.2.3
 
 dev_dependencies:
   flutter_test:

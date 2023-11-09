@@ -11,4 +11,5 @@ class Keys {
   //functions
   static String generateId = 'generateId';
   static String uploadFileToServer = 'uploadFileToServer';
+  static String register = 'register';
 }
