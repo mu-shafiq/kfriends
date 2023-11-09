@@ -39,6 +39,7 @@ class Assets {
   static const String speaker = '${pathIcons}speaker.png';
   static const String mic = '${pathIcons}mic.png';
   static const String record = '${pathIcons}record.png';
+  static const String cross = '${pathIcons}cross.png';
 
   //image
   static const String joinFormImage = '${pathImages}joinFormImage.png';

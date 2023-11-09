@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 
-class UserTile2 extends StatelessWidget {
+class ChatTile extends StatelessWidget {
   final String asset;
   final String username;
-  final String about;
+  final String lastchat;
+  final String time;
+
   final bool verified;
 
-  const UserTile2(
-      {super.key,
-      required this.asset,
-      required this.username,
-      required this.about,
-      required this.verified});
+  const ChatTile({
+    super.key,
+    required this.asset,
+    required this.username,
+    required this.lastchat,
+    required this.time,
+    required this.verified,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class UserTile2 extends StatelessWidget {
           ),
           child: ListTile(
             horizontalTitleGap: 5.w,
-            contentPadding: EdgeInsets.only(left: 5.w),
+            contentPadding: EdgeInsets.only(left: 5.w, top: 10.h),
             leading: CircleAvatar(
               radius: 35.r,
               backgroundImage: Image.asset(
@@ -74,14 +76,14 @@ class UserTile2 extends StatelessWidget {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  width: 110.w,
-                  height: 30.h,
+                  width: 140.w,
+                  height: 50.h,
                   child: Text(
-                    about,
-                    maxLines: 3,
+                    lastchat,
+                    maxLines: 2,
                     style: TextStyle(
                         color: textBlackColor,
-                        fontSize: 10.sp,
+                        fontSize: 9.sp,
                         fontFamily: 'Pretendard',
                         fontWeight: FontWeight.w400,
                         height: 0,
@@ -91,45 +93,20 @@ class UserTile2 extends StatelessWidget {
               ],
             ),
             trailing: SizedBox(
-              width: 70.w,
-              child: Row(
+              width: 40.w,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  InkWell(
-                      onTap: () {
-                        Get.toNamed(Routes.chatMainScreen);
-                      },
-                      child: Image.asset(Assets.message)),
-                  10.horizontalSpace,
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(Routes.incomingCall);
-                    },
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      decoration: const ShapeDecoration(
-                        color: Color(0xFFF5F5F5),
-                        shape: OvalBorder(),
-                        shadows: [
-                          BoxShadow(
-                            color: Color(0x19000000),
-                            blurRadius: 4,
-                            offset: Offset(0, 2),
-                            spreadRadius: 0,
-                          ),
-                          BoxShadow(
-                            color: Color(0x19000000),
-                            blurRadius: 8,
-                            offset: Offset(0, 0),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                      child: Image.asset(
-                        Assets.call,
-                        scale: 1.9.sp,
-                        color: textBlackColor,
-                      ),
+                  Text(
+                    time,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: textGreyColor,
+                      fontSize: 8.sp,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                      height: 0,
                     ),
                   ),
                 ],

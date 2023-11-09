@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:country_picker/country_picker.dart';
+import 'package:cupertino_date_textbox/cupertino_date_textbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -175,7 +176,6 @@ class JoinFormScreen extends StatelessWidget {
                                       .split(' ')[0]),
                               width: .9.sw,
                               height: 40.h,
-                              hint: 'YYYY-MM-DD',
                               hintSize: 10.sp,
                               trailing: Image.asset(Assets.drop),
                               textInputType: TextInputType.none,
@@ -215,65 +215,6 @@ class JoinFormScreen extends StatelessWidget {
                               hint: 'Select your Job',
                               hintSize: 10.sp,
                               trailing: Image.asset(Assets.drop),
-                              textInputType: TextInputType.none,
-                              ontap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text("Select Your Job"),
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          JobOption(
-                                            gender: 'Student',
-                                            isSelected:
-                                                controller.selectedJob.value ==
-                                                    'Student',
-                                            onTap: () {
-                                              controller.updateJob('Student');
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                          JobOption(
-                                            gender: 'University Student',
-                                            isSelected:
-                                                controller.selectedJob.value ==
-                                                    'University Student',
-                                            onTap: () {
-                                              controller.updateJob(
-                                                  'University Student');
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                          JobOption(
-                                            gender: 'Home maker',
-                                            isSelected:
-                                                controller.selectedJob.value ==
-                                                    'Home maker',
-                                            onTap: () {
-                                              controller
-                                                  .updateJob('Home maker');
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                          JobOption(
-                                            gender: 'Office worker',
-                                            isSelected:
-                                                controller.selectedJob.value ==
-                                                    'Office worker',
-                                            onTap: () {
-                                              controller
-                                                  .updateJob('Office worker');
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
                             ),
                             10.verticalSpace,
                             Padding(
@@ -451,16 +392,19 @@ class JoinFormScreen extends StatelessWidget {
                               ],
                             ),
                             10.verticalSpace,
-                            Text(
-                              "Interests",
-                              style: TextStyle(
-                                fontFamily: "Pretendard",
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                                color: textBlackColor,
-                                height: 17 / 14,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Interests",
+                                style: TextStyle(
+                                  fontFamily: "Pretendard",
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: textBlackColor,
+                                  height: 17 / 14,
+                                ),
+                                textAlign: TextAlign.right,
                               ),
-                              textAlign: TextAlign.right,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

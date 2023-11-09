@@ -25,7 +25,7 @@ class CallUserTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: Container(
           width: .9.sw,
           decoration: ShapeDecoration(
@@ -49,7 +49,7 @@ class CallUserTile extends StatelessWidget {
           ),
           child: ListTile(
             horizontalTitleGap: 5.w,
-            contentPadding: EdgeInsets.only(left: 5.w),
+            contentPadding: EdgeInsets.only(left: 5.w, top: 10.h),
             leading: CircleAvatar(
               radius: 35.r,
               backgroundImage: Image.asset(

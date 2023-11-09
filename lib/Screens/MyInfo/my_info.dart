@@ -147,7 +147,7 @@ class MyInfoScreen extends StatelessWidget {
                       TextSpan(
                         text: 'Following',
                         style: TextStyle(
-                          color: textBlueColor,
+                          color: textGreyColor,
                           fontSize: 12.sp,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
@@ -163,7 +163,7 @@ class MyInfoScreen extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: '999 ',
+                        text: '49,000 ',
                         style: TextStyle(
                           color: textYellowColor,
                           fontSize: 10.sp,
@@ -219,6 +219,7 @@ class MyInfoScreen extends StatelessWidget {
                   width: 160.w,
                   height: 30.h,
                   text: 'PRACTICE',
+                  unselectedtextColor: textBlackColor,
                 ),
               ],
             ),
