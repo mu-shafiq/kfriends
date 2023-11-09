@@ -9,7 +9,7 @@ import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Widgets/textfield.dart';
-import 'package:kfriends/controllers/auth_controller.dart';
+import 'package:kfriends/Controllers/auth_controller.dart';
 
 class JoinFormScreen extends StatelessWidget {
   const JoinFormScreen({super.key});
