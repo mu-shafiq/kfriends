@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kfriends/Screens/FriendsPage/my_friends.dart';
-import 'package:kfriends/Screens/FriendsPage/new_friends.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
-import 'package:kfriends/Widgets/small_button.dart';
 
-class Friends extends StatefulWidget {
-  const Friends({super.key});
+class ChatMainScreen extends StatefulWidget {
+  const ChatMainScreen({super.key});
 
   @override
-  State<Friends> createState() => _FriendsState();
+  State<ChatMainScreen> createState() => _ChatMainScreenState();
 }
 
-class _FriendsState extends State<Friends> {
+class _ChatMainScreenState extends State<ChatMainScreen> {
   int _tab = 0;
   @override
   Widget build(BuildContext context) {
@@ -23,7 +20,7 @@ class _FriendsState extends State<Friends> {
         scrolledUnderElevation: 0,
         leading: Image.asset(Assets.backArrow),
         title: Text(
-          'FRIENDS',
+          'ChatMainScreen',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,
@@ -45,7 +42,7 @@ class _FriendsState extends State<Friends> {
                 ),
                 2.horizontalSpace,
                 Text(
-                  'K-FRIENDS',
+                  'K-ChatMainScreen',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: textGreyColor,
@@ -62,40 +59,7 @@ class _FriendsState extends State<Friends> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
-            20.verticalSpace,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                RoundedSmallButton(
-                  selected: _tab == 0,
-                  onTap: () {
-                    setState(() {
-                      _tab = 0;
-                    });
-                  },
-                  textColor: textBlackColor,
-                  width: 135.w,
-                  height: 37.h,
-                  text: 'My Friends',
-                ),
-                10.horizontalSpace,
-                RoundedSmallButton(
-                  selected: _tab == 1,
-                  onTap: () {
-                    setState(() {
-                      _tab = 1;
-                    });
-                  },
-                  textColor: textBlackColor,
-                  width: 135.w,
-                  height: 37.h,
-                  text: 'Find New Friends',
-                ),
-              ],
-            ),
-            _tab == 0 ? const MyFriends() : const NewFriends()
-          ],
+          children: [],
         ),
       ),
     );

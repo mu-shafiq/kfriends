@@ -1,22 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
-import 'package:kfriends/Widgets/comment_tile.dart';
+import 'package:kfriends/Widgets/bottom_bar.dart';
+import 'package:kfriends/Widgets/comment_tile2.dart';
 import 'package:kfriends/Widgets/small_button.dart';
+import 'package:kfriends/Widgets/textfield.dart';
 
-class MyInfoScreen extends StatelessWidget {
-  const MyInfoScreen({super.key});
+class UserInfo extends StatelessWidget {
+  const UserInfo({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const BottomBar(
+        index: 1,
+      ),
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        leading: const SizedBox(),
+        leading: InkWell(
+          onTap: () {
+            Get.back();
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Image.asset(Assets.backArrow),
+          ),
+        ),
         centerTitle: true,
         title: Text(
-          'MY HOME',
+          'PROFILE',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,
@@ -26,12 +41,6 @@ class MyInfoScreen extends StatelessWidget {
             height: 0,
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Image.asset(Assets.settings),
-          )
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -189,15 +198,18 @@ class MyInfoScreen extends StatelessWidget {
               ],
             ),
             25.verticalSpace,
-            Text(
-              'Hi, Nice to meet you guys. I’m looking for new friends!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: textBlackColor,
-                fontSize: 12.sp,
-                fontFamily: 'Pretendard',
-                fontWeight: FontWeight.w400,
-                height: 0.15,
+            SizedBox(
+              width: .7.sw,
+              child: Text(
+                'I live in Brazil now, but I’ll go South Korean next year!한국어를 공부하는 학생입니다.',
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: textBlackColor,
+                  fontSize: 12.sp,
+                  fontFamily: 'Pretendard',
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
             40.verticalSpace,
@@ -205,20 +217,33 @@ class MyInfoScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 RoundedSmallButton(
+                  icon: Image.asset(Assets.following),
                   selected: true,
                   onTap: () {},
                   textColor: textBlackColor,
-                  width: 160.w,
+                  width: 106.w,
                   height: 30.h,
-                  text: 'COMMENTS',
+                  text: 'Following',
                 ),
                 10.horizontalSpace,
                 RoundedSmallButton(
+                  icon: Image.asset(Assets.privatechat),
                   onTap: () {},
                   textColor: textBlackColor,
-                  width: 160.w,
+                  width: 106.w,
                   height: 30.h,
-                  text: 'PRACTICE',
+                  text: 'Private Chat',
+                ),
+                10.horizontalSpace,
+                RoundedSmallButton(
+                  icon: Image.asset(Assets.outgoing),
+                  onTap: () {
+                    Get.toNamed(Routes.incomingCall);
+                  },
+                  textColor: textBlackColor,
+                  width: 106.w,
+                  height: 30.h,
+                  text: 'Call',
                 ),
               ],
             ),
@@ -230,7 +255,7 @@ class MyInfoScreen extends StatelessWidget {
                   itemCount: 1,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return const CommentTile(
+                    return const CommentTile2(
                       time: '6 Days ago',
                       verified: true,
                       asset: Assets.user1,
@@ -238,7 +263,15 @@ class MyInfoScreen extends StatelessWidget {
                       comment: '안녕하세요! 반가워요!대화 걸어주세요~',
                     );
                   }),
-            )
+            ),
+            30.verticalSpace,
+            CustomTextfield(
+                height: 40.h,
+                width: .9.sw,
+                hintSize: 10.sp,
+                hint: 'Leave your comment',
+                controller: TextEditingController()),
+            30.verticalSpace,
           ],
         ),
       ),

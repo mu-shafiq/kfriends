@@ -8,14 +8,15 @@ import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({Key? key}) : super(key: key);
+  final int initialIndex;
+  const BottomNavBar({Key? key, required this.initialIndex});
 
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
-class _BottomNavBarState extends State {
-  int _selectedTab = 0;
+class _BottomNavBarState extends State<BottomNavBar> {
+  late int _selectedTab = widget.initialIndex;
 
   final List _pages = [
     const HomePage(),
@@ -29,6 +30,13 @@ class _BottomNavBarState extends State {
     setState(() {
       _selectedTab = index;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
   }
 
   @override

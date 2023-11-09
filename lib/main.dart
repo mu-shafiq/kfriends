@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kfriends/Routes/get_routes.dart';
-import 'package:kfriends/Screens/SplashScreen/splash_screen.dart';
-import 'package:kfriends/Screens/UserScreen/user_screen.dart';
+import 'package:kfriends/Screens/SplashScreen/splash_screen.dart'; 
 
 void main() {
   runApp(const MyApp());

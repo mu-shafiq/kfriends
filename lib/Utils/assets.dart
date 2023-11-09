@@ -30,6 +30,15 @@ class Assets {
   static const String incoming = '${pathIcons}incoming.png';
   static const String settings = '${pathIcons}settings.png';
   static const String reply = '${pathIcons}reply.png';
+  static const String filter = '${pathIcons}filter.png';
+  static const String following = '${pathIcons}following.png';
+  static const String privatechat = '${pathIcons}privatechat.png';
+  static const String reject = '${pathIcons}reject.png';
+  static const String accept = '${pathIcons}accept.png';
+  static const String incomingblack = '${pathIcons}incomingblack.png';
+  static const String speaker = '${pathIcons}speaker.png';
+  static const String mic = '${pathIcons}mic.png';
+  static const String record = '${pathIcons}record.png';
 
   //image
   static const String joinFormImage = '${pathImages}joinFormImage.png';

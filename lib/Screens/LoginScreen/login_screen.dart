@@ -28,7 +28,7 @@ class LoginScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      90.verticalSpace,
+                      120.verticalSpace,
                       Text(
                         "Login",
                         style: TextStyle(
@@ -40,12 +40,13 @@ class LoginScreen extends StatelessWidget {
                         ),
                         textAlign: TextAlign.left,
                       ),
-                      40.verticalSpace,
+                      50.verticalSpace,
                       CustomTextfield(
                         controller: TextEditingController(),
                         width: .9.sw,
                         height: 40.h,
                         hint: 'E-mail',
+                        hintSize: 10.sp,
                       ),
                       20.verticalSpace,
                       CustomTextfield(
@@ -53,6 +54,7 @@ class LoginScreen extends StatelessWidget {
                         width: .9.sw,
                         height: 40.h,
                         hint: 'Password',
+                        hintSize: 10.sp,
                       ),
                       20.verticalSpace,
                       RoundedButton(
@@ -65,7 +67,7 @@ class LoginScreen extends StatelessWidget {
                         bgColor: buttonBlackColor,
                         width: .9.sw,
                         height: 35.h,
-                        text: 'Login',
+                        text: 'LOGIN',
                       ),
                       20.verticalSpace,
                       Text(
@@ -79,7 +81,6 @@ class LoginScreen extends StatelessWidget {
                           height: 0,
                         ),
                       ),
-                      2.verticalSpace,
                       Container(
                         width: .25.sw,
                         decoration: const ShapeDecoration(
@@ -91,16 +92,45 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      40.verticalSpace,
-                      Text(
-                        'Login with Social ID',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 10.sp,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
-                        ),
+                      60.verticalSpace,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: .3.sw,
+                            decoration: const ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  width: .4,
+                                  strokeAlign: BorderSide.strokeAlignCenter,
+                                ),
+                              ),
+                            ),
+                          ),
+                          3.horizontalSpace,
+                          Text(
+                            'Login with Social ID',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 10.sp,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
+                          ),
+                          3.horizontalSpace,
+                          Container(
+                            width: .3.sw,
+                            decoration: const ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  width: .4,
+                                  strokeAlign: BorderSide.strokeAlignCenter,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       20.verticalSpace,
                       IconRoundedButton(
