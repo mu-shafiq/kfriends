@@ -42,6 +42,9 @@ dependencies:
   http: ^1.1.0
   dio: ^5.3.3
   shared_preferences: ^2.2.2
+  cupertino_date_textbox: ^1.0.3
+  menu_button: ^1.4.2+1 
+  numberpicker: ^2.1.2
 
 dev_dependencies:
   flutter_test:

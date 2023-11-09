@@ -45,115 +45,128 @@ class CommentTile extends StatelessWidget {
           ),
           child: Column(
             children: [
-              ListTile(
-                horizontalTitleGap: 5.w,
-                contentPadding: EdgeInsets.only(left: 5.w),
-                leading: CircleAvatar(
-                  radius: 35.r,
-                  backgroundImage: Image.asset(
-                    asset,
-                  ).image,
-                ),
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+              Stack(
+                children: [
+                  ListTile(
+                    horizontalTitleGap: 5.w,
+                    contentPadding: EdgeInsets.only(left: 5.w, top: 5.h),
+                    leading: CircleAvatar(
+                      radius: 35.r,
+                      backgroundImage: Image.asset(
+                        asset,
+                      ).image,
+                    ),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              username,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: textBlackColor,
+                                fontSize: 10.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                              ),
+                            ),
+                            3.horizontalSpace,
+                            verified
+                                ? Image.asset(Assets.verified)
+                                : const SizedBox(),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              width: 110.w,
+                              height: 30.h,
+                              child: Text(
+                                comment,
+                                maxLines: 3,
+                                style: TextStyle(
+                                    color: textBlackColor,
+                                    fontSize: 10.sp,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
+                                    overflow: TextOverflow.ellipsis),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    right: 15.w,
+                    top: 15.h,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          username,
-                          textAlign: TextAlign.center,
+                          time,
                           style: TextStyle(
-                            color: textBlackColor,
-                            fontSize: 10.sp,
+                            color: textGreyColor,
+                            fontSize: 8.sp,
                             fontFamily: 'Pretendard',
                             fontWeight: FontWeight.w700,
                             height: 0,
                           ),
                         ),
-                        3.horizontalSpace,
-                        verified
-                            ? Image.asset(Assets.verified)
-                            : const SizedBox()
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          width: 110.w,
-                          height: 30.h,
-                          child: Text(
-                            comment,
-                            maxLines: 3,
-                            style: TextStyle(
-                                color: textBlackColor,
-                                fontSize: 10.sp,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w400,
-                                height: 0,
-                                overflow: TextOverflow.ellipsis),
+                        SizedBox(
+                          width: 90.w,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              20.verticalSpace,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Reply',
+                                    style: TextStyle(
+                                      color: textBlackColor,
+                                      fontSize: 8.sp,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w700,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' | ',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      color: textBlackColor,
+                                      fontSize: 12.sp,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w700,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  Text(
+                                    '  Delete',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      color: textBlackColor,
+                                      fontSize: 10.sp,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w700,
+                                      height: 0,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                  ],
-                ),
-                trailing: SizedBox(
-                  width: 80.w,
-                  child: Column(
-                    children: [
-                      Text(
-                        time,
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: textGreyColor,
-                          fontSize: 8.sp,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
-                        ),
-                      ),
-                      20.verticalSpace,
-                      Row(
-                        children: [
-                          Text(
-                            'Reply',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: textBlackColor,
-                              fontSize: 10.sp,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w700,
-                              height: 0,
-                            ),
-                          ),
-                          Text(
-                            ' | ',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: textBlackColor,
-                              fontSize: 12.sp,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w700,
-                              height: 0,
-                            ),
-                          ),
-                          Text(
-                            '  Delete',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: textBlackColor,
-                              fontSize: 10.sp,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w700,
-                              height: 0,
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
                   ),
-                ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -183,103 +196,116 @@ class CommentTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Container(
           width: .9.sw,
-          child: ListTile(
-            horizontalTitleGap: 5.w,
-            contentPadding: EdgeInsets.only(left: 5.w),
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          child: Stack(
+            children: [
+              ListTile(
+                horizontalTitleGap: 5.w,
+                contentPadding: EdgeInsets.only(left: 5.w),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    isme ? Image.asset(Assets.reply) : SizedBox(),
+                    Row(
+                      children: [
+                        isme ? Image.asset(Assets.reply) : SizedBox(),
+                        Text(
+                          isme ? 'My Reply' : username,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: textBlackColor,
+                            fontSize: 10.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ),
+                        ),
+                        3.horizontalSpace,
+                      ],
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      width: 110.w,
+                      height: 30.h,
+                      child: Text(
+                        comment,
+                        maxLines: 3,
+                        style: TextStyle(
+                            color: textBlackColor,
+                            fontSize: 10.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w400,
+                            height: 0,
+                            overflow: TextOverflow.ellipsis),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                right: 15.w,
+                top: 15.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
                     Text(
-                      isme ? 'My Reply' : username,
-                      textAlign: TextAlign.center,
+                      time,
                       style: TextStyle(
-                        color: textBlackColor,
-                        fontSize: 10.sp,
+                        color: textGreyColor,
+                        fontSize: 8.sp,
                         fontFamily: 'Pretendard',
                         fontWeight: FontWeight.w700,
                         height: 0,
                       ),
                     ),
-                    3.horizontalSpace,
+                    SizedBox(
+                      width: 90.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          20.verticalSpace,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                'Reply',
+                                style: TextStyle(
+                                  color: textBlackColor,
+                                  fontSize: 8.sp,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w700,
+                                  height: 0,
+                                ),
+                              ),
+                              Text(
+                                ' | ',
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: textBlackColor,
+                                  fontSize: 12.sp,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w700,
+                                  height: 0,
+                                ),
+                              ),
+                              Text(
+                                '  Delete',
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: textBlackColor,
+                                  fontSize: 10.sp,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w700,
+                                  height: 0,
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  width: 110.w,
-                  height: 30.h,
-                  child: Text(
-                    comment,
-                    maxLines: 3,
-                    style: TextStyle(
-                        color: textBlackColor,
-                        fontSize: 10.sp,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
-                        overflow: TextOverflow.ellipsis),
-                  ),
-                ),
-              ],
-            ),
-            trailing: SizedBox(
-              width: 80.w,
-              child: Column(
-                children: [
-                  Text(
-                    time,
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      color: textGreyColor,
-                      fontSize: 8.sp,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w700,
-                      height: 0,
-                    ),
-                  ),
-                  20.verticalSpace,
-                  Row(
-                    children: [
-                      Text(
-                        'Reply',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: textBlackColor,
-                          fontSize: 10.sp,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
-                        ),
-                      ),
-                      Text(
-                        ' | ',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: textBlackColor,
-                          fontSize: 12.sp,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
-                        ),
-                      ),
-                      Text(
-                        '  Delete',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: textBlackColor,
-                          fontSize: 10.sp,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
-                        ),
-                      )
-                    ],
-                  ),
-                ],
               ),
-            ),
+            ],
           ),
         ));
   }

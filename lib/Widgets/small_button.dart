@@ -12,6 +12,7 @@ class RoundedSmallButton extends StatelessWidget {
   final Color? selectedColor;
 
   final Color textColor;
+  final Color? unselectedtextColor;
 
   final Color? shadow1;
   final Color? shadow2;
@@ -31,7 +32,8 @@ class RoundedSmallButton extends StatelessWidget {
       required this.onTap,
       this.selected,
       this.selectedColor,
-      this.icon});
+      this.icon,
+      this.unselectedtextColor});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class RoundedSmallButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Stack(
+          alignment: Alignment.bottomCenter,
           children: [
             Container(
               width: width,
@@ -50,44 +53,60 @@ class RoundedSmallButton extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100),
                 ),
-                shadows: [
-                  BoxShadow(
-                    color: shadow1 ?? buttonBlackShadow1,
-                    blurRadius: 1,
-                    offset: selected == true
-                        ? const Offset(-2, -2)
-                        : const Offset(0, 2),
-                    spreadRadius: 1,
-                  ),
-                  BoxShadow(
-                    color: shadow2 ?? buttonBlackShadow2,
-                    blurRadius: 8,
-                    offset: const Offset(0, 0),
-                    spreadRadius: 0,
-                  )
-                ],
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  icon ?? const SizedBox(),
-                  icon != null ? 3.horizontalSpace : 0.horizontalSpace,
-                  Text(
-                    text,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: selected == true ? textColor : Colors.grey,
-                      fontSize: 10.sp,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w700,
-                      height: 0,
-                    ),
-                  ),
-                ],
               ),
             ),
+            Center(
+              child: Container(
+                width: width - 5,
+                height: height - 5,
+                decoration: ShapeDecoration(
+                  color: selected == true
+                      ? (selectedColor ?? buttonGreenColor2)
+                      : (unselectedColor ?? buttonWhiteColor),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: shadow1 ?? buttonBlackShadow1,
+                      blurRadius: 1,
+                      offset: selected == true
+                          ? const Offset(-2, -2)
+                          : const Offset(0, 2),
+                      spreadRadius: 1,
+                    ),
+                    BoxShadow(
+                      color: shadow2 ?? buttonBlackShadow2,
+                      blurRadius: 8,
+                      offset: const Offset(0, 0),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    icon ?? const SizedBox(),
+                    icon != null ? 3.horizontalSpace : 0.horizontalSpace,
+                    Text(
+                      text,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: selected == true
+                            ? textColor
+                            : unselectedtextColor ?? Colors.grey,
+                        fontSize: 10.sp,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w700,
+                        height: 0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

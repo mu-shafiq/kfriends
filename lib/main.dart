@@ -24,6 +24,8 @@ class MyApp extends StatelessWidget {
             getPages: pages,
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
             ),

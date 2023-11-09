@@ -1,12 +1,15 @@
 import 'dart:developer';
 
 import 'package:country_picker/country_picker.dart';
+import 'package:cupertino_date_textbox/cupertino_date_textbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
+import 'package:kfriends/Widgets/birthday_selecter.dart';
+import 'package:kfriends/Widgets/job_selector.dart';
 import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Widgets/textfield.dart';
 import 'package:kfriends/Controllers/auth_controller.dart';
@@ -140,23 +143,13 @@ class JoinFormScreen extends StatelessWidget {
                                 textAlign: TextAlign.left,
                               ),
                             ),
-                            CustomTextfield(
+                            BirthdaySelector(
                               controller: TextEditingController(),
                               width: .9.sw,
                               height: 40.h,
-                              hint: 'YYYY-MM-DD',
                               hintSize: 10.sp,
                               trailing: Image.asset(Assets.drop),
                               textInputType: TextInputType.none,
-                              ontap: () {
-                                showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime.now()
-                                        .subtract(const Duration(days: 100000)),
-                                    lastDate: DateTime.now()
-                                        .add(const Duration(days: 100000)));
-                              },
                             ),
                             10.verticalSpace,
                             Padding(
@@ -173,72 +166,13 @@ class JoinFormScreen extends StatelessWidget {
                                 textAlign: TextAlign.left,
                               ),
                             ),
-                            CustomTextfield(
+                            JobSelector(
                               controller: controller.job,
                               width: .9.sw,
                               height: 40.h,
                               hint: 'Select your Job',
                               hintSize: 10.sp,
                               trailing: Image.asset(Assets.drop),
-                              textInputType: TextInputType.none,
-                              ontap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text("Select Your Job"),
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          JobOption(
-                                            gender: 'Student',
-                                            isSelected:
-                                                controller.selectedJob.value ==
-                                                    'Student',
-                                            onTap: () {
-                                              controller.updateJob('Student');
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                          JobOption(
-                                            gender: 'University Student',
-                                            isSelected:
-                                                controller.selectedJob.value ==
-                                                    'University Student',
-                                            onTap: () {
-                                              controller.updateJob(
-                                                  'University Student');
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                          JobOption(
-                                            gender: 'Home maker',
-                                            isSelected:
-                                                controller.selectedJob.value ==
-                                                    'Home maker',
-                                            onTap: () {
-                                              controller
-                                                  .updateJob('Home maker');
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                          JobOption(
-                                            gender: 'Office worker',
-                                            isSelected:
-                                                controller.selectedJob.value ==
-                                                    'Office worker',
-                                            onTap: () {
-                                              controller
-                                                  .updateJob('Office worker');
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
                             ),
                             10.verticalSpace,
                             Padding(
@@ -266,10 +200,34 @@ class JoinFormScreen extends StatelessWidget {
                               ontap: () {
                                 showCountryPicker(
                                   context: context,
-                                  showSearch: false,
-                                  onSelect: (Country count) {
-                                    log(count.name);
-                                    controller.country.text = count.name;
+                                  countryListTheme: CountryListThemeData(
+                                    flagSize: 25,
+                                    backgroundColor: Colors.white,
+                                    textStyle: TextStyle(
+                                        fontSize: 16.sp,
+                                        color: Colors.blueGrey),
+                                    bottomSheetHeight: .5
+                                        .sh, // Optional. Country list modal height
+                                    //Optional. Sets the border radius for the bottomsheet.
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(15.0),
+                                      topRight: Radius.circular(15.0),
+                                    ),
+                                    //Optional. Styles the search field.
+                                    inputDecoration: InputDecoration(
+                                      labelText: 'Search',
+                                      hintText: 'Start typing to search',
+                                      prefixIcon: const Icon(Icons.search),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: const Color(0xFF8C98A8)
+                                              .withOpacity(0.2),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  onSelect: (Country country) {
+                                    controller.country.text = country.name;
                                   },
                                 );
                               },
@@ -381,16 +339,19 @@ class JoinFormScreen extends StatelessWidget {
                               ],
                             ),
                             10.verticalSpace,
-                            Text(
-                              "Interests",
-                              style: TextStyle(
-                                fontFamily: "Pretendard",
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                                color: textBlackColor,
-                                height: 17 / 14,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Interests",
+                                style: TextStyle(
+                                  fontFamily: "Pretendard",
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: textBlackColor,
+                                  height: 17 / 14,
+                                ),
+                                textAlign: TextAlign.right,
                               ),
-                              textAlign: TextAlign.right,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -628,20 +589,27 @@ class JoinFormScreen extends StatelessWidget {
                                   selected: true,
                                   onTap: () {
                                     // set up the button
-                                    Widget okButton = Center(
-                                      child: RoundedSmallButton(
-                                        onTap: () {
-                                          Get.offAndToNamed(
-                                              Routes.bottomNavBar);
-                                        },
-                                        textColor: textWhiteColor,
-                                        shadow1: buttonBlackShadow1,
-                                        shadow2: buttonBlackShadow2,
-                                        selectedColor: buttonBlueColor2,
-                                        selected: true,
-                                        width: 160.w,
-                                        height: 30.h,
-                                        text: 'Ok',
+                                    Widget okButton = Container(
+                                      color: Colors.transparent,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          RoundedSmallButton(
+                                            onTap: () {
+                                              Get.offAllNamed(
+                                                  Routes.bottomNavBar);
+                                            },
+                                            textColor: textWhiteColor,
+                                            shadow1: buttonBlackShadow1,
+                                            shadow2: buttonBlackShadow2,
+                                            selectedColor: buttonBlueColor2,
+                                            selected: true,
+                                            width: 160.w,
+                                            height: 30.h,
+                                            text: 'Ok',
+                                          ),
+                                        ],
                                       ),
                                     );
 

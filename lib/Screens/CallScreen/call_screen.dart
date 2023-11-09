@@ -134,15 +134,18 @@ class CallScreen extends StatelessWidget {
                                   ),
                                 ),
                                 3.horizontalSpace,
-                                Text(
-                                  '☎️',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                Ink(
+                                  color: textPinkColor,
+                                  child: Text(
+                                    '☎️',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
                                       color: textPinkColor,
                                       fontSize: 10.sp,
                                       fontFamily: 'Pretendard',
                                       fontWeight: FontWeight.w700,
-                                      height: 2),
+                                    ),
+                                  ),
                                 )
                               ],
                             ),
