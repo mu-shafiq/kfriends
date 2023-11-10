@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kfriends/Screens/CallScreen/call_history.dart';
 import 'package:kfriends/Screens/CallScreen/call_screen.dart';
 import 'package:kfriends/Screens/FriendsPage/friends.dart';
 import 'package:kfriends/Screens/HomePage/home_page.dart';
@@ -22,7 +23,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     const HomePage(),
     const Friends(),
     const SizedBox(),
-    const CallScreen(),
+    CallHistory(),
     const MyInfoScreen(),
   ];
 

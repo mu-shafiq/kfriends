@@ -1,12 +1,26 @@
 import 'package:get/get.dart';
 import 'package:kfriends/CallScreens/incoming_call.dart';
 import 'package:kfriends/CallScreens/outgoing_call.dart';
+import 'package:kfriends/ChatScreens/ai_chat.dart';
 import 'package:kfriends/ChatScreens/chat_main.dart';
+import 'package:kfriends/ChatScreens/chat_settings.dart';
+import 'package:kfriends/ChatScreens/chating_Screen.dart';
+import 'package:kfriends/KoreanGames/korean_main_screen.dart';
+import 'package:kfriends/KoreanGames/korean_game_Sheet.dart';
+import 'package:kfriends/KoreanGames/korean_game_result.dart';
+import 'package:kfriends/KoreanGames/korean_game_screen.dart';
+import 'package:kfriends/ReportUser/report_Screen.dart';
 import 'package:kfriends/Screens/BottomNavBar/bottom_nav_bar.dart';
+import 'package:kfriends/Screens/CallScreen/contact_Screen.dart';
+import 'package:kfriends/Screens/CallScreen/contact_settings.dart';
 import 'package:kfriends/Screens/JoinFormScreen/join_form_screen.dart';
 import 'package:kfriends/Screens/LoginScreen/login_screen.dart';
 import 'package:kfriends/Screens/SplashScreen/splash_screen.dart';
 import 'package:kfriends/Screens/UserScreen/user_screen.dart';
+import 'package:kfriends/TopikPractice/topik_main_screen.dart';
+import 'package:kfriends/TopikPractice/topik_test_Screen.dart';
+import 'package:kfriends/TopikPractice/topik_test_result.dart';
+import 'package:kfriends/TopikPractice/topik_test_sheet.dart';
 import 'package:kfriends/UserInfo/user_info.dart';
 
 class Routes {
@@ -19,6 +33,22 @@ class Routes {
   static String incomingCall = "/incomingcall";
   static String outgoingCall = "/outgoingcall";
   static String chatMainScreen = "/chatmainscreen";
+  static String chatSettings = "/chatsettings";
+  static String chatingScreen = "/chatingscreen";
+  static String aiChat = "/aichat";
+  static String reportScreen = "/reportscreen";
+  static String reportSent = "/reportsent";
+  static String contactScreen = "/contactscreen";
+  static String contactSettings = "/contactsettings";
+  static String topikMainScreen = "/topikmainscreen";
+  static String topikTestScreen = "/topiktestscreen";
+  static String topikTestSheet = "/topiktestsheet";
+  static String topikTestResult = "/topiktestresult";
+
+  static String koreanMainScreen = "/koreanmainscreen";
+  static String koreanGameScreen = "/koreangamescreen";
+  static String koreanGameSheet = "/koreangamesheet";
+  static String koreanGameResult = "/koreangameresult";
 }
 
 final pages = [
@@ -59,5 +89,61 @@ final pages = [
   GetPage(
     name: Routes.chatMainScreen,
     page: () => const ChatMainScreen(),
+  ),
+  GetPage(
+    name: Routes.chatSettings,
+    page: () => const ChatSettings(),
+  ),
+  GetPage(
+    name: Routes.aiChat,
+    page: () => const AiChat(),
+  ),
+  GetPage(
+    name: Routes.chatingScreen,
+    page: () => const ChatingScreen(),
+  ),
+  GetPage(
+    name: Routes.reportScreen,
+    page: () => const ReportScreen(),
+  ),
+  GetPage(
+    name: Routes.reportSent,
+    page: () => const ContactScreen(),
+  ),
+  GetPage(
+    name: Routes.contactSettings,
+    page: () => const ContactSettings(),
+  ),
+  GetPage(
+    name: Routes.topikMainScreen,
+    page: () => const TopikMainScreen(),
+  ),
+  GetPage(
+    name: Routes.topikTestScreen,
+    page: () => const TopikTestScreen(),
+  ),
+  GetPage(
+    name: Routes.topikTestSheet,
+    page: () => const TopikTestSheet(),
+  ),
+  GetPage(
+    name: Routes.topikTestResult,
+    page: () => const TopikTestResult(),
+  ),
+  GetPage(
+    name: Routes.koreanMainScreen,
+    page: () => const KoreanMainScreen(),
+  ),
+  GetPage(
+    name: Routes.koreanGameScreen,
+    page: () => const KoreanGameScreen(),
+  ),
+  GetPage(
+    name: Routes.koreanGameSheet,
+    page: () => const KoreanGameSheet(),
+  ),
+  GetPage(
+    name: Routes.koreanGameResult,
+    page: () => const KoreanGameResult(),
   ),
 ];

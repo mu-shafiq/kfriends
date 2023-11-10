@@ -40,6 +40,12 @@ class Assets {
   static const String mic = '${pathIcons}mic.png';
   static const String record = '${pathIcons}record.png';
   static const String cross = '${pathIcons}cross.png';
+  static const String blueTick = '${pathIcons}bluetick.png';
+  static const String crossblack = '${pathIcons}crossblack.png';
+  static const String aiFriend = '${pathIcons}aifriend.png';
+  static const String more = '${pathIcons}more.png';
+  static const String add = '${pathIcons}add.png';
+  static const String blueTick2 = '${pathIcons}bluetick2.png';
 
   //image
   static const String joinFormImage = '${pathImages}joinFormImage.png';
@@ -47,4 +53,9 @@ class Assets {
   static const String topikpractice = '${pathImages}topikpractice.png';
   static const String user1 = '${pathImages}user1.png';
   static const String cover = '${pathImages}cover.png';
+  static const String widget1 = '${pathImages}widget1.png';
+  static const String widget2 = '${pathImages}widget2.png';
+  static const String widget3 = '${pathImages}widget3.png';
+  static const String widget4 = '${pathImages}widget4.png';
+  static const String widget5 = '${pathImages}widget5.png';
 }

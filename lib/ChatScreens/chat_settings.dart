@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,14 +7,14 @@ import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Widgets/bottom_bar.dart';
 import 'package:kfriends/Widgets/chat_tile.dart';
 
-class ChatMainScreen extends StatefulWidget {
-  const ChatMainScreen({super.key});
+class ChatSettings extends StatefulWidget {
+  const ChatSettings({super.key});
 
   @override
-  State<ChatMainScreen> createState() => _ChatMainScreenState();
+  State<ChatSettings> createState() => _ChatSettingsState();
 }
 
-class _ChatMainScreenState extends State<ChatMainScreen> {
+class _ChatSettingsState extends State<ChatSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +24,9 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
         scrolledUnderElevation: 0,
         leading: GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.chatSettings);
+              Get.back();
             },
-            child: Image.asset(Assets.settings)),
+            child: Image.asset(Assets.blueTick)),
         title: Text(
           'MY CHAT',
           textAlign: TextAlign.center,
@@ -41,25 +39,6 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
           ),
         ),
         centerTitle: true,
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Padding(
-                padding: const EdgeInsets.only(right: 15.0),
-                child: Image.asset(Assets.cross)),
-          )
-        ],
-      ),
-      floatingActionButton: GestureDetector(
-        onTap: () {
-          Get.toNamed(Routes.aiChat);
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Image.asset(Assets.aiFriend),
-        ),
       ),
       body: SingleChildScrollView(
         child: SizedBox(
@@ -74,23 +53,34 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
                   width: .94.sw,
                   child: ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 5,
+                      itemCount: 3,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            log('message');
-                            Get.toNamed(Routes.chatingScreen);
-                          },
-                          child: const ChatTile(
-                            chatCount: 2,
-                            verified: true,
-                            time: '19:43',
-                            asset: Assets.user1,
-                            username: '김민준',
-                            lastchat:
-                                '내가 좋아하는 한국 가수는 아이유야! 아이유 노래 혹시들어봤어?? 안 들어봤다면 진짜 꼭 들어봐!!!!',
-                          ),
+                        return Stack(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Get.toNamed(Routes.chatingScreen);
+                              },
+                              child: const ChatTile(
+                                verified: true,
+                                time: '19:43',
+                                asset: Assets.user1,
+                                chatCount: 2,
+                                username: '김민준',
+                                lastchat:
+                                    '내가 좋아하는 한국 가수는 아이유야! 아이유 노래 혹시들어봤어?? 안 들어봤다면 진짜 꼭 들어봐!!!!',
+                              ),
+                            ),
+                            Positioned(
+                              top: 15.h,
+                              left: 5.w,
+                              child: Image.asset(
+                                Assets.crossblack,
+                                scale: 1.1.sp,
+                              ),
+                            )
+                          ],
                         );
                       }),
                 )

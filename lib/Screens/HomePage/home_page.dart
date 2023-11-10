@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Widgets/rounded_button.dart';
@@ -15,7 +17,7 @@ class HomePage extends StatelessWidget {
       height: 1.sh,
       width: 1.sw,
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(15.0.sp),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -176,27 +178,37 @@ class HomePage extends StatelessWidget {
                 ],
               ),
               15.verticalSpace,
-              ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  child: Container(
-                    width: .92.sw,
-                    child: Image.asset(
-                      Assets.koreangame,
-                      scale: .1,
-                      fit: BoxFit.fill,
-                    ),
-                  )),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.koreanMainScreen);
+                },
+                child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: Container(
+                      width: .92.sw,
+                      child: Image.asset(
+                        Assets.koreangame,
+                        scale: .1,
+                        fit: BoxFit.fill,
+                      ),
+                    )),
+              ),
               10.verticalSpace,
-              ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  child: Container(
-                    width: .96.sw,
-                    child: Image.asset(
-                      Assets.topikpractice,
-                      scale: .1,
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.topikMainScreen);
+                },
+                child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: Container(
+                      width: .96.sw,
+                      child: Image.asset(
+                        Assets.topikpractice,
+                        scale: .1,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+              ),
               10.verticalSpace,
               Padding(
                 padding: const EdgeInsets.all(8.0),
