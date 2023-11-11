@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Widgets/contact_tile.dart';
 import 'package:kfriends/Widgets/textfield.dart';
@@ -36,11 +38,16 @@ class ContactSettings extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Stack(
                         children: [
-                          const ContactTile(
-                            verified: true,
-                            asset: Assets.user1,
-                            username: '김민준',
-                            about: '20 / FEMALE /  South Korea',
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed(Routes.userInfo);
+                            },
+                            child: const ContactTile(
+                              verified: true,
+                              asset: Assets.user1,
+                              username: '김민준',
+                              about: '20 / FEMALE /  South Korea',
+                            ),
                           ),
                           Positioned(
                             top: 15.h,

@@ -4,9 +4,10 @@ import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Widgets/bottom_bar.dart';
 import 'package:kfriends/Widgets/korean_game_tile.dart';
+import 'package:kfriends/Widgets/korean_season_tile.dart';
 
-class KoreanMainScreen extends StatelessWidget {
-  const KoreanMainScreen({super.key});
+class KoreanSeasonScreen extends StatelessWidget {
+  const KoreanSeasonScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -215,11 +216,13 @@ class KoreanMainScreen extends StatelessWidget {
                         itemCount: 4,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 5.0),
-                            child: KoreanGameTile(
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5.0),
+                            child: KoreanSeasonTile(
+                              completed: index == 1,
                               words: 10,
-                              gameName: 'ANIMAL(동물)',
+                              seasonName: 'SEASON(동물)',
+                              score: 100,
                             ),
                           );
                         }),

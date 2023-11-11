@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Widgets/comment_tile.dart';
 import 'package:kfriends/Widgets/small_button.dart';
 
-class MyInfoScreen extends StatelessWidget {
+class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({super.key});
 
+  @override
+  State<MyInfoScreen> createState() => _MyInfoScreenState();
+}
+
+class _MyInfoScreenState extends State<MyInfoScreen> {
+  int selected = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +35,14 @@ class MyInfoScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Image.asset(Assets.settings),
+          GestureDetector(
+            onTap: () {
+              Get.toNamed(Routes.profileSettings);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Image.asset(Assets.settings),
+            ),
           )
         ],
       ),
@@ -205,16 +218,26 @@ class MyInfoScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 RoundedSmallButton(
-                  selected: true,
-                  onTap: () {},
+                  selected: selected == 0,
+                  onTap: () {
+                    setState(() {
+                      selected = 0;
+                    });
+                  },
                   textColor: textBlackColor,
                   width: 160.w,
                   height: 30.h,
                   text: 'COMMENTS',
+                  unselectedtextColor: textBlackColor,
                 ),
                 10.horizontalSpace,
                 RoundedSmallButton(
-                  onTap: () {},
+                  selected: selected == 1,
+                  onTap: () {
+                    setState(() {
+                      selected = 1;
+                    });
+                  },
                   textColor: textBlackColor,
                   width: 160.w,
                   height: 30.h,
@@ -224,22 +247,134 @@ class MyInfoScreen extends StatelessWidget {
               ],
             ),
             30.verticalSpace,
-            SizedBox(
-              width: .9.sw,
-              child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 1,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return const CommentTile(
-                      time: '6 Days ago',
-                      verified: true,
-                      asset: Assets.user1,
-                      username: '김민준',
-                      comment: '안녕하세요! 반가워요!대화 걸어주세요~',
-                    );
-                  }),
-            )
+            selected == 0
+                ? SizedBox(
+                    width: .9.sw,
+                    child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 1,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return const CommentTile(
+                            time: '6 Days ago',
+                            verified: true,
+                            asset: Assets.user1,
+                            username: '김민준',
+                            comment: '안녕하세요! 반가워요!대화 걸어주세요~',
+                          );
+                        }),
+                  )
+                : Column(
+                    children: [
+                      SizedBox(
+                        width: .87.sw,
+                        height: 30.h,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'English Proficiency',
+                              style: TextStyle(
+                                color: textBlackColor,
+                                fontSize: 10.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                              ),
+                            ),
+                            RoundedSmallButton(
+                                height: 22.h,
+                                width: 80.w,
+                                text: 'Advanced',
+                                textColor: textBlueColor,
+                                unselectedtextColor: textBlueColor,
+                                onTap: () {})
+                          ],
+                        ),
+                      ),
+                      5.verticalSpace,
+                      SizedBox(
+                        width: .87.sw,
+                        height: 30.h,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Korean Proficiency',
+                              style: TextStyle(
+                                color: textBlackColor,
+                                fontSize: 10.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                              ),
+                            ),
+                            RoundedSmallButton(
+                                height: 22.h,
+                                width: 80.w,
+                                text: 'Beginner',
+                                textColor: textBlueColor,
+                                unselectedtextColor: textYellowColor,
+                                onTap: () {})
+                          ],
+                        ),
+                      ),
+                      5.verticalSpace,
+                      SizedBox(
+                        width: .87.sw,
+                        height: 30.h,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Studied Words',
+                              style: TextStyle(
+                                color: textBlackColor,
+                                fontSize: 10.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                              ),
+                            ),
+                            RoundedSmallButton(
+                                height: 22.h,
+                                width: 80.w,
+                                text: '3,596',
+                                textColor: textBlueColor,
+                                unselectedtextColor: textPinkColor,
+                                onTap: () {})
+                          ],
+                        ),
+                      ),
+                      5.verticalSpace,
+                      SizedBox(
+                        width: .87.sw,
+                        height: 30.h,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Total Call Duration',
+                              style: TextStyle(
+                                color: textBlackColor,
+                                fontSize: 10.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                              ),
+                            ),
+                            RoundedSmallButton(
+                                height: 22.h,
+                                width: 80.w,
+                                text: '2h 37m',
+                                textColor: textBlueColor,
+                                unselectedtextColor: textPinkColor,
+                                onTap: () {})
+                          ],
+                        ),
+                      )
+                    ],
+                  )
           ],
         ),
       ),

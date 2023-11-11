@@ -5,7 +5,7 @@ import 'package:kfriends/Utils/colors.dart';
 class CustomTextfield extends StatelessWidget {
   final double height;
   final double width;
-  final String hint;
+  final String? hint;
   final TextEditingController controller;
   final double? hintSize;
   final Widget? trailing;
@@ -16,7 +16,7 @@ class CustomTextfield extends StatelessWidget {
       {super.key,
       required this.height,
       required this.width,
-      required this.hint,
+      this.hint,
       required this.controller,
       this.hintSize,
       this.trailing,

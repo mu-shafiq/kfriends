@@ -48,6 +48,7 @@ dependencies:
   cupertino_date_textbox: ^1.0.3
   menu_button: ^1.4.2+1
   numberpicker: ^2.1.2
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:

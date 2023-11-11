@@ -4,11 +4,17 @@ import 'package:get/get.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/colors.dart';
 
-class KoreanGameTile extends StatelessWidget {
+class KoreanSeasonTile extends StatelessWidget {
   final int words;
-  final String gameName;
-  const KoreanGameTile(
-      {super.key, required this.words, required this.gameName});
+  final String seasonName;
+  final int score;
+  final bool completed;
+  const KoreanSeasonTile(
+      {super.key,
+      required this.words,
+      required this.seasonName,
+      required this.score,
+      required this.completed});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +49,7 @@ class KoreanGameTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  gameName,
+                  seasonName,
                   style: TextStyle(
                     color: textBlackColor,
                     fontSize: 13.sp,
@@ -52,44 +58,55 @@ class KoreanGameTile extends StatelessWidget {
                     height: 0,
                   ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      'studied games',
-                      style: TextStyle(
-                        color: textGreyColor,
-                        fontSize: 10.sp,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Best score ',
+                        style: TextStyle(
+                          color: textGreyColor,
+                          fontSize: 10.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                        ),
                       ),
-                    ),
-                    5.horizontalSpace,
-                    Text(
-                      '0 / $words',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        color: textGreyColor,
-                        fontSize: 10.sp,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w400,
-                        height: 0.15,
+                      TextSpan(
+                        text: score.toString(),
+                        style: TextStyle(
+                          color: textGreyColor,
+                          fontSize: 10.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                          height: 0.15,
+                        ),
                       ),
-                    )
-                  ],
+                      TextSpan(
+                        text: ' ',
+                        style: TextStyle(
+                          color: textGreyColor,
+                          fontSize: 10.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
             GestureDetector(
               onTap: () {
-                Get.toNamed(Routes.koreanSeasonScreen);
+                Get.toNamed(Routes.koreanGameScreen);
               },
               child: CircleAvatar(
                 radius: 30.r,
-                backgroundColor: buttonGreenColor2,
+                backgroundColor:
+                    completed ? const Color(0xFFFFB84D) : buttonGreenColor2,
                 child: Center(
                   child: Text(
-                    'START →',
+                    completed ? 'AGAIN →' : 'START →',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: textBlackColor,

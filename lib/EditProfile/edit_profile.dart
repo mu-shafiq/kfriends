@@ -10,13 +10,14 @@ import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Widgets/birthday_selecter.dart';
+import 'package:kfriends/Widgets/bottom_bar.dart';
 import 'package:kfriends/Widgets/job_selector.dart';
 import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Widgets/textfield.dart';
 import 'package:kfriends/Controllers/auth_controller.dart';
 
-class JoinFormScreen extends StatelessWidget {
-  const JoinFormScreen({super.key});
+class EditProfile extends StatelessWidget {
+  const EditProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,56 @@ class JoinFormScreen extends StatelessWidget {
             },
             child: SafeArea(
               child: Scaffold(
+                appBar: AppBar(
+                  leading: GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Padding(
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: Image.asset(Assets.backArrow)),
+                  ),
+                  elevation: 0,
+                  scrolledUnderElevation: 0,
+                  title: Text(
+                    'MY PROFILE',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: textBlackColor,
+                      fontSize: 14.sp,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w600,
+                      height: 0,
+                    ),
+                  ),
+                  centerTitle: true,
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            Assets.appLogo2,
+                            scale: 15.sp,
+                          ),
+                          Text(
+                            'K-FRIENDS',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: textGreyColor,
+                              fontSize: 8.sp,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                bottomNavigationBar: const BottomBar(index: 4),
                 backgroundColor: bgWhiteColor,
                 body: SingleChildScrollView(
                   child: Column(
@@ -190,7 +241,7 @@ class JoinFormScreen extends StatelessWidget {
                               //       lastDate: DateTime.now()
                               //           .add(const Duration(days: 100000)));
                               //   if (dateTime != null) {
-                              //     controller.dateOfBirth = dateTime;
+                              //     controller.dateOfBirth = dateTime.obs;
                               //     controller.update();
                               //   }
                               // },
@@ -698,7 +749,7 @@ class JoinFormScreen extends StatelessWidget {
                             ),
                             20.verticalSpace,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 RoundedSmallButton(
                                   selected: true,
@@ -809,15 +860,6 @@ class JoinFormScreen extends StatelessWidget {
                                   width: 160.w,
                                   height: 30.h,
                                   text: 'Ok',
-                                ),
-                                RoundedSmallButton(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  textColor: textBlackColor,
-                                  width: 160.w,
-                                  height: 30.h,
-                                  text: 'Cancel',
                                 ),
                               ],
                             ),
