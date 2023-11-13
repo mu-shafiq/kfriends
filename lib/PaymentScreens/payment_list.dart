@@ -155,10 +155,13 @@ class PaymentList extends StatelessWidget {
                   itemCount: 3,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return const PaymentTile(
-                      package: 'Buy Basic Call Package',
-                      date: '2023.06.16',
-                      price: "99,000",
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5.h),
+                      child: const PaymentTile(
+                        package: 'Buy Basic Call Package',
+                        date: '2023.06.16',
+                        price: "99,000",
+                      ),
                     );
                   }),
             )

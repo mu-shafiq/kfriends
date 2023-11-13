@@ -109,7 +109,8 @@ class ProfileSettings extends StatelessWidget {
                   },
                   child: ListTile(
                     horizontalTitleGap: 5,
-                    contentPadding: EdgeInsets.all(5),
+                    contentPadding:
+                        EdgeInsets.only(bottom: 5.h, left: 10.w, right: 10.w),
                     leading: CircleAvatar(
                       radius: 30.r,
                       child: Image.asset(Assets.user1),
@@ -157,11 +158,10 @@ class ProfileSettings extends StatelessWidget {
             ),
             15.verticalSpace,
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                0.horizontalSpace,
                 Container(
-                  width: 160.w,
+                  width: 170.w,
                   height: 31.h,
                   decoration: ShapeDecoration(
                     color: Colors.white,
@@ -212,6 +212,7 @@ class ProfileSettings extends StatelessWidget {
                     ],
                   ),
                 ),
+                10.horizontalSpace,
                 GestureDetector(
                   onTap: () {
                     Get.toNamed(Routes.buyPayment);
@@ -253,7 +254,6 @@ class ProfileSettings extends StatelessWidget {
                     ),
                   ),
                 ),
-                0.horizontalSpace,
               ],
             ),
             20.verticalSpace,
@@ -267,7 +267,7 @@ class ProfileSettings extends StatelessWidget {
                 height: 0,
               ),
             ),
-            10.verticalSpace,
+            20.verticalSpace,
             GestureDetector(
               onTap: () {
                 Get.toNamed(Routes.notice);

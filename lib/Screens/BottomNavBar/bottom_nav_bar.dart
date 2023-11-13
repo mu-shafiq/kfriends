@@ -48,38 +48,53 @@ class _BottomNavBarState extends State<BottomNavBar> {
         children: [
           Scaffold(
             body: _pages[_selectedTab],
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              currentIndex: _selectedTab,
-              onTap: (index) => index != 2 ? _changeTab(index) : null,
-              selectedItemColor: textBlackColor,
-              unselectedItemColor: textBlackColor,
-              selectedLabelStyle: TextStyle(
-                color: textBlackColor,
-                fontSize: 12.sp,
-                fontFamily: 'Pretendard',
-                fontWeight: FontWeight.w400,
-                height: 2,
+            bottomNavigationBar: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromARGB(255, 211, 205, 205),
+                    blurRadius: 4,
+                    offset: Offset(0, 1),
+                    spreadRadius: 1,
+                  )
+                ],
               ),
-              unselectedLabelStyle: TextStyle(
-                color: textBlackColor,
-                fontSize: 12.sp,
-                fontFamily: 'Pretendard',
-                fontWeight: FontWeight.w400,
-                height: 2,
+              child: BottomNavigationBar(
+                elevation: 2,
+                type: BottomNavigationBarType.fixed,
+                currentIndex: _selectedTab,
+                onTap: (index) => index != 2 ? _changeTab(index) : null,
+                selectedItemColor: textBlackColor,
+                unselectedItemColor: textBlackColor,
+                selectedLabelStyle: TextStyle(
+                  color: textBlackColor,
+                  fontSize: 12.sp,
+                  fontFamily: 'Pretendard',
+                  fontWeight: FontWeight.w400,
+                  height: 2,
+                ),
+                unselectedLabelStyle: TextStyle(
+                  color: textBlackColor,
+                  fontSize: 12.sp,
+                  fontFamily: 'Pretendard',
+                  fontWeight: FontWeight.w400,
+                  height: 2,
+                ),
+                showUnselectedLabels: true,
+                items: [
+                  BottomNavigationBarItem(
+                      icon: bottombaritem(Assets.home), label: "HOME"),
+                  BottomNavigationBarItem(
+                      icon: bottombaritem(Assets.friends), label: "FRIENDS"),
+                  BottomNavigationBarItem(
+                      icon: bottombaritem('logo'), label: ""),
+                  BottomNavigationBarItem(
+                      icon: bottombaritem(Assets.call), label: "CALL"),
+                  BottomNavigationBarItem(
+                      icon: bottombaritem(Assets.profile), label: "MY INFO"),
+                ],
               ),
-              showUnselectedLabels: true,
-              items: [
-                BottomNavigationBarItem(
-                    icon: bottombaritem(Assets.home), label: "HOME"),
-                BottomNavigationBarItem(
-                    icon: bottombaritem(Assets.friends), label: "FRIENDS"),
-                BottomNavigationBarItem(icon: bottombaritem('logo'), label: ""),
-                BottomNavigationBarItem(
-                    icon: bottombaritem(Assets.call), label: "CALL"),
-                BottomNavigationBarItem(
-                    icon: bottombaritem(Assets.profile), label: "MY INFO"),
-              ],
             ),
           ),
           Positioned(
@@ -102,33 +117,38 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 
   Widget bottombaritem(String asset) {
-    return Container(
-      height: 35,
-      width: 35,
-      decoration: const ShapeDecoration(
-        color: Color(0xFFF5F5F5),
-        shape: OvalBorder(),
-        shadows: [
-          BoxShadow(
-            color: Color(0x19000000),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-            spreadRadius: 0,
+    return Column(
+      children: [
+        5.verticalSpace,
+        Container(
+          height: 35.h,
+          width: 35.w,
+          decoration: const ShapeDecoration(
+            color: Color(0xFFF5F5F5),
+            shape: OvalBorder(),
+            shadows: [
+              BoxShadow(
+                color: Color(0x19000000),
+                blurRadius: 4,
+                offset: Offset(0, 2),
+                spreadRadius: 0,
+              ),
+              BoxShadow(
+                color: Color(0x19000000),
+                blurRadius: 8,
+                offset: Offset(0, 0),
+                spreadRadius: 0,
+              )
+            ],
           ),
-          BoxShadow(
-            color: Color(0x19000000),
-            blurRadius: 8,
-            offset: Offset(0, 0),
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: asset == 'logo'
-          ? const SizedBox()
-          : Image.asset(
-              asset,
-              color: textBlackColor,
-            ),
+          child: asset == 'logo'
+              ? const SizedBox()
+              : Image.asset(
+                  asset,
+                  color: textBlackColor,
+                ),
+        ),
+      ],
     );
   }
 }

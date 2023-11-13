@@ -9,7 +9,7 @@ import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/constants.dart';
-import 'package:kfriends/Widgets/birthday_selecter.dart';
+import 'package:kfriends/Widgets/birthday_selector.dart';
 import 'package:kfriends/Widgets/job_selector.dart';
 import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Widgets/textfield.dart';
@@ -105,7 +105,6 @@ class JoinFormScreen extends StatelessWidget {
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w600,
                                   color: textBlackColor,
-                                  height: 17 / 14,
                                 ),
                                 textAlign: TextAlign.left,
                               ),
@@ -328,7 +327,7 @@ class JoinFormScreen extends StatelessWidget {
                                         .updateEnglishProficiency(beginner);
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'Beginner',
                                 ),
@@ -341,7 +340,7 @@ class JoinFormScreen extends StatelessWidget {
                                         .updateEnglishProficiency(intermediate);
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'Intermediate',
                                 ),
@@ -354,7 +353,7 @@ class JoinFormScreen extends StatelessWidget {
                                         .updateEnglishProficiency(advanced);
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'Advanced',
                                 ),
@@ -387,7 +386,7 @@ class JoinFormScreen extends StatelessWidget {
                                         .updateKoreanProficiency(beginner);
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'Beginner',
                                 ),
@@ -400,7 +399,7 @@ class JoinFormScreen extends StatelessWidget {
                                         .updateKoreanProficiency(intermediate);
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'Intermediate',
                                 ),
@@ -413,7 +412,7 @@ class JoinFormScreen extends StatelessWidget {
                                         .updateKoreanProficiency(advanced);
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'Advanced',
                                 ),
@@ -435,7 +434,7 @@ class JoinFormScreen extends StatelessWidget {
                               ),
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 RoundedSmallButton(
                                   selected: controller.interests
@@ -444,7 +443,7 @@ class JoinFormScreen extends StatelessWidget {
                                     controller.updateInterests('#K-TRAVEL');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: '#K-TRAVEL',
                                 ),
@@ -455,7 +454,7 @@ class JoinFormScreen extends StatelessWidget {
                                     controller.updateInterests('#K-TRAVELS');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: '#K-TRAVELS',
                                 ),
@@ -466,7 +465,7 @@ class JoinFormScreen extends StatelessWidget {
                                     controller.updateInterests('#K-DRAMA');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: '#K-DRAMA',
                                 ),
@@ -474,7 +473,7 @@ class JoinFormScreen extends StatelessWidget {
                             ),
                             5.verticalSpace,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 RoundedSmallButton(
                                   selected:
@@ -483,7 +482,7 @@ class JoinFormScreen extends StatelessWidget {
                                     controller.updateInterests('#K-POP');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: '#K-POP',
                                 ),
@@ -494,7 +493,7 @@ class JoinFormScreen extends StatelessWidget {
                                     controller.updateInterests('#K-FOOD');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: '#K-FOOD',
                                 ),
@@ -505,7 +504,7 @@ class JoinFormScreen extends StatelessWidget {
                                     controller.updateInterests('#K-BEAUTY');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: '#K-BEAUTY',
                                 ),
@@ -513,7 +512,7 @@ class JoinFormScreen extends StatelessWidget {
                             ),
                             5.verticalSpace,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 RoundedSmallButton(
                                   selected:
@@ -522,7 +521,7 @@ class JoinFormScreen extends StatelessWidget {
                                     controller.updateInterests('PET');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'PET',
                                 ),
@@ -533,7 +532,7 @@ class JoinFormScreen extends StatelessWidget {
                                     controller.updateInterests('GAME');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'GAME',
                                 ),
@@ -548,7 +547,7 @@ class JoinFormScreen extends StatelessWidget {
                                 const SizedBox(),
                               ],
                             ),
-                            10.verticalSpace,
+                            8.verticalSpace,
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -560,20 +559,21 @@ class JoinFormScreen extends StatelessWidget {
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w600,
                                       color: textBlackColor,
-                                      height: 17 / 14,
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
-                                  Text(
-                                    " (Optional)",
-                                    style: TextStyle(
-                                      fontFamily: "Pretendard",
-                                      fontSize: 11.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey,
-                                      height: 17 / 14,
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text(
+                                      " (Optional)",
+                                      style: TextStyle(
+                                        fontFamily: "Pretendard",
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.grey,
+                                      ),
+                                      textAlign: TextAlign.left,
                                     ),
-                                    textAlign: TextAlign.left,
                                   ),
                                 ],
                               ),
@@ -749,14 +749,16 @@ class JoinFormScreen extends StatelessWidget {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
+                                            contentPadding: EdgeInsets.all(3),
+                                            backgroundColor: bgWhiteColor,
                                             shape: const OutlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.white),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10))),
                                             content: SizedBox(
-                                                height: .2.sh,
-                                                // width: .8.sw,
+                                                height: .25.sh,
+                                                width: .98.sw,
                                                 child: Center(
                                                     child: Padding(
                                                   padding:

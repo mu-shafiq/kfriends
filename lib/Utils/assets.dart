@@ -51,6 +51,8 @@ class Assets {
   static const String comment = '${pathIcons}comment.png';
   static const String delete = '${pathIcons}delete.png';
   static const String edit = '${pathIcons}edit.png';
+  static const String alert = '${pathIcons}alert.png';
+  static const String exclamation = '${pathIcons}exclamation.png';
 
   //image
   static const String joinFormImage = '${pathImages}joinFormImage.png';

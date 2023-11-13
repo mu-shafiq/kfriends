@@ -84,13 +84,16 @@ class Notice extends StatelessWidget {
                   itemCount: 3,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Get.toNamed(Routes.noticeView);
-                      },
-                      child: const NoticeTile(
-                        notice: 'Hello, Everyone! It’s notice from KFriends',
-                        date: '2023.06.16',
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.toNamed(Routes.noticeView);
+                        },
+                        child: const NoticeTile(
+                          notice: 'Hello, Everyone! It’s notice from KFriends',
+                          date: '2023.06.16',
+                        ),
                       ),
                     );
                   }),

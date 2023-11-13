@@ -21,7 +21,7 @@ class MyFriends extends StatelessWidget {
             hintSize: 12.sp,
             trailing: Image.asset(Assets.search),
             controller: TextEditingController()),
-        30.verticalSpace,
+        25.verticalSpace,
         SizedBox(
           width: .9.sw,
           child: ListView.builder(

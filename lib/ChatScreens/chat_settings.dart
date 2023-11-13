@@ -74,7 +74,7 @@ class _ChatSettingsState extends State<ChatSettings> {
                             ),
                             Positioned(
                               top: 15.h,
-                              left: 5.w,
+                              left: 8.w,
                               child: Image.asset(
                                 Assets.crossblack,
                                 scale: 1.1.sp,

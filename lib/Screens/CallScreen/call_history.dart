@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Screens/CallScreen/call_screen.dart';
 import 'package:kfriends/Screens/CallScreen/contact_Screen.dart';
 import 'package:kfriends/Screens/CallScreen/contact_settings.dart';
@@ -56,7 +57,7 @@ class _CallHistoryState extends State<CallHistory> {
                           ),
                           child: GestureDetector(
                               onTap: () {
-                                Get.back();
+                                Get.toNamed(Routes.bottomNavBar);
                               },
                               child: Image.asset(Assets.backArrow)))
                       : const SizedBox(),

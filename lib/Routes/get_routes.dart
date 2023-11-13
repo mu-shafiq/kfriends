@@ -25,7 +25,10 @@ import 'package:kfriends/Notice/notice.dart';
 import 'package:kfriends/Notice/notice_view.dart';
 import 'package:kfriends/PaymentScreens/buy_package.dart';
 import 'package:kfriends/PaymentScreens/payment_list.dart';
+import 'package:kfriends/PhonAuth/enter_phone.dart';
+import 'package:kfriends/PhonAuth/verify_phone.dart';
 import 'package:kfriends/ReportUser/report_Screen.dart';
+import 'package:kfriends/ReportUser/report_sent.dart';
 import 'package:kfriends/Screens/BottomNavBar/bottom_nav_bar.dart';
 import 'package:kfriends/Screens/CallScreen/call_history.dart';
 import 'package:kfriends/Screens/CallScreen/call_screen.dart';
@@ -89,6 +92,8 @@ class Routes {
   static String terms = "/terms";
   static String editprofile = "/editprofile";
   static String callHistory = "/callhistory";
+  static String enterPhon = "/enterPhon";
+  static String verifyPhon = "/verifyPhon";
 }
 
 final pages = [
@@ -148,7 +153,7 @@ final pages = [
   ),
   GetPage(
     name: Routes.reportSent,
-    page: () => const ContactScreen(),
+    page: () => const ReportSent(),
   ),
   GetPage(
     name: Routes.contactSettings,
@@ -261,5 +266,17 @@ final pages = [
   GetPage(
     name: Routes.callHistory,
     page: () => CallHistory(),
+  ),
+  GetPage(
+    name: Routes.enterPhon,
+    page: () => const EnterPhonNumber(),
+  ),
+  GetPage(
+    name: Routes.verifyPhon,
+    page: () => const VerifyPhon(),
+  ),
+  GetPage(
+    name: Routes.inquirySent,
+    page: () => const INquirySent(),
   ),
 ];

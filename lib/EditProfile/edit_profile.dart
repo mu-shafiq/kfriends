@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kfriends/Routes/get_routes.dart';
+import 'package:kfriends/Screens/BottomNavBar/bottom_nav_bar.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/constants.dart';
-import 'package:kfriends/Widgets/birthday_selecter.dart';
+import 'package:kfriends/Widgets/birthday_selector.dart';
 import 'package:kfriends/Widgets/bottom_bar.dart';
 import 'package:kfriends/Widgets/job_selector.dart';
 import 'package:kfriends/Widgets/small_button.dart';
@@ -31,56 +32,7 @@ class EditProfile extends StatelessWidget {
             },
             child: SafeArea(
               child: Scaffold(
-                appBar: AppBar(
-                  leading: GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
-                        child: Image.asset(Assets.backArrow)),
-                  ),
-                  elevation: 0,
-                  scrolledUnderElevation: 0,
-                  title: Text(
-                    'MY PROFILE',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: textBlackColor,
-                      fontSize: 14.sp,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w600,
-                      height: 0,
-                    ),
-                  ),
-                  centerTitle: true,
-                  actions: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            Assets.appLogo2,
-                            scale: 15.sp,
-                          ),
-                          Text(
-                            'K-FRIENDS',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: textGreyColor,
-                              fontSize: 8.sp,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              height: 0,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                bottomNavigationBar: const BottomBar(index: 4),
+                bottomNavigationBar: BottomNavBar(initialIndex: 4),
                 backgroundColor: bgWhiteColor,
                 body: SingleChildScrollView(
                   child: Column(
@@ -156,7 +108,6 @@ class EditProfile extends StatelessWidget {
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w600,
                                   color: textBlackColor,
-                                  height: 17 / 14,
                                 ),
                                 textAlign: TextAlign.left,
                               ),
@@ -241,7 +192,7 @@ class EditProfile extends StatelessWidget {
                               //       lastDate: DateTime.now()
                               //           .add(const Duration(days: 100000)));
                               //   if (dateTime != null) {
-                              //     controller.dateOfBirth = dateTime.obs;
+                              //     controller.dateOfBirth = dateTime;
                               //     controller.update();
                               //   }
                               // },
@@ -379,7 +330,7 @@ class EditProfile extends StatelessWidget {
                                         .updateEnglishProficiency(beginner);
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'Beginner',
                                 ),
@@ -392,7 +343,7 @@ class EditProfile extends StatelessWidget {
                                         .updateEnglishProficiency(intermediate);
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'Intermediate',
                                 ),
@@ -405,7 +356,7 @@ class EditProfile extends StatelessWidget {
                                         .updateEnglishProficiency(advanced);
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'Advanced',
                                 ),
@@ -438,7 +389,7 @@ class EditProfile extends StatelessWidget {
                                         .updateKoreanProficiency(beginner);
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'Beginner',
                                 ),
@@ -451,7 +402,7 @@ class EditProfile extends StatelessWidget {
                                         .updateKoreanProficiency(intermediate);
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'Intermediate',
                                 ),
@@ -464,7 +415,7 @@ class EditProfile extends StatelessWidget {
                                         .updateKoreanProficiency(advanced);
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'Advanced',
                                 ),
@@ -486,7 +437,7 @@ class EditProfile extends StatelessWidget {
                               ),
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 RoundedSmallButton(
                                   selected: controller.interests
@@ -495,7 +446,7 @@ class EditProfile extends StatelessWidget {
                                     controller.updateInterests('#K-TRAVEL');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: '#K-TRAVEL',
                                 ),
@@ -506,7 +457,7 @@ class EditProfile extends StatelessWidget {
                                     controller.updateInterests('#K-TRAVELS');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: '#K-TRAVELS',
                                 ),
@@ -517,7 +468,7 @@ class EditProfile extends StatelessWidget {
                                     controller.updateInterests('#K-DRAMA');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: '#K-DRAMA',
                                 ),
@@ -525,7 +476,7 @@ class EditProfile extends StatelessWidget {
                             ),
                             5.verticalSpace,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 RoundedSmallButton(
                                   selected:
@@ -534,7 +485,7 @@ class EditProfile extends StatelessWidget {
                                     controller.updateInterests('#K-POP');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: '#K-POP',
                                 ),
@@ -545,7 +496,7 @@ class EditProfile extends StatelessWidget {
                                     controller.updateInterests('#K-FOOD');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: '#K-FOOD',
                                 ),
@@ -556,7 +507,7 @@ class EditProfile extends StatelessWidget {
                                     controller.updateInterests('#K-BEAUTY');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: '#K-BEAUTY',
                                 ),
@@ -564,7 +515,7 @@ class EditProfile extends StatelessWidget {
                             ),
                             5.verticalSpace,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 RoundedSmallButton(
                                   selected:
@@ -573,7 +524,7 @@ class EditProfile extends StatelessWidget {
                                     controller.updateInterests('PET');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'PET',
                                 ),
@@ -584,7 +535,7 @@ class EditProfile extends StatelessWidget {
                                     controller.updateInterests('GAME');
                                   },
                                   textColor: textBlackColor,
-                                  width: 106.w,
+                                  width: 114.w,
                                   height: 30.h,
                                   text: 'GAME',
                                 ),
@@ -599,7 +550,7 @@ class EditProfile extends StatelessWidget {
                                 const SizedBox(),
                               ],
                             ),
-                            10.verticalSpace,
+                            8.verticalSpace,
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -611,20 +562,21 @@ class EditProfile extends StatelessWidget {
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w600,
                                       color: textBlackColor,
-                                      height: 17 / 14,
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
-                                  Text(
-                                    " (Optional)",
-                                    style: TextStyle(
-                                      fontFamily: "Pretendard",
-                                      fontSize: 11.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey,
-                                      height: 17 / 14,
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text(
+                                      " (Optional)",
+                                      style: TextStyle(
+                                        fontFamily: "Pretendard",
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.grey,
+                                      ),
+                                      textAlign: TextAlign.left,
                                     ),
-                                    textAlign: TextAlign.left,
                                   ),
                                 ],
                               ),
@@ -654,98 +606,9 @@ class EditProfile extends StatelessWidget {
                               controller: controller.introController,
                               width: .9.sw,
                               height: .25.sh,
-                              hint: ' ',
-                            ),
-                            15.verticalSpace,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "I agree with the",
-                                      style: TextStyle(
-                                        fontFamily: "Pretendard",
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: textBlackColor,
-                                        height: 18 / 12,
-                                      ),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                    Text(
-                                      " User&Terms",
-                                      style: TextStyle(
-                                          fontFamily: "Pretendard",
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                          color: textBlackColor,
-                                          height: 18 / 12,
-                                          decorationThickness: 2,
-                                          decoration: TextDecoration.underline),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  ],
-                                ),
-                                Checkbox(
-                                    checkColor: controller.terms.value
-                                        ? buttonBlueColor2
-                                        : null,
-                                    fillColor: MaterialStateProperty.all(
-                                        controller.terms.value
-                                            ? buttonBlueColor2
-                                            : null),
-                                    value: controller.terms.value,
-                                    onChanged: (v) {
-                                      controller.terms.value = v!;
-                                      controller.update();
-                                    })
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "I agree with the",
-                                      style: TextStyle(
-                                        fontFamily: "Pretendard",
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: textBlackColor,
-                                        height: 18 / 12,
-                                      ),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                    Text(
-                                      " Privacy Terms",
-                                      style: TextStyle(
-                                          fontFamily: "Pretendard",
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                          color: textBlackColor,
-                                          height: 18 / 12,
-                                          decorationThickness: 2,
-                                          decoration: TextDecoration.underline),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  ],
-                                ),
-                                Checkbox(
-                                    checkColor: controller.privacy.value
-                                        ? buttonBlueColor2
-                                        : null,
-                                    fillColor: MaterialStateProperty.all(
-                                        controller.privacy.value
-                                            ? buttonBlueColor2
-                                            : null),
-                                    value: controller.privacy.value,
-                                    onChanged: (v) {
-                                      controller.privacy.value = v!;
-                                      controller.update();
-                                    })
-                              ],
+                              hintSize: 10.sp,
+                              hint:
+                                  'Hi, Nice to meet you guys. I’m looking for new friends!',
                             ),
                             20.verticalSpace,
                             Row(
@@ -800,14 +663,16 @@ class EditProfile extends StatelessWidget {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
+                                            contentPadding: EdgeInsets.all(3),
+                                            backgroundColor: bgWhiteColor,
                                             shape: const OutlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.white),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10))),
                                             content: SizedBox(
-                                                height: .2.sh,
-                                                // width: .8.sw,
+                                                height: .25.sh,
+                                                width: .98.sw,
                                                 child: Center(
                                                     child: Padding(
                                                   padding:
@@ -858,7 +723,7 @@ class EditProfile extends StatelessWidget {
                                   shadow2: buttonBlackShadow2,
                                   selectedColor: buttonBlueColor2,
                                   width: 160.w,
-                                  height: 30.h,
+                                  height: 35.h,
                                   text: 'Ok',
                                 ),
                               ],

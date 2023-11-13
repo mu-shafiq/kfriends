@@ -197,43 +197,106 @@ class TimelineSearch extends StatelessWidget {
               ),
               30.verticalSpace,
               CustomTextfield(
-                  height: 35.h,
+                  height: 40.h,
                   width: .9.sw,
+                  hintColor: textBlackColor,
                   hint: 'Hanbok',
                   hintSize: 10.sp,
                   trailing: Image.asset(Assets.search),
                   controller: TextEditingController()),
               20.verticalSpace,
               CustomTextfield(
-                  height: 35.h,
+                  height: 40.h,
                   width: .9.sw,
                   hint: '#K-CULTURE',
+                  hintColor: textBlackColor,
                   hintSize: 10.sp,
                   controller: TextEditingController()),
-              20.verticalSpace,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '2 results',
-                    style: TextStyle(
-                      color: textBlackColor,
-                      fontSize: 10.sp,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w500,
-                      height: 0.15,
+              15.verticalSpace,
+              Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '2 results',
+                      style: TextStyle(
+                        color: textBlackColor,
+                        fontSize: 10.sp,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w500,
+                        height: 0.15,
+                      ),
                     ),
-                  ),
-                  RoundedSmallButton(
-                    onTap: () {
-                      Get.back();
-                    },
-                    textColor: textWhiteColor,
-                    width: 70.w,
-                    height: 20.h,
-                    text: 'Cancel',
-                  ),
-                ],
+                    InkWell(
+                      onTap: () {},
+                      child: Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Container(
+                            width: 75.w,
+                            height: 24.h,
+                            decoration: ShapeDecoration(
+                              color: buttonWhiteColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              width: 75.w - 5,
+                              height: 24.h - 5,
+                              decoration: ShapeDecoration(
+                                color: buttonWhiteColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                shadows: const [
+                                  BoxShadow(
+                                    color: buttonBlackShadow1,
+                                    blurRadius: 1,
+                                    offset: const Offset(0, 2),
+                                    spreadRadius: 1,
+                                  ),
+                                  BoxShadow(
+                                    color: buttonBlackShadow2,
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 0),
+                                    spreadRadius: 0,
+                                  )
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Newest',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 10.sp,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w700,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  10.horizontalSpace,
+                                  Image.asset(
+                                    Assets.drop,
+                                    scale: 1.5,
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               10.verticalSpace,
               SizedBox(

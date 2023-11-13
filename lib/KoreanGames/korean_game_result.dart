@@ -94,7 +94,7 @@ class _TopikTestResultState extends State<KoreanGameResult> {
                     bgColor: buttonBlackColor,
                     shadow1: buttonBlackShadow1,
                     shadow2: buttonBlackShadow2,
-                    height: 35.h,
+                    height: 30.h,
                     width: 120.w,
                     text: 'RESULT',
                     textColor: textYellowColor,

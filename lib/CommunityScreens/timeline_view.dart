@@ -15,14 +15,14 @@ class TimelineView extends StatelessWidget {
       child: Scaffold(
         bottomNavigationBar: const BottomBar(index: 0),
         floatingActionButton: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(20.0),
           child: GestureDetector(
             onTap: () {
               Get.toNamed(Routes.timelineWrite);
             },
             child: CircleAvatar(
               backgroundColor: buttonBlueColor,
-              radius: 25.r,
+              radius: 35.r,
               child: Icon(
                 Icons.add,
                 size: 35.sp,
@@ -258,7 +258,7 @@ class TimelineView extends StatelessWidget {
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: 10.w, vertical: 10.h),
+                                        horizontal: 14.w, vertical: 8.h),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -329,7 +329,7 @@ class TimelineView extends StatelessWidget {
                                         children: [
                                           Image.asset(
                                             Assets.like,
-                                            scale: .6.sp,
+                                            scale: 1.sp,
                                           ),
                                           5.horizontalSpace,
                                           Text(
@@ -349,7 +349,7 @@ class TimelineView extends StatelessWidget {
                                         children: [
                                           Image.asset(
                                             Assets.comment,
-                                            scale: .7.sp,
+                                            scale: 1.sp,
                                           ),
                                           5.horizontalSpace,
                                           Text(

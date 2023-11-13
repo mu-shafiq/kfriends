@@ -21,6 +21,7 @@ class _KoreanGameSheetState extends State<KoreanGameSheet> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Color(0xffFFFFFF),
             centerTitle: true,
             leading: GestureDetector(
                 onTap: () {
@@ -97,8 +98,7 @@ class _KoreanGameSheetState extends State<KoreanGameSheet> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                  padding: EdgeInsets.only(right: 20.w, top: 10.h),
                   child: Container(
                     alignment: Alignment.centerRight,
                     child: Image.asset(

@@ -56,7 +56,7 @@ class INquirySent extends StatelessWidget {
               ),
               10.verticalSpace,
               SizedBox(
-                width: .5.sw,
+                width: .65.sw,
                 child: Text(
                   'We’ll check it and  take appropriate action.We’re trying to respond back as soon as possible.Thank you!  ',
                   textAlign: TextAlign.center,

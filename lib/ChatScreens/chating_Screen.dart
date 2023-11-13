@@ -77,11 +77,14 @@ class ChatingScreen extends StatelessWidget {
         width: .94.sw,
         child: Row(
           children: [
-            Image.asset(Assets.add),
+            Image.asset(
+              Assets.add,
+              scale: .8,
+            ),
             7.horizontalSpace,
             CustomTextfield(
-                height: 30.h,
-                width: .82.sw,
+                height: 40.h,
+                width: .80.sw,
                 hintSize: 10.sp,
                 hint: 'Enter your message here💬',
                 controller: TextEditingController())

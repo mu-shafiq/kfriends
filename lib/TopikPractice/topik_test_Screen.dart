@@ -16,6 +16,7 @@ class TopikTestScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Color(0xffFFFFFF),
           centerTitle: true,
           leading: GestureDetector(
               onTap: () {
@@ -80,7 +81,7 @@ class TopikTestScreen extends StatelessWidget {
             width: 1.sw,
             decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                    begin: Alignment.topRight,
+                    begin: Alignment.topCenter,
                     end: Alignment.bottomLeft,
                     colors: [
                   Color(0xffFFFFFF),
@@ -140,7 +141,7 @@ class TopikTestScreen extends StatelessWidget {
                           shadow1: buttonBlackShadow1,
                           shadow2: buttonBlackShadow2,
                           height: 35.h,
-                          width: 120.w,
+                          width: 130.w,
                           text: 'START',
                           textColor: textYellowColor,
                           onTap: () {

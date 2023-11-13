@@ -50,6 +50,7 @@ class CustomerCenter extends StatelessWidget {
                 height: 40.h,
                 hintSize: 10.sp,
                 hint: 'CATEGORY',
+                hintColor: textBlackColor,
                 trailing: Image.asset(Assets.drop),
               ),
               10.verticalSpace,
@@ -79,18 +80,20 @@ class CustomerCenter extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
+                            contentPadding: EdgeInsets.all(3),
+                            backgroundColor: bgWhiteColor,
                             shape: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10))),
                             content: SizedBox(
-                                height: 80.h,
-                                // width: .8.sw,
+                                height: .15.sh,
+                                width: .98.sw,
                                 child: Center(
                                     child: Padding(
                                   padding: const EdgeInsets.only(top: 12.0),
                                   child: Text(
-                                    'alertContent',
+                                    'You must fill the title and the content !',
                                     style: TextStyle(
                                       fontFamily: "Pretendard",
                                       fontSize: 10.sp,
@@ -112,8 +115,8 @@ class CustomerCenter extends StatelessWidget {
                                   shadow1: buttonBlackShadow1,
                                   shadow2: buttonBlackShadow2,
                                   bgColor: buttonBlueColor2,
-                                  width: 160.w,
-                                  height: 30.h,
+                                  width: 170.w,
+                                  height: 35.h,
                                   text: 'Ok',
                                 ),
                               )

@@ -52,7 +52,8 @@ class _CommentTile2State extends State<CommentTile2> {
             children: [
               ListTile(
                 horizontalTitleGap: 5.w,
-                contentPadding: EdgeInsets.only(left: 5.w),
+                contentPadding:
+                    EdgeInsets.only(left: 5.w, top: 5.h, bottom: 5.h),
                 leading: CircleAvatar(
                   radius: 35.r,
                   backgroundImage: Image.asset(

@@ -32,19 +32,19 @@ class _CommunityMainState extends State<CommunityMain> {
             hint: 'Enter your keyword 👀',
             trailing: Image.asset(Assets.search),
             hintSize: 10.sp,
-            height: 35.h,
+            height: 40.h,
             width: .9.sw,
             controller: TextEditingController()),
-        10.verticalSpace,
+        27.verticalSpace,
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 3.0),
           child: Container(
             alignment: Alignment.centerLeft,
             child: Text(
               'HOT TOPICS🔥',
               style: TextStyle(
                 fontFamily: "Pretendard",
-                fontSize: 14.sp,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
                 color: textBlackColor,
                 height: 17 / 14,
@@ -53,52 +53,55 @@ class _CommunityMainState extends State<CommunityMain> {
             ),
           ),
         ),
-        10.verticalSpace,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            RoundedSmallButton2(
-              onTap: () {},
-              textColor: textBlackColor,
-              shadow1: buttonBlackShadow1,
-              shadow2: buttonBlackShadow2,
-              bgColor: buttonWhiteColor,
-              width: 80.w,
-              height: 25.h,
-              text: '#K-CULTURE',
-              selected: true,
-            ),
-            RoundedSmallButton2(
-              onTap: () {},
-              textColor: textBlackColor,
-              shadow1: buttonBlackShadow1,
-              shadow2: buttonBlackShadow2,
-              bgColor: buttonWhiteColor,
-              width: 80.w,
-              height: 25.h,
-              text: '#K-POP',
-            ),
-            RoundedSmallButton2(
-              onTap: () {},
-              textColor: textBlackColor,
-              shadow1: buttonBlackShadow1,
-              shadow2: buttonBlackShadow2,
-              bgColor: buttonWhiteColor,
-              width: 80.w,
-              height: 25.h,
-              text: '#K-DRAMA',
-            ),
-            RoundedSmallButton2(
-              onTap: () {},
-              textColor: textBlackColor,
-              shadow1: buttonBlackShadow1,
-              shadow2: buttonBlackShadow2,
-              bgColor: buttonWhiteColor,
-              width: 80.w,
-              height: 25.h,
-              text: '#K-FOOD',
-            ),
-          ],
+        19.verticalSpace,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 3.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              RoundedSmallButton2(
+                onTap: () {},
+                textColor: textBlackColor,
+                shadow1: buttonBlackShadow1,
+                shadow2: buttonBlackShadow2,
+                bgColor: buttonWhiteColor,
+                width: 80.w,
+                height: 25.h,
+                text: '#K-CULTURE',
+                selected: true,
+              ),
+              RoundedSmallButton2(
+                onTap: () {},
+                textColor: textBlackColor,
+                shadow1: buttonBlackShadow1,
+                shadow2: buttonBlackShadow2,
+                bgColor: buttonWhiteColor,
+                width: 80.w,
+                height: 25.h,
+                text: '#K-POP',
+              ),
+              RoundedSmallButton2(
+                onTap: () {},
+                textColor: textBlackColor,
+                shadow1: buttonBlackShadow1,
+                shadow2: buttonBlackShadow2,
+                bgColor: buttonWhiteColor,
+                width: 80.w,
+                height: 25.h,
+                text: '#K-DRAMA',
+              ),
+              RoundedSmallButton2(
+                onTap: () {},
+                textColor: textBlackColor,
+                shadow1: buttonBlackShadow1,
+                shadow2: buttonBlackShadow2,
+                bgColor: buttonWhiteColor,
+                width: 80.w,
+                height: 25.h,
+                text: '#K-FOOD',
+              ),
+            ],
+          ),
         ),
         20.verticalSpace,
         Container(
@@ -160,7 +163,10 @@ class _CommunityMainState extends State<CommunityMain> {
                       ),
                     ),
                     3.horizontalSpace,
-                    Image.asset(Assets.arrowForward)
+                    Image.asset(
+                      Assets.arrowForward,
+                      scale: 1,
+                    )
                   ],
                 ),
               )
@@ -200,7 +206,10 @@ class _CommunityMainState extends State<CommunityMain> {
                       ),
                     ),
                     3.horizontalSpace,
-                    Image.asset(Assets.arrowForward)
+                    Image.asset(
+                      Assets.arrowForward,
+                      scale: .8,
+                    )
                   ],
                 ),
               )
@@ -392,7 +401,7 @@ class _CommunityMainState extends State<CommunityMain> {
                   width: 8.0,
                   height: 8.0,
                   margin: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 2.0),
+                      vertical: 10.0, horizontal: 5.0),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: crouselindex == i

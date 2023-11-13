@@ -287,18 +287,20 @@ class WriteTimeLine extends StatelessWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
+                              contentPadding: EdgeInsets.all(3),
+                              backgroundColor: bgWhiteColor,
                               shape: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.white),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10))),
                               content: SizedBox(
-                                  height: 80.h,
-                                  // width: .8.sw,
+                                  height: .15.sh,
+                                  width: .98.sw,
                                   child: Center(
                                       child: Padding(
                                     padding: const EdgeInsets.only(top: 12.0),
                                     child: Text(
-                                      'alertContent',
+                                      'You must fill the content and upload at least 1 image!',
                                       style: TextStyle(
                                         fontFamily: "Pretendard",
                                         fontSize: 10.sp,

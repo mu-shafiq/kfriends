@@ -15,14 +15,14 @@ class ContactSettings extends StatelessWidget {
       height: 1.sh,
       width: 1.sw,
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(5.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              20.verticalSpace,
+              30.verticalSpace,
               CustomTextfield(
-                  height: 35.h,
+                  height: 40.h,
                   width: .92.sw,
                   hint: 'Search by name',
                   hintSize: 10.sp,

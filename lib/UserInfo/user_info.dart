@@ -80,7 +80,7 @@ class UserInfo extends StatelessWidget {
                 )
               ],
             ),
-            20.verticalSpace,
+            16.verticalSpace,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -96,14 +96,16 @@ class UserInfo extends StatelessWidget {
                   ),
                 ),
                 10.horizontalSpace,
-                Text(
-                  '33 / MALE / Canada',
-                  style: TextStyle(
-                    color: textBlackColor,
-                    fontSize: 12.sp,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w400,
-                    height: 0.15,
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text(
+                    '33 / MALE / Canada',
+                    style: TextStyle(
+                      color: textBlackColor,
+                      fontSize: 12.sp,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 )
               ],
@@ -119,7 +121,7 @@ class UserInfo extends StatelessWidget {
                         text: '999 ',
                         style: TextStyle(
                           color: textPinkColor,
-                          fontSize: 10.sp,
+                          fontSize: 12.sp,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
                           height: 0,
@@ -147,7 +149,7 @@ class UserInfo extends StatelessWidget {
                         text: '999 ',
                         style: TextStyle(
                           color: textBlueColor,
-                          fontSize: 10.sp,
+                          fontSize: 12.sp,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
                           height: 0,
@@ -175,7 +177,7 @@ class UserInfo extends StatelessWidget {
                         text: '999 ',
                         style: TextStyle(
                           color: textYellowColor,
-                          fontSize: 10.sp,
+                          fontSize: 12.sp,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
                           height: 0,
@@ -197,7 +199,7 @@ class UserInfo extends StatelessWidget {
                 ),
               ],
             ),
-            25.verticalSpace,
+            15.verticalSpace,
             SizedBox(
               width: .7.sw,
               child: Text(
@@ -212,37 +214,55 @@ class UserInfo extends StatelessWidget {
                 ),
               ),
             ),
-            40.verticalSpace,
+            25.verticalSpace,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 RoundedSmallButton(
-                  icon: Image.asset(Assets.following),
+                  icon: Image.asset(
+                    Assets.following,
+                    scale: .9,
+                  ),
                   selected: true,
                   onTap: () {},
                   textColor: textBlackColor,
                   width: 106.w,
                   height: 30.h,
+                  unselectedtextColor: textBlackColor,
                   text: 'Following',
                 ),
                 10.horizontalSpace,
                 RoundedSmallButton(
-                  icon: Image.asset(Assets.privatechat),
-                  onTap: () {},
+                  icon: Padding(
+                    padding: const EdgeInsets.only(bottom: 6.0),
+                    child: Image.asset(
+                      Assets.privatechat,
+                      scale: .9,
+                    ),
+                  ),
+                  onTap: () {
+                    Get.toNamed(Routes.chatMainScreen);
+                  },
                   textColor: textBlackColor,
+                  unselectedtextColor: textBlackColor,
                   width: 106.w,
                   height: 30.h,
                   text: 'Private Chat',
                 ),
                 10.horizontalSpace,
                 RoundedSmallButton(
-                  icon: Image.asset(Assets.outgoing),
+                  icon: Image.asset(
+                    Assets.outgoing,
+                    scale: .9,
+                    color: textBlackColor,
+                  ),
                   onTap: () {
                     Get.toNamed(Routes.incomingCall);
                   },
                   textColor: textBlackColor,
                   width: 106.w,
                   height: 30.h,
+                  unselectedtextColor: textBlackColor,
                   text: 'Call',
                 ),
               ],

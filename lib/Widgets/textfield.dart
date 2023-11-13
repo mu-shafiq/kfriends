@@ -11,6 +11,7 @@ class CustomTextfield extends StatelessWidget {
   final Widget? trailing;
   final TextInputType? textInputType;
   final Function()? ontap;
+  final Color? hintColor;
 
   const CustomTextfield(
       {super.key,
@@ -21,7 +22,8 @@ class CustomTextfield extends StatelessWidget {
       this.hintSize,
       this.trailing,
       this.textInputType,
-      this.ontap});
+      this.ontap,
+      this.hintColor});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class CustomTextfield extends StatelessWidget {
       // padding: EdgeInsets.only(top: 5.h),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(7),
         boxShadow: const [
           BoxShadow(
             color: Color.fromARGB(255, 211, 205, 205),
@@ -41,23 +43,27 @@ class CustomTextfield extends StatelessWidget {
           )
         ],
       ),
-      child: TextFormField(
-        textAlignVertical: TextAlignVertical.top,
-        controller: controller,
-        keyboardType: textInputType,
-        onTap: ontap,
-        expands: true,
-        maxLines: null,
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(8.h),
-            suffixIcon: trailing ?? const SizedBox(),
-            enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: bgWhiteColor)),
-            focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: borderBlueColor, width: 1.3)),
-            hintText: hint,
-            hintStyle:
-                TextStyle(color: hintTextColor, fontSize: hintSize ?? 13.sp)),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(5),
+        child: TextFormField(
+          controller: controller,
+          keyboardType: textInputType,
+          onTap: ontap,
+          expands: true,
+          maxLines: null,
+          decoration: InputDecoration(
+              isCollapsed: true,
+              contentPadding: EdgeInsets.only(left: 12.w, top: 7.h),
+              suffixIcon: trailing ?? const SizedBox(),
+              enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: bgWhiteColor)),
+              focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: borderBlueColor, width: 1.3)),
+              hintText: hint,
+              hintStyle: TextStyle(
+                  color: hintColor ?? hintTextColor,
+                  fontSize: hintSize ?? 13.sp)),
+        ),
       ),
     );
   }

@@ -74,11 +74,14 @@ class BuyPackage extends StatelessWidget {
                   itemCount: 3,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return const PaymentTile(
-                      package: 'Buy Basic Call Package',
-                      date: '2023.06.16',
-                      price: "99,000",
-                      description: '240 Minutes + Free 30 Minutes',
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5.0.h),
+                      child: const PaymentTile(
+                        package: 'Buy Basic Call Package',
+                        date: '2023.06.16',
+                        price: "99,000",
+                        description: '240 Minutes + Free 30 Minutes',
+                      ),
                     );
                   }),
             )

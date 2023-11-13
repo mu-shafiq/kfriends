@@ -100,14 +100,17 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                   ),
                 ),
                 10.horizontalSpace,
-                Text(
-                  '33 / MALE / Canada',
-                  style: TextStyle(
-                    color: textBlackColor,
-                    fontSize: 12.sp,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w400,
-                    height: 0.15,
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    '33 / MALE / Canada',
+                    style: TextStyle(
+                      color: textBlackColor,
+                      fontSize: 12.sp,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w400,
+                      height: 0.15,
+                    ),
                   ),
                 )
               ],
@@ -123,7 +126,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         text: '999 ',
                         style: TextStyle(
                           color: textPinkColor,
-                          fontSize: 10.sp,
+                          fontSize: 12.sp,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
                           height: 0,
@@ -151,7 +154,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         text: '999 ',
                         style: TextStyle(
                           color: textBlueColor,
-                          fontSize: 10.sp,
+                          fontSize: 12.sp,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
                           height: 0,
@@ -179,7 +182,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         text: '49,000 ',
                         style: TextStyle(
                           color: textYellowColor,
-                          fontSize: 10.sp,
+                          fontSize: 12.sp,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
                           height: 0,
@@ -188,7 +191,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                       TextSpan(
                         text: 'Points',
                         style: TextStyle(
-                          color: textYellowColor,
+                          color: textGreyColor,
                           fontSize: 12.sp,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,

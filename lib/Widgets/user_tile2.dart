@@ -45,7 +45,7 @@ class UserTile2 extends StatelessWidget {
           ),
           child: ListTile(
             horizontalTitleGap: 5.w,
-            contentPadding: EdgeInsets.only(left: 5.w),
+            contentPadding: EdgeInsets.only(left: 5.w, top: 10.h, bottom: 10.h),
             leading: CircleAvatar(
               radius: 35.r,
               backgroundImage: Image.asset(

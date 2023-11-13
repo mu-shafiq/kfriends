@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kfriends/CommunityScreens/community_main.dart';
-import 'package:kfriends/PracticeScreen/pratice_screen.dart';
+import 'package:kfriends/PracticeScreen/practice_screen.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
@@ -117,9 +117,9 @@ class _HomePageState extends State<HomePage> {
                                       color: selected == 0
                                           ? textPinkColor
                                           : textGreyColor,
-                                      fontSize: 10.sp,
+                                      fontSize: 12.sp,
                                       fontFamily: 'Pretendard',
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w800,
                                       height: 0,
                                     ),
                                   ),

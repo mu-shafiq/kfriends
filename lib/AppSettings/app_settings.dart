@@ -254,7 +254,7 @@ class _AppSettingsState extends State<AppSettings> {
                     children: [
                       Container(
                         width: 50.w,
-                        height: 23.h,
+                        height: 25.h,
                         decoration: selected == 0
                             ? ShapeDecoration(
                                 shape: RoundedRectangleBorder(
@@ -312,7 +312,7 @@ class _AppSettingsState extends State<AppSettings> {
                         },
                         child: Container(
                           width: 50.w,
-                          height: 23.h,
+                          height: 25.h,
                           decoration: selected == 1
                               ? ShapeDecoration(
                                   shape: RoundedRectangleBorder(

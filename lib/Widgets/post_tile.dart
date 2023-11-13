@@ -13,6 +13,7 @@ class PostTile extends StatelessWidget {
   final String date;
   final bool showBorder;
   final int? postCount;
+  final bool? more;
   const PostTile(
       {super.key,
       required this.postTitle,
@@ -21,12 +22,13 @@ class PostTile extends StatelessWidget {
       required this.userAsset,
       required this.date,
       required this.showBorder,
-      this.postCount});
+      this.postCount,
+      this.more});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: postCount == null ? 100.h : 90.h,
+      height: more == null ? 100.h : 90.h,
       width: .9.sw,
       decoration: showBorder
           ? ShapeDecoration(
@@ -71,7 +73,7 @@ class PostTile extends StatelessWidget {
                       ),
                     ),
                     10.horizontalSpace,
-                    postCount != null
+                    more != null
                         ? CircleAvatar(
                             backgroundColor: buttonGreenColor2,
                             radius: 10.r,
@@ -116,7 +118,7 @@ class PostTile extends StatelessWidget {
                       date,
                       style: TextStyle(
                         color: textBlackColor,
-                        fontSize: 8.sp,
+                        fontSize: 9.sp,
                         fontFamily: 'Pretendard',
                         fontWeight: FontWeight.w400,
                         height: 0,
@@ -127,8 +129,8 @@ class PostTile extends StatelessWidget {
               ],
             ),
             Container(
-                height: postCount == null ? 75.h : 55.h,
-                width: postCount == null ? 75.w : 55.w,
+                height: more == null ? 75.h : 65.h,
+                width: more == null ? 75.w : 60.w,
                 decoration: const BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.all(Radius.circular(15))),
