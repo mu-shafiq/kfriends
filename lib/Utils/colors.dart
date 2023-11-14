@@ -30,3 +30,15 @@ const Color textWhiteColor = Colors.white;
 const Color textBlackColor = Colors.black;
 
 const Color hintTextColor = Color(0xFF888888);
+
+///
+//
+//
+///           Interests
+const Color culture = Color(0xFF86FF4E);
+const Color travel = Color(0xFF09E1FF);
+const Color beauty = Color(0xFFFF50D8);
+const Color food = Color(0xFFFFF615);
+const Color pop = Color(0xFF0BFFE5);
+const Color pet = Color(0xFFFF0046);
+const Color game = Color(0xFFFF8515);
