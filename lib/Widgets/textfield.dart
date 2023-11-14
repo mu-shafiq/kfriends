@@ -52,6 +52,10 @@ class CustomTextfield extends StatelessWidget {
           expands: true,
           maxLines: null,
           decoration: InputDecoration(
+              helperStyle: TextStyle(
+                  color: textBlackColor,
+                  fontFamily: 'Montserrat',
+                  fontSize: 13.sp),
               isCollapsed: true,
               contentPadding: EdgeInsets.only(left: 12.w, top: 7.h),
               suffixIcon: trailing ?? const SizedBox(),

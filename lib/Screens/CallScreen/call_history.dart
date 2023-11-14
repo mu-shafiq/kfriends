@@ -24,7 +24,7 @@ class _CallHistoryState extends State<CallHistory> {
       height: 1.sh,
       width: 1.sw,
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.only(top: 15.0, left: 15, right: 15),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

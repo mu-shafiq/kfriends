@@ -49,6 +49,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           Scaffold(
             body: _pages[_selectedTab],
             bottomNavigationBar: Container(
+              height: 90.h,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -119,7 +120,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget bottombaritem(String asset) {
     return Column(
       children: [
-        5.verticalSpace,
+        10.verticalSpace,
         Container(
           height: 35.h,
           width: 35.w,
@@ -145,6 +146,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ? const SizedBox()
               : Image.asset(
                   asset,
+                  height: 57.h,
+                  width: 55.w,
                   color: textBlackColor,
                 ),
         ),

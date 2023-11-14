@@ -158,7 +158,7 @@ class UserInfo extends StatelessWidget {
                       TextSpan(
                         text: 'Following',
                         style: TextStyle(
-                          color: textBlueColor,
+                          color: textGreyColor,
                           fontSize: 12.sp,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
@@ -174,9 +174,9 @@ class UserInfo extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: '999 ',
+                        text: 'Favorite ',
                         style: TextStyle(
-                          color: textYellowColor,
+                          color: textGreyColor,
                           fontSize: 12.sp,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
@@ -184,7 +184,7 @@ class UserInfo extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: 'Points',
+                        text: 'Egypt',
                         style: TextStyle(
                           color: textYellowColor,
                           fontSize: 12.sp,

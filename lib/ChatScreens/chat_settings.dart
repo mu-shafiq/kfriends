@@ -50,7 +50,7 @@ class _ChatSettingsState extends State<ChatSettings> {
               children: [
                 20.verticalSpace,
                 SizedBox(
-                  width: .94.sw,
+                  width: .9.sw,
                   child: ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: 3,

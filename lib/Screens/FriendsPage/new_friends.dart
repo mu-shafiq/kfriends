@@ -470,7 +470,7 @@ class _NewFriendsState extends State<NewFriends> {
                       width: .9.sw,
                       height: 40.h,
                       hint: 'Select here',
-                      hintSize: 10.sp,
+                      hintSize: 14.sp,
                       trailing: Image.asset(Assets.drop),
                       textInputType: TextInputType.none,
                       ontap: () {

@@ -11,38 +11,41 @@ class MyFriends extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        30.verticalSpace,
-        CustomTextfield(
-            height: 40.h,
+    return SizedBox(
+      width: 1.sw,
+      child: Column(
+        children: [
+          20.verticalSpace,
+          CustomTextfield(
+              height: 40.h,
+              width: .9.sw,
+              hint: 'Search by name',
+              hintSize: 12.sp,
+              trailing: Image.asset(Assets.search),
+              controller: TextEditingController()),
+          25.verticalSpace,
+          SizedBox(
             width: .9.sw,
-            hint: 'Search by name',
-            hintSize: 12.sp,
-            trailing: Image.asset(Assets.search),
-            controller: TextEditingController()),
-        25.verticalSpace,
-        SizedBox(
-          width: .9.sw,
-          child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 10,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Get.toNamed(Routes.userInfo);
-                  },
-                  child: const UserTile2(
-                    verified: true,
-                    asset: Assets.user1,
-                    username: '김민준',
-                    about: '안녕하세요! 반가워요!대화 걸어주세요~',
-                  ),
-                );
-              }),
-        )
-      ],
+            child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 10,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      Get.toNamed(Routes.userInfo);
+                    },
+                    child: const UserTile2(
+                      verified: true,
+                      asset: Assets.user1,
+                      username: '김민준',
+                      about: '안녕하세요! 반가워요!대화 걸어주세요~',
+                    ),
+                  );
+                }),
+          )
+        ],
+      ),
     );
   }
 }

@@ -49,7 +49,8 @@ class ChatTile extends StatelessWidget {
           ),
           child: ListTile(
             horizontalTitleGap: 5.w,
-            contentPadding: EdgeInsets.only(left: 0.w, top: 5.h),
+            contentPadding:
+                EdgeInsets.only(left: 5.w, top: 10.h, bottom: 10.h, right: 5.w),
             leading: CircleAvatar(
               radius: 35.r,
               backgroundImage: Image.asset(

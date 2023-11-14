@@ -56,10 +56,13 @@ class AiChat extends StatelessWidget {
         width: .94.sw,
         child: Row(
           children: [
-            Image.asset(Assets.add),
+            Image.asset(
+              Assets.add,
+              scale: .8,
+            ),
             7.horizontalSpace,
             CustomTextfield(
-                height: 30.h,
+                height: 40.h,
                 width: .82.sw,
                 hintSize: 10.sp,
                 hint: 'Enter your message here💬',

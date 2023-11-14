@@ -28,7 +28,7 @@ class EditProfile extends StatelessWidget {
           return WillPopScope(
             onWillPop: () {
               FocusNode().unfocus();
-              throw Null;
+              return Future.value(true);
             },
             child: SafeArea(
               child: Scaffold(

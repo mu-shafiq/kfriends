@@ -16,158 +16,164 @@ class PracticeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        15.verticalSpace,
-        GestureDetector(
-          onTap: () {
-            Get.toNamed(Routes.koreanMainScreen);
-          },
-          child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              child: Container(
-                width: .90.sw,
-                child: Image.asset(
-                  Assets.koreangame,
-                  scale: .1,
-                  fit: BoxFit.fill,
-                ),
-              )),
-        ),
-        10.verticalSpace,
-        GestureDetector(
-          onTap: () {
-            Get.toNamed(Routes.topikMainScreen);
-          },
-          child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              child: Container(
-                width: .96.sw,
-                child: Image.asset(
-                  Assets.topikpractice,
-                  scale: .06,
-                  fit: BoxFit.fill,
-                ),
-              )),
-        ),
-        10.verticalSpace,
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Suggested Korean Friends!",
-              style: TextStyle(
-                fontFamily: "Pretendard",
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
-                color: textBlackColor,
-                height: 17 / 14,
-              ),
-              textAlign: TextAlign.left,
-            ),
-          ),
-        ),
-        10.verticalSpace,
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: EdgeInsets.only(left: 15.w, right: 15.w),
+          child: Column(
             children: [
-              RoundedSmallButton2(
-                onTap: () {},
-                textColor: textBlackColor,
-                shadow1: buttonBlackShadow1,
-                shadow2: buttonBlackShadow2,
-                bgColor: buttonWhiteColor,
-                width: 81.w,
-                height: 25.h,
-                text: '#K-CULTURE',
-                selected: true,
+              15.verticalSpace,
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.koreanMainScreen);
+                },
+                child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: Container(
+                      width: .90.sw,
+                      child: Image.asset(
+                        Assets.koreangame,
+                        scale: .1,
+                        fit: BoxFit.fill,
+                      ),
+                    )),
               ),
-              RoundedSmallButton2(
-                onTap: () {},
-                textColor: textBlackColor,
-                shadow1: buttonBlackShadow1,
-                shadow2: buttonBlackShadow2,
-                bgColor: buttonWhiteColor,
-                width: 81.w,
-                height: 25.h,
-                text: '#K-POP',
+              10.verticalSpace,
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.topikMainScreen);
+                },
+                child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: Container(
+                      width: .96.sw,
+                      child: Image.asset(
+                        Assets.topikpractice,
+                        scale: .06,
+                        fit: BoxFit.fill,
+                      ),
+                    )),
               ),
-              RoundedSmallButton2(
-                onTap: () {},
-                textColor: textBlackColor,
-                shadow1: buttonBlackShadow1,
-                shadow2: buttonBlackShadow2,
-                bgColor: buttonWhiteColor,
-                width: 81.w,
-                height: 25.h,
-                text: '#K-DRAMA',
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Suggested Korean Friends!",
+                    style: TextStyle(
+                      fontFamily: "Pretendard",
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: textBlackColor,
+                      height: 17 / 14,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
               ),
-              RoundedSmallButton2(
-                onTap: () {},
-                textColor: textBlackColor,
-                shadow1: buttonBlackShadow1,
-                shadow2: buttonBlackShadow2,
-                bgColor: buttonWhiteColor,
-                width: 81.w,
-                height: 25.h,
-                text: '#K-FOOD',
+              10.verticalSpace,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RoundedSmallButton2(
+                      onTap: () {},
+                      textColor: textBlackColor,
+                      shadow1: buttonBlackShadow1,
+                      shadow2: buttonBlackShadow2,
+                      bgColor: buttonWhiteColor,
+                      width: 81.w,
+                      height: 25.h,
+                      text: '#K-CULTURE',
+                      selected: true,
+                    ),
+                    RoundedSmallButton2(
+                      onTap: () {},
+                      textColor: textBlackColor,
+                      shadow1: buttonBlackShadow1,
+                      shadow2: buttonBlackShadow2,
+                      bgColor: buttonWhiteColor,
+                      width: 81.w,
+                      height: 25.h,
+                      text: '#K-POP',
+                    ),
+                    RoundedSmallButton2(
+                      onTap: () {},
+                      textColor: textBlackColor,
+                      shadow1: buttonBlackShadow1,
+                      shadow2: buttonBlackShadow2,
+                      bgColor: buttonWhiteColor,
+                      width: 81.w,
+                      height: 25.h,
+                      text: '#K-DRAMA',
+                    ),
+                    RoundedSmallButton2(
+                      onTap: () {},
+                      textColor: textBlackColor,
+                      shadow1: buttonBlackShadow1,
+                      shadow2: buttonBlackShadow2,
+                      bgColor: buttonWhiteColor,
+                      width: 81.w,
+                      height: 25.h,
+                      text: '#K-FOOD',
+                    ),
+                  ],
+                ),
               ),
+              12.verticalSpace,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RoundedSmallButton2(
+                      onTap: () {},
+                      textColor: textBlackColor,
+                      shadow1: buttonBlackShadow1,
+                      shadow2: buttonBlackShadow2,
+                      bgColor: buttonWhiteColor,
+                      width: 81.w,
+                      height: 25.h,
+                      text: '#K-TRAVEL',
+                    ),
+                    RoundedSmallButton2(
+                      onTap: () {},
+                      textColor: textBlackColor,
+                      shadow1: buttonBlackShadow1,
+                      shadow2: buttonBlackShadow2,
+                      bgColor: buttonWhiteColor,
+                      width: 81.w,
+                      height: 25.h,
+                      text: '#K-BEAUTY',
+                    ),
+                    RoundedSmallButton2(
+                      onTap: () {},
+                      textColor: textBlackColor,
+                      shadow1: buttonBlackShadow1,
+                      shadow2: buttonBlackShadow2,
+                      bgColor: buttonWhiteColor,
+                      width: 81.w,
+                      height: 25.h,
+                      text: '#PET',
+                    ),
+                    RoundedSmallButton2(
+                      onTap: () {},
+                      textColor: textBlackColor,
+                      shadow1: buttonBlackShadow1,
+                      shadow2: buttonBlackShadow2,
+                      bgColor: buttonWhiteColor,
+                      width: 81.w,
+                      height: 25.h,
+                      text: '#GAME',
+                    ),
+                  ],
+                ),
+              ),
+              15.verticalSpace,
             ],
           ),
         ),
-        12.verticalSpace,
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              RoundedSmallButton2(
-                onTap: () {},
-                textColor: textBlackColor,
-                shadow1: buttonBlackShadow1,
-                shadow2: buttonBlackShadow2,
-                bgColor: buttonWhiteColor,
-                width: 81.w,
-                height: 25.h,
-                text: '#K-TRAVEL',
-              ),
-              RoundedSmallButton2(
-                onTap: () {},
-                textColor: textBlackColor,
-                shadow1: buttonBlackShadow1,
-                shadow2: buttonBlackShadow2,
-                bgColor: buttonWhiteColor,
-                width: 81.w,
-                height: 25.h,
-                text: '#K-BEAUTY',
-              ),
-              RoundedSmallButton2(
-                onTap: () {},
-                textColor: textBlackColor,
-                shadow1: buttonBlackShadow1,
-                shadow2: buttonBlackShadow2,
-                bgColor: buttonWhiteColor,
-                width: 81.w,
-                height: 25.h,
-                text: 'PET',
-              ),
-              RoundedSmallButton2(
-                onTap: () {},
-                textColor: textBlackColor,
-                shadow1: buttonBlackShadow1,
-                shadow2: buttonBlackShadow2,
-                bgColor: buttonWhiteColor,
-                width: 81.w,
-                height: 25.h,
-                text: '#GAME',
-              ),
-            ],
-          ),
-        ),
-        30.verticalSpace,
         SizedBox(
-          height: .2.sh,
+          height: .19.sh,
           width: 1.sw,
           child: ListView.builder(
               itemCount: 5,

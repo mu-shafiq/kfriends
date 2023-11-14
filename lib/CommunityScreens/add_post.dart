@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,9 +5,9 @@ import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Widgets/bottom_bar.dart';
-import 'package:kfriends/Widgets/post_tile.dart';
 import 'package:kfriends/Widgets/rounded_button.dart';
 import 'package:kfriends/Widgets/small_button.dart';
+import 'package:kfriends/Widgets/tag_selector.dart';
 import 'package:kfriends/Widgets/textfield.dart';
 
 class AddPost extends StatelessWidget {
@@ -30,8 +29,8 @@ class AddPost extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                        height: 35,
-                        width: 35,
+                        height: 35.h,
+                        width: 35.w,
                         decoration: const ShapeDecoration(
                           color: Color(0xFFF5F5F5),
                           shape: OvalBorder(),
@@ -198,11 +197,10 @@ class AddPost extends StatelessWidget {
                   ],
                 ),
                 30.verticalSpace,
-                CustomTextfield(
+                TagSelector(
                     height: 40.h,
                     width: .9.sw,
-                    hint: '#K-CULTURE',
-                    hintColor: textBlackColor,
+                    hint: 'Title',
                     hintSize: 10.sp,
                     trailing: Image.asset(Assets.drop),
                     controller: TextEditingController()),
@@ -232,55 +230,72 @@ class AddPost extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding: EdgeInsets.only(right: 3.w),
-                              child: SizedBox(
-                                  height: 60.h,
-                                  width: 60.w,
-                                  child: Image.asset(
-                                    Assets.postImage,
-                                    scale: .5.sp,
-                                  )),
-                            );
-                          }),
-                    ),
-                    Container(
-                      width: 65.w,
-                      height: 65.h,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Container(
-                              width: 65,
-                              height: 65,
-                              decoration: ShapeDecoration(
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                shadows: const [
-                                  BoxShadow(
-                                    color: Color(0x19000000),
-                                    blurRadius: 8,
-                                    offset: Offset(0, 0),
-                                    spreadRadius: 0,
-                                  ),
-                                  BoxShadow(
-                                    color: Color(0x19000000),
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2),
-                                    spreadRadius: 0,
+                              padding: EdgeInsets.only(right: 5.w),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  SizedBox(
+                                      height: 60.h,
+                                      width: 60.w,
+                                      child: Image.asset(
+                                        Assets.postImage,
+                                        scale: .5.sp,
+                                      )),
+                                  Positioned(
+                                    top: 22.h,
+                                    right: 5.w,
+                                    child: const Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                    ),
                                   )
                                 ],
                               ),
-                              child: Icon(
-                                Icons.add,
-                                color: const Color.fromARGB(255, 201, 194, 194),
-                                size: 40.sp,
+                            );
+                          }),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 5.w),
+                      child: Container(
+                        height: 60.h,
+                        width: 60.w,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              left: 0,
+                              top: 0,
+                              child: Container(
+                                height: 60.h,
+                                width: 60.w,
+                                decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  shadows: const [
+                                    BoxShadow(
+                                      color: Color(0x19000000),
+                                      blurRadius: 8,
+                                      offset: Offset(0, 0),
+                                      spreadRadius: 0,
+                                    ),
+                                    BoxShadow(
+                                      color: Color(0x19000000),
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: Icon(
+                                  Icons.add,
+                                  color:
+                                      const Color.fromARGB(255, 201, 194, 194),
+                                  size: 40.sp,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     )
                   ],
