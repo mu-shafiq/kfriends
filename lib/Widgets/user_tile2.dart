@@ -4,19 +4,23 @@ import 'package:get/get.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
+import 'package:kfriends/Utils/helper.dart';
 
 class UserTile2 extends StatelessWidget {
   final String asset;
   final String username;
   final String about;
   final bool verified;
+  final int? agoraUid;
 
-  const UserTile2(
-      {super.key,
-      required this.asset,
-      required this.username,
-      required this.about,
-      required this.verified});
+  const UserTile2({
+    super.key,
+    required this.asset,
+    required this.username,
+    required this.about,
+    required this.verified,
+    this.agoraUid,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +106,19 @@ class UserTile2 extends StatelessWidget {
                   10.horizontalSpace,
                   InkWell(
                     onTap: () {
-                      Get.toNamed(Routes.incomingCall);
+                      print("agoraUid $agoraUid");
+                      if (agoraUid == null) {
+                        Helper().showToast("User Needs to login first");
+                        return;
+                      }
+                      Get.toNamed(
+                        Routes.voiceCallScreen,
+                        arguments: {
+                          'channelName': "TheChannel",
+                          'remoteUid': agoraUid,
+                          'token': 'jkhfkjfvtj',
+                        },
+                      );
                     },
                     child: Container(
                       height: 20,

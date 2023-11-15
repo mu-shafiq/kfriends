@@ -9,6 +9,7 @@ import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/constants.dart';
+import 'package:kfriends/Utils/helper.dart';
 import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Widgets/textfield.dart';
 import 'package:kfriends/Controllers/auth_controller.dart';
@@ -179,6 +180,7 @@ class JoinFormScreen extends StatelessWidget {
                               hintSize: 10.sp,
                               trailing: Image.asset(Assets.drop),
                               textInputType: TextInputType.none,
+                              hint: "Birthday",
                               ontap: () async {
                                 DateTime? dateTime = await showDatePicker(
                                     context: context,
@@ -676,16 +678,24 @@ class JoinFormScreen extends StatelessWidget {
                                   selected: true,
                                   onTap: () {
                                     String alertContent = '';
+                                    if (controller.profileImage == null) {
+                                      alertContent +=
+                                          'Please select your profile image';
+                                    }
+                                    if (controller.featuredImage == null) {
+                                      alertContent +=
+                                          '\nPlease select your featured image';
+                                    }
                                     if (controller
                                         .usernameController.text.isEmpty) {
                                       alertContent +=
-                                          'Please enter your nickname';
+                                          '\nPlease enter your nickname';
                                     }
                                     if (controller.dateOfBirth == null) {
                                       alertContent +=
                                           '\nPlease enter your birthday';
                                     }
-                                    if (controller.selectedJob.value.isEmpty) {
+                                    if (controller.jobController.text.isEmpty) {
                                       alertContent += '\nPlease enter your job';
                                     }
                                     if (controller
@@ -717,59 +727,7 @@ class JoinFormScreen extends StatelessWidget {
                                     }
                                     print(alertContent);
                                     if (alertContent.isNotEmpty) {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            shape: const OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.white),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                            content: SizedBox(
-                                                height: .2.sh,
-                                                // width: .8.sw,
-                                                child: Center(
-                                                    child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 12.0),
-                                                  child: Text(
-                                                    alertContent,
-                                                    style: TextStyle(
-                                                      fontFamily: "Pretendard",
-                                                      fontSize: 10.sp,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: textBlackColor,
-                                                      height: 15 / 10,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ))),
-                                            actions: [
-                                              Center(
-                                                child: RoundedSmallButton(
-                                                  onTap: () {
-                                                    // Get.offAndToNamed(
-                                                    //     Routes.bottomNavBar);
-                                                    Get.back();
-                                                  },
-                                                  textColor: textWhiteColor,
-                                                  shadow1: buttonBlackShadow1,
-                                                  shadow2: buttonBlackShadow2,
-                                                  selectedColor:
-                                                      buttonBlueColor2,
-                                                  selected: true,
-                                                  width: 160.w,
-                                                  height: 30.h,
-                                                  text: 'Ok',
-                                                ),
-                                              )
-                                            ],
-                                          );
-                                        },
-                                      );
+                                      Helper().showAlertDialog(alertContent);
                                     } else {
                                       controller.signUp();
                                     }

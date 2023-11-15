@@ -5,19 +5,22 @@ import 'package:http_parser/http_parser.dart' as parser;
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Utils/keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Create a custom interceptor
 class AuthInterceptor extends Interceptor {
-  final String _bearerToken;
-
-  AuthInterceptor(this._bearerToken);
+  final String bearerToken;
+  AuthInterceptor(this.bearerToken);
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  Future<void> onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
+    // String token = await SharedPreferences.getInstance()
+    //     .then((value) => value.getString(Keys.bearerToken) ?? "");
     // Add the bearer token to the headers
-    options.headers["Authorization"] = "Bearer $_bearerToken";
+    options.headers["Authorization"] = "Bearer ${token ?? ''}";
     super.onRequest(options, handler);
   }
 }
@@ -30,9 +33,7 @@ class MongoDBController extends GetxController {
   onInit() {
     super.onInit();
     Future.delayed(const Duration(seconds: 1), () async {
-      String token = await SharedPreferences.getInstance()
-          .then((value) => value.getString(Keys.bearerToken) ?? "");
-      dio.interceptors.add(AuthInterceptor(token));
+      dio.interceptors.add(AuthInterceptor(token ?? ''));
     });
   }
 

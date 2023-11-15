@@ -22,6 +22,8 @@ import 'package:kfriends/TopikPractice/topik_test_Screen.dart';
 import 'package:kfriends/TopikPractice/topik_test_result.dart';
 import 'package:kfriends/TopikPractice/topik_test_sheet.dart';
 import 'package:kfriends/UserInfo/user_info.dart';
+import 'package:kfriends/Widgets/voice_calling_screen.dart';
+import 'package:kfriends/model/user.dart';
 
 class Routes {
   static String splashScreen = "/splashscreen";
@@ -49,6 +51,7 @@ class Routes {
   static String koreanGameScreen = "/koreangamescreen";
   static String koreanGameSheet = "/koreangamesheet";
   static String koreanGameResult = "/koreangameresult";
+  static String voiceCallScreen = "/VoiceCallScreen";
 }
 
 final pages = [
@@ -76,7 +79,12 @@ final pages = [
   ),
   GetPage(
     name: Routes.userInfo,
-    page: () => const UserInfo(),
+    page: () {
+      final UserModel user = Get.arguments as UserModel;
+      return UserInfo(
+        user: user,
+      );
+    },
   ),
   GetPage(
     name: Routes.incomingCall,
@@ -146,4 +154,16 @@ final pages = [
     name: Routes.koreanGameResult,
     page: () => const KoreanGameResult(),
   ),
+  GetPage(
+      name: Routes.voiceCallScreen,
+      page: () {
+        final String channelName = Get.arguments['channelName'] as String;
+        final String token = Get.arguments['token'] as String;
+        final int uid = Get.arguments['remoteUid'] as int;
+        return VoiceCallScreen(
+          channelName: channelName,
+          token: token,
+          uid: uid,
+        );
+      })
 ];

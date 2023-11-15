@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 1.sh,
       width: 1.sw,
       child: Padding(
@@ -147,7 +147,7 @@ class HomePage extends StatelessWidget {
                             TextSpan(
                               text: '49,000 ',
                               style: TextStyle(
-                                color: Color(0xFFFFCC00),
+                                color: const Color(0xFFFFCC00),
                                 fontSize: 12.sp,
                                 fontFamily: 'Pretendard',
                                 fontWeight: FontWeight.w700,
@@ -184,7 +184,7 @@ class HomePage extends StatelessWidget {
                 },
                 child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    child: Container(
+                    child: SizedBox(
                       width: .92.sw,
                       child: Image.asset(
                         Assets.koreangame,
@@ -200,7 +200,7 @@ class HomePage extends StatelessWidget {
                 },
                 child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    child: Container(
+                    child: SizedBox(
                       width: .96.sw,
                       child: Image.asset(
                         Assets.topikpractice,
@@ -232,6 +232,7 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   RoundedSmallButton2(
+                    selected: true,
                     onTap: () {},
                     textColor: textBlackColor,
                     shadow1: buttonBlackShadow1,
@@ -240,7 +241,6 @@ class HomePage extends StatelessWidget {
                     width: 80.w,
                     height: 25.h,
                     text: '#K-CULTURE',
-                    selected: true,
                   ),
                   RoundedSmallButton2(
                     onTap: () {},

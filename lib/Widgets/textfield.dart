@@ -11,17 +11,20 @@ class CustomTextfield extends StatelessWidget {
   final Widget? trailing;
   final TextInputType? textInputType;
   final Function()? ontap;
+  final Function(String)? onChanged;
 
-  const CustomTextfield(
-      {super.key,
-      required this.height,
-      required this.width,
-      required this.hint,
-      required this.controller,
-      this.hintSize,
-      this.trailing,
-      this.textInputType,
-      this.ontap});
+  const CustomTextfield({
+    super.key,
+    required this.height,
+    required this.width,
+    required this.hint,
+    required this.controller,
+    this.hintSize,
+    this.trailing,
+    this.textInputType,
+    this.ontap,
+    this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +49,7 @@ class CustomTextfield extends StatelessWidget {
         controller: controller,
         keyboardType: textInputType,
         onTap: ontap,
+        onChanged: onChanged,
         expands: true,
         maxLines: null,
         decoration: InputDecoration(

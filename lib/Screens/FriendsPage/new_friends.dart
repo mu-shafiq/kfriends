@@ -7,12 +7,14 @@ import 'package:get/get.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
+import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Widgets/textfield.dart';
 import 'package:kfriends/Widgets/user_tile2.dart';
+import 'package:kfriends/Controllers/users_controller.dart';
+import 'package:kfriends/model/user.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-// ignore: must_be_immutable
 class NewFriends extends StatefulWidget {
   const NewFriends({super.key});
 
@@ -21,100 +23,125 @@ class NewFriends extends StatefulWidget {
 }
 
 class _NewFriendsState extends State<NewFriends> {
-  int _tab = 0;
-  TextEditingController country = TextEditingController();
-  int initAge = 12;
-  int finalAge = 100;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        30.verticalSpace,
-        SizedBox(
-          width: .9.sw,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return GetBuilder<UsersController>(
+        init: UsersController(),
+        builder: (controller) {
+          print(controller.initAge.value);
+          print(controller.isFilterApplied.value);
+          print(controller.country.text);
+          return Column(
             children: [
-              CustomTextfield(
-                  height: 40.h,
-                  width: .76.sw,
-                  hint: 'Search by name',
-                  hintSize: 12.sp,
-                  trailing: Image.asset(Assets.search),
-                  controller: TextEditingController()),
-              InkWell(
-                onTap: () {
-                  bottomSheet();
-                },
-                child: Image.asset(
-                  Assets.filter,
-                  scale: .8.sp,
+              30.verticalSpace,
+              SizedBox(
+                width: .9.sw,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomTextfield(
+                      height: 40.h,
+                      width: .76.sw,
+                      hint: 'Search by name',
+                      hintSize: 12.sp,
+                      trailing: Image.asset(Assets.search),
+                      controller: controller.newFriendController,
+                      onChanged: (String val) {
+                        controller.onSearchChanged(val);
+                      },
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        await bottomSheet(controller);
+                        controller.update();
+                      },
+                      child: Image.asset(
+                        Assets.filter,
+                        scale: .8.sp,
+                      ),
+                    )
+                  ],
                 ),
+              ),
+              20.verticalSpace,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RoundedSmallButton(
+                    selected: controller.tab == 0,
+                    onTap: () {
+                      setState(() {
+                        controller.tab = 0;
+                      });
+                    },
+                    textColor: textBlackColor,
+                    width: 163.w,
+                    selectedColor: buttonYellowColor,
+                    height: 32.h,
+                    text: 'Korean',
+                  ),
+                  10.horizontalSpace,
+                  RoundedSmallButton(
+                    selected: controller.tab == 1,
+                    onTap: () {
+                      setState(() {
+                        controller.tab = 1;
+                      });
+                    },
+                    textColor: textBlackColor,
+                    width: 163.w,
+                    selectedColor: buttonYellowColor,
+                    height: 32.h,
+                    text: 'Global',
+                  ),
+                ],
+              ),
+              30.verticalSpace,
+              SizedBox(
+                width: .9.sw,
+                child: FutureBuilder<List<UserModel>>(
+                    future: controller.getNewFriends(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      List<UserModel> users = snapshot.data ?? [];
+                      if (users.isEmpty) {
+                        return Center(
+                            child: Text(
+                                'No ${controller.tab == 0 ? "korean" : "global"} user found'));
+                      }
+                      return ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: users.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            UserModel user = users[index];
+                            return InkWell(
+                              onTap: () async {
+                                await Get.toNamed(Routes.userInfo,
+                                    arguments: user);
+                                controller.update();
+                              },
+                              child: UserTile2(
+                                verified: user.userType == korean,
+                                asset: Assets.user1,
+                                username: user.username,
+                                about: user.intro!,
+                              ),
+                            );
+                          });
+                    }),
               )
             ],
-          ),
-        ),
-        20.verticalSpace,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            RoundedSmallButton(
-              selected: _tab == 0,
-              onTap: () {
-                setState(() {
-                  _tab = 0;
-                });
-              },
-              textColor: textBlackColor,
-              width: 163.w,
-              selectedColor: buttonYelloColor,
-              height: 32.h,
-              text: 'Korean',
-            ),
-            10.horizontalSpace,
-            RoundedSmallButton(
-              selected: _tab == 1,
-              onTap: () {
-                setState(() {
-                  _tab = 1;
-                });
-              },
-              textColor: textBlackColor,
-              width: 163.w,
-              selectedColor: buttonYelloColor,
-              height: 32.h,
-              text: 'Global',
-            ),
-          ],
-        ),
-        30.verticalSpace,
-        SizedBox(
-          width: .9.sw,
-          child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 10,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    log('message');
-                    Get.toNamed(Routes.userInfo);
-                  },
-                  child: const UserTile2(
-                    verified: true,
-                    asset: Assets.user1,
-                    username: '김민준',
-                    about: '안녕하세요! 반가워요!대화 걸어주세요~',
-                  ),
-                );
-              }),
-        )
-      ],
-    );
+          );
+        });
   }
 
-  bottomSheet() {
-    showModalBottomSheet(
+  Future bottomSheet(UsersController controller) async {
+    await showModalBottomSheet(
         shape: const OutlineInputBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(15.0),
@@ -133,7 +160,7 @@ class _NewFriendsState extends State<NewFriends> {
                   topRight: Radius.circular(15.0),
                 ),
               ),
-              height: .85.sh,
+              height: .90.sh,
               child: Column(
                 children: [
                   30.verticalSpace,
@@ -198,9 +225,9 @@ class _NewFriendsState extends State<NewFriends> {
                         children: [
                           const SizedBox(),
                           InkWell(
-                            onTap: () {
+                            onTap: () async {
                               log('message');
-                              showModalBottomSheet(
+                              await showModalBottomSheet(
                                   context: context,
                                   builder: (context) {
                                     return StatefulBuilder(
@@ -209,27 +236,26 @@ class _NewFriendsState extends State<NewFriends> {
                                         width: 1.sw,
                                         height: .4.sh,
                                         child: NumberPicker(
-                                          value: initAge,
+                                          value: controller.initAge.value,
                                           minValue: 0,
                                           maxValue: 12,
                                           onChanged: (value) {
-                                            set(() {
-                                              set2(() {
-                                                initAge = value;
-                                              });
-                                            });
+                                            controller.initAge.value = value;
+
+                                            set2(() {});
                                           },
                                         ),
                                       );
                                     });
                                   });
+                              set(() {});
                             },
                             child: SizedBox(
                               width: 40.w,
                               height: 20.h,
                               child: Center(
                                 child: Text(
-                                  initAge.toString(),
+                                  controller.initAge.toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: textGreyColor,
@@ -255,27 +281,24 @@ class _NewFriendsState extends State<NewFriends> {
                                         width: 1.sw,
                                         height: .4.sh,
                                         child: NumberPicker(
-                                          value: finalAge,
+                                          value: controller.finalAge.value,
                                           minValue: 0,
                                           maxValue: 100,
                                           onChanged: (value) {
-                                            set(() {
-                                              set1(() {
-                                                finalAge = value;
-                                              });
-                                            });
+                                            controller.finalAge.value = value;
                                           },
                                         ),
                                       );
                                     });
                                   });
+                              set(() {});
                             },
                             child: SizedBox(
                               width: 40.w,
                               height: 20.h,
                               child: Center(
                                 child: Text(
-                                  finalAge.toString(),
+                                  controller.finalAge.toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: textGreyColor,
@@ -318,15 +341,20 @@ class _NewFriendsState extends State<NewFriends> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         RoundedSmallButton(
-                          selected: true,
-                          onTap: () {},
+                          selected: controller.male.value,
+                          onTap: () {
+                            controller.updateGender(true);
+                          },
                           textColor: textBlackColor,
                           width: 160.w,
                           height: 30.h,
                           text: 'Male',
                         ),
                         RoundedSmallButton(
-                          onTap: () {},
+                          selected: !controller.male.value,
+                          onTap: () {
+                            controller.updateGender(false);
+                          },
                           textColor: textBlackColor,
                           width: 160.w,
                           height: 30.h,
@@ -360,21 +388,30 @@ class _NewFriendsState extends State<NewFriends> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         RoundedSmallButton(
-                          onTap: () {},
+                          selected: controller.interests.contains('#K-TRAVELS'),
+                          onTap: () {
+                            controller.updateInterests('#K-TRAVELS');
+                          },
+                          textColor: textBlackColor,
+                          width: 106.w,
+                          height: 30.h,
+                          text: '#K-TRAVELS',
+                        ),
+                        RoundedSmallButton(
+                          selected: controller.interests.contains('#K-TRAVEL'),
+                          onTap: () {
+                            controller.updateInterests('#K-TRAVEL');
+                          },
                           textColor: textBlackColor,
                           width: 106.w,
                           height: 30.h,
                           text: '#K-TRAVEL',
                         ),
                         RoundedSmallButton(
-                          onTap: () {},
-                          textColor: textBlackColor,
-                          width: 106.w,
-                          height: 30.h,
-                          text: '#K-TRAVEL',
-                        ),
-                        RoundedSmallButton(
-                          onTap: () {},
+                          selected: controller.interests.contains('#K-DRAMA'),
+                          onTap: () {
+                            controller.updateInterests('#K-DRAMA');
+                          },
                           textColor: textBlackColor,
                           width: 106.w,
                           height: 30.h,
@@ -390,25 +427,34 @@ class _NewFriendsState extends State<NewFriends> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         RoundedSmallButton(
-                          onTap: () {},
+                          selected: controller.interests.contains('#K-POP'),
+                          onTap: () {
+                            controller.updateInterests('#K-POP');
+                          },
                           textColor: textBlackColor,
                           width: 106.w,
                           height: 30.h,
                           text: '#K-POP',
                         ),
                         RoundedSmallButton(
-                          onTap: () {},
+                          selected: controller.interests.contains('#K-FOOD'),
+                          onTap: () {
+                            controller.updateInterests('#K-FOOD');
+                          },
                           textColor: textBlackColor,
                           width: 106.w,
                           height: 30.h,
                           text: '#K-FOOD',
                         ),
                         RoundedSmallButton(
-                          onTap: () {},
+                          selected: controller.interests.contains('#K-BEAUTY'),
+                          onTap: () {
+                            controller.updateInterests('#K-BEAUTY');
+                          },
                           textColor: textBlackColor,
                           width: 106.w,
                           height: 30.h,
-                          text: '#K-BREAUTY',
+                          text: '#K-BEAUTY',
                         ),
                       ],
                     ),
@@ -420,14 +466,20 @@ class _NewFriendsState extends State<NewFriends> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         RoundedSmallButton(
-                          onTap: () {},
+                          selected: controller.interests.contains('PET'),
+                          onTap: () {
+                            controller.updateInterests('PET');
+                          },
                           textColor: textBlackColor,
                           width: 106.w,
                           height: 30.h,
                           text: 'PET',
                         ),
                         RoundedSmallButton(
-                          onTap: () {},
+                          selected: controller.interests.contains('GAME'),
+                          onTap: () {
+                            controller.updateInterests('GAME');
+                          },
                           textColor: textBlackColor,
                           width: 106.w,
                           height: 30.h,
@@ -465,7 +517,7 @@ class _NewFriendsState extends State<NewFriends> {
                     ),
                   ),
                   CustomTextfield(
-                    controller: country,
+                    controller: controller.country,
                     width: .9.sw,
                     height: 40.h,
                     hint: 'Select here',
@@ -500,7 +552,7 @@ class _NewFriendsState extends State<NewFriends> {
                           ),
                         ),
                         onSelect: (Country count) {
-                          country.text = count.name;
+                          controller.country.text = count.name;
                         },
                       );
                     },
@@ -530,22 +582,33 @@ class _NewFriendsState extends State<NewFriends> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         RoundedSmallButton(
-                          selected: true,
-                          onTap: () {},
+                          selected:
+                              controller.englishProficiency.value == beginner,
+                          onTap: () {
+                            controller.updateEnglishProficiency(beginner);
+                          },
                           textColor: textBlackColor,
                           width: 106.w,
                           height: 30.h,
                           text: 'Beginner',
                         ),
                         RoundedSmallButton(
-                          onTap: () {},
+                          selected: controller.englishProficiency.value ==
+                              intermediate,
+                          onTap: () {
+                            controller.updateEnglishProficiency(intermediate);
+                          },
                           textColor: textBlackColor,
                           width: 106.w,
                           height: 30.h,
                           text: 'Intermediate',
                         ),
                         RoundedSmallButton(
-                          onTap: () {},
+                          selected:
+                              controller.englishProficiency.value == advanced,
+                          onTap: () {
+                            controller.updateEnglishProficiency(advanced);
+                          },
                           textColor: textBlackColor,
                           width: 106.w,
                           height: 30.h,
@@ -579,22 +642,33 @@ class _NewFriendsState extends State<NewFriends> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         RoundedSmallButton(
-                          selected: true,
-                          onTap: () {},
+                          selected:
+                              controller.koreanProficiency.value == beginner,
+                          onTap: () {
+                            controller.updateKoreanProficiency(beginner);
+                          },
                           textColor: textBlackColor,
                           width: 106.w,
                           height: 30.h,
                           text: 'Beginner',
                         ),
                         RoundedSmallButton(
-                          onTap: () {},
+                          selected: controller.koreanProficiency.value ==
+                              intermediate,
+                          onTap: () {
+                            controller.updateKoreanProficiency(intermediate);
+                          },
                           textColor: textBlackColor,
                           width: 106.w,
                           height: 30.h,
                           text: 'Intermediate',
                         ),
                         RoundedSmallButton(
-                          onTap: () {},
+                          selected:
+                              controller.koreanProficiency.value == advanced,
+                          onTap: () {
+                            controller.updateKoreanProficiency(advanced);
+                          },
                           textColor: textBlackColor,
                           width: 106.w,
                           height: 30.h,
@@ -612,6 +686,7 @@ class _NewFriendsState extends State<NewFriends> {
                         RoundedSmallButton(
                           selected: true,
                           onTap: () {
+                            controller.isFilterApplied.value = true;
                             Get.back();
                           },
                           textColor: textWhiteColor,
@@ -624,6 +699,7 @@ class _NewFriendsState extends State<NewFriends> {
                         ),
                         RoundedSmallButton(
                           onTap: () {
+                            controller.resetFilter();
                             Get.back();
                           },
                           textColor: textBlackColor,

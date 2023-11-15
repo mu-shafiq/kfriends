@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "729373058578",
+    "project_id": "kfriends-e88f8",
+    "storage_bucket": "kfriends-e88f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729373058578:android:88e10c92526cf5ab099acb",
+        "android_client_info": {
+          "package_name": "com.kfriends.app.kfriends"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEAHhozY792PgstN46UtvNaWvffk150j0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

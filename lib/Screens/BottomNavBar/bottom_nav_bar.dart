@@ -10,7 +10,7 @@ import 'package:kfriends/Utils/colors.dart';
 
 class BottomNavBar extends StatefulWidget {
   final int initialIndex;
-  const BottomNavBar({Key? key, required this.initialIndex});
+  const BottomNavBar({super.key, required this.initialIndex});
 
   @override
   _BottomNavBarState createState() => _BottomNavBarState();

@@ -9,7 +9,7 @@ const Color borderGreyColor = Colors.grey;
 const Color buttonBlackColor = Colors.black;
 const Color buttonGreenColor = Color(0xFF22BA4F);
 const Color buttonGreenColor2 = Color(0xFF86FF4E);
-const Color buttonYelloColor = Color(0xFFFFF615);
+const Color buttonYellowColor = Color(0xFFFFF615);
 
 const Color buttonBlueColor = Color(0xFF1778F2);
 const Color buttonBlueColor2 = Color(0xFF2346FF);
