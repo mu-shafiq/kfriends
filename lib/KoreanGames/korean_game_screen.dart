@@ -16,6 +16,7 @@ class KoreanGameScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Color(0xffFFFFFF),
           centerTitle: true,
           leading: GestureDetector(
               onTap: () {
@@ -80,7 +81,7 @@ class KoreanGameScreen extends StatelessWidget {
             width: 1.sw,
             decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                    begin: Alignment.topRight,
+                    begin: Alignment.topCenter,
                     end: Alignment.bottomLeft,
                     colors: [
                   Color(0xffFFFFFF),
@@ -127,14 +128,13 @@ class KoreanGameScreen extends StatelessWidget {
                                 fontSize: 16.sp,
                                 fontFamily: 'Pretendard',
                                 fontWeight: FontWeight.w700,
-                                height: 0,
                               ),
                             ),
                           ],
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      70.verticalSpace,
+                      113.verticalSpace,
                       Text(
                         'INSTRUCTION',
                         textAlign: TextAlign.center,
@@ -158,7 +158,7 @@ class KoreanGameScreen extends StatelessWidget {
                           height: 0.15,
                         ),
                       ),
-                      80.verticalSpace,
+                      27.verticalSpace,
                       RoundedButton(
                           bgColor: buttonBlackColor,
                           shadow1: buttonBlackShadow1,

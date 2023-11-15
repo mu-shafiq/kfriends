@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
+
+import '../Routes/get_routes.dart';
 
 class ContactTile extends StatelessWidget {
   final String asset;
@@ -97,31 +100,36 @@ class ContactTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 20,
-                      width: 20,
-                      decoration: const ShapeDecoration(
-                        color: Color(0xFFF5F5F5),
-                        shape: OvalBorder(),
-                        shadows: [
-                          BoxShadow(
-                            color: Color(0x19000000),
-                            blurRadius: 4,
-                            offset: Offset(0, 2),
-                            spreadRadius: 0,
-                          ),
-                          BoxShadow(
-                            color: Color(0x19000000),
-                            blurRadius: 8,
-                            offset: Offset(0, 0),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                      child: Image.asset(
-                        Assets.call,
-                        scale: 1.9.sp,
-                        color: textBlackColor,
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(Routes.incomingCall);
+                      },
+                      child: Container(
+                        height: 20,
+                        width: 20,
+                        decoration: const ShapeDecoration(
+                          color: Color(0xFFF5F5F5),
+                          shape: OvalBorder(),
+                          shadows: [
+                            BoxShadow(
+                              color: Color(0x19000000),
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                              spreadRadius: 0,
+                            ),
+                            BoxShadow(
+                              color: Color(0x19000000),
+                              blurRadius: 8,
+                              offset: Offset(0, 0),
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                        child: Image.asset(
+                          Assets.call,
+                          scale: 1.9.sp,
+                          color: textBlackColor,
+                        ),
                       ),
                     ),
                   ],

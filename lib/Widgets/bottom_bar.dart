@@ -15,37 +15,52 @@ class BottomBar extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          onTap: (index) => Get.offAll(BottomNavBar(initialIndex: index)),
-          selectedItemColor: textBlackColor,
-          unselectedItemColor: textBlackColor,
-          selectedLabelStyle: TextStyle(
-            color: textBlackColor,
-            fontSize: 12.sp,
-            fontFamily: 'Pretendard',
-            fontWeight: FontWeight.w400,
-            height: 2,
+        Container(
+          height: 80.h,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromARGB(255, 211, 205, 205),
+                blurRadius: 4,
+                offset: Offset(0, 1),
+                spreadRadius: 2,
+              )
+            ],
           ),
-          unselectedLabelStyle: TextStyle(
-            color: textBlackColor,
-            fontSize: 12.sp,
-            fontFamily: 'Pretendard',
-            fontWeight: FontWeight.w400,
-            height: 2,
+          child: BottomNavigationBar(
+            elevation: 2,
+            type: BottomNavigationBarType.fixed,
+            onTap: (index) => Get.offAll(BottomNavBar(initialIndex: index)),
+            selectedItemColor: textBlackColor,
+            unselectedItemColor: textBlackColor,
+            selectedLabelStyle: TextStyle(
+              color: textBlackColor,
+              fontSize: 12.sp,
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.w400,
+              height: 2,
+            ),
+            unselectedLabelStyle: TextStyle(
+              color: textBlackColor,
+              fontSize: 12.sp,
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.w400,
+              height: 2,
+            ),
+            showUnselectedLabels: true,
+            items: [
+              BottomNavigationBarItem(
+                  icon: bottombaritem(Assets.home), label: "HOME"),
+              BottomNavigationBarItem(
+                  icon: bottombaritem(Assets.friends), label: "FRIENDS"),
+              BottomNavigationBarItem(icon: bottombaritem('logo'), label: ""),
+              BottomNavigationBarItem(
+                  icon: bottombaritem(Assets.call), label: "CALL"),
+              BottomNavigationBarItem(
+                  icon: bottombaritem(Assets.profile), label: "MY INFO"),
+            ],
           ),
-          showUnselectedLabels: true,
-          items: [
-            BottomNavigationBarItem(
-                icon: bottombaritem(Assets.home), label: "HOME"),
-            BottomNavigationBarItem(
-                icon: bottombaritem(Assets.friends), label: "FRIENDS"),
-            BottomNavigationBarItem(icon: bottombaritem('logo'), label: ""),
-            BottomNavigationBarItem(
-                icon: bottombaritem(Assets.call), label: "CALL"),
-            BottomNavigationBarItem(
-                icon: bottombaritem(Assets.profile), label: "MY INFO"),
-          ],
         ),
         Positioned(
           bottom: 6.h,
@@ -66,33 +81,38 @@ class BottomBar extends StatelessWidget {
   }
 
   Widget bottombaritem(String asset) {
-    return Container(
-      height: 35,
-      width: 35,
-      decoration: const ShapeDecoration(
-        color: Color(0xFFF5F5F5),
-        shape: OvalBorder(),
-        shadows: [
-          BoxShadow(
-            color: Color(0x19000000),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-            spreadRadius: 0,
+    return Column(
+      children: [
+        5.verticalSpace,
+        Container(
+          height: 35.h,
+          width: 35.h,
+          decoration: const ShapeDecoration(
+            color: Color(0xFFF5F5F5),
+            shape: OvalBorder(),
+            shadows: [
+              BoxShadow(
+                color: Color(0x19000000),
+                blurRadius: 4,
+                offset: Offset(0, 2),
+                spreadRadius: 0,
+              ),
+              BoxShadow(
+                color: Color(0x19000000),
+                blurRadius: 8,
+                offset: Offset(0, 0),
+                spreadRadius: 0,
+              )
+            ],
           ),
-          BoxShadow(
-            color: Color(0x19000000),
-            blurRadius: 8,
-            offset: Offset(0, 0),
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: asset == 'logo'
-          ? const SizedBox()
-          : Image.asset(
-              asset,
-              color: textBlackColor,
-            ),
+          child: asset == 'logo'
+              ? const SizedBox()
+              : Image.asset(
+                  asset,
+                  color: textBlackColor,
+                ),
+        ),
+      ],
     );
   }
 }

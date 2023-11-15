@@ -193,36 +193,298 @@ class _NewFriendsState extends State<NewFriends> {
                         textAlign: TextAlign.left,
                       ),
                     ),
-                  ),
-                  Container(
-                    width: .92.sw,
-                    height: 30.h,
-                    decoration: ShapeDecoration(
-                      color: bgWhiteColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      shadows: const [
-                        BoxShadow(
-                          color: Color(0x19000000),
-                          blurRadius: 8,
-                          offset: Offset(0, 0),
-                          spreadRadius: 0,
+                    5.verticalSpace,
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 20.w),
+                        child: Text(
+                          "Age",
+                          style: TextStyle(
+                            fontFamily: "Pretendard",
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: textBlackColor,
+                            height: 17 / 14,
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        BoxShadow(
-                          color: Color(0x19000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 2),
-                          spreadRadius: 0,
-                        )
-                      ],
+                      ),
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    Container(
+                      width: .92.sw,
+                      height: 30.h,
+                      decoration: ShapeDecoration(
+                        color: bgWhiteColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
+                        shadows: const [
+                          BoxShadow(
+                            color: Color(0x19000000),
+                            blurRadius: 8,
+                            offset: Offset(0, 0),
+                            spreadRadius: 0,
+                          ),
+                          BoxShadow(
+                            color: Color(0x19000000),
+                            blurRadius: 4,
+                            offset: Offset(0, 2),
+                            spreadRadius: 0,
+                          )
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(),
+                            InkWell(
+                              onTap: () {
+                                log('message');
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return StatefulBuilder(
+                                          builder: (context, set2) {
+                                        return SizedBox(
+                                          width: 1.sw,
+                                          height: .4.sh,
+                                          child: NumberPicker(
+                                            value: initAge,
+                                            minValue: 0,
+                                            maxValue: 12,
+                                            onChanged: (value) {
+                                              set(() {
+                                                set2(() {
+                                                  initAge = value;
+                                                });
+                                              });
+                                            },
+                                          ),
+                                        );
+                                      });
+                                    });
+                              },
+                              child: SizedBox(
+                                width: 40.w,
+                                height: 20.h,
+                                child: Center(
+                                  child: Text(
+                                    initAge.toString(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: textGreyColor,
+                                      fontSize: 10.sp,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0.15,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Image.asset(Assets.equal),
+                            InkWell(
+                              onTap: () {
+                                log('message');
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return StatefulBuilder(
+                                          builder: (context, set1) {
+                                        return SizedBox(
+                                          width: 1.sw,
+                                          height: .4.sh,
+                                          child: NumberPicker(
+                                            value: finalAge,
+                                            minValue: 0,
+                                            maxValue: 100,
+                                            onChanged: (value) {
+                                              set(() {
+                                                set1(() {
+                                                  finalAge = value;
+                                                });
+                                              });
+                                            },
+                                          ),
+                                        );
+                                      });
+                                    });
+                              },
+                              child: SizedBox(
+                                width: 40.w,
+                                height: 20.h,
+                                child: Center(
+                                  child: Text(
+                                    finalAge.toString(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: textGreyColor,
+                                      fontSize: 10.sp,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0.15,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(),
+                          ],
+                        ),
+                      ),
+                    ),
+                    10.verticalSpace,
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 20.w),
+                        child: Text(
+                          "Gender",
+                          style: TextStyle(
+                            fontFamily: "Pretendard",
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: textBlackColor,
+                            height: 17 / 14,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: .9.sw,
                       child: Row(
-                        mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          RoundedSmallButton(
+                            selected: true,
+                            onTap: () {},
+                            textColor: textBlackColor,
+                            width: 165.w,
+                            height: 30.h,
+                            text: 'Male',
+                          ),
+                          RoundedSmallButton(
+                            onTap: () {},
+                            textColor: textBlackColor,
+                            width: 165.w,
+                            height: 30.h,
+                            text: 'Female',
+                          ),
+                        ],
+                      ),
+                    ),
+                    10.verticalSpace,
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 20.w),
+                        child: Text(
+                          "Interests",
+                          style: TextStyle(
+                            fontFamily: "Pretendard",
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: textBlackColor,
+                            height: 17 / 14,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: .92.sw,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RoundedSmallButton(
+                            onTap: () {},
+                            textColor: textBlackColor,
+                            width: 112.w,
+                            height: 35.h,
+                            text: '#K-TRAVEL',
+                          ),
+                          RoundedSmallButton(
+                            onTap: () {},
+                            textColor: textBlackColor,
+                            width: 112.w,
+                            height: 35.h,
+                            text: '#K-TRAVEL',
+                          ),
+                          RoundedSmallButton(
+                            onTap: () {},
+                            textColor: textBlackColor,
+                            width: 112.w,
+                            height: 35.h,
+                            text: '#K-DRAMA',
+                          ),
+                        ],
+                      ),
+                    ),
+                    5.verticalSpace,
+                    SizedBox(
+                      width: .92.sw,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RoundedSmallButton(
+                            onTap: () {},
+                            textColor: textBlackColor,
+                            width: 112.w,
+                            height: 35.h,
+                            text: '#K-POP',
+                          ),
+                          RoundedSmallButton(
+                            onTap: () {},
+                            textColor: textBlackColor,
+                            width: 112.w,
+                            height: 35.h,
+                            text: '#K-FOOD',
+                          ),
+                          RoundedSmallButton(
+                            onTap: () {},
+                            textColor: textBlackColor,
+                            width: 112.w,
+                            height: 35.h,
+                            text: '#K-BREAUTY',
+                          ),
+                        ],
+                      ),
+                    ),
+                    5.verticalSpace,
+                    SizedBox(
+                      width: .92.sw,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RoundedSmallButton(
+                            onTap: () {},
+                            textColor: textBlackColor,
+                            width: 112.w,
+                            height: 35.h,
+                            text: 'PET',
+                          ),
+                          RoundedSmallButton(
+                            onTap: () {},
+                            textColor: textBlackColor,
+                            width: 112.w,
+                            height: 35.h,
+                            text: 'GAME',
+                          ),
+                          const SizedBox(),
+                          const SizedBox(),
+                          const SizedBox(),
+                          const SizedBox(),
+                          const SizedBox(),
+                          const SizedBox(),
+                          const SizedBox(),
                           const SizedBox(),
                           InkWell(
                             onTap: () async {
@@ -539,17 +801,68 @@ class _NewFriendsState extends State<NewFriends> {
                             topLeft: Radius.circular(15.0),
                             topRight: Radius.circular(15.0),
                           ),
-                          //Optional. Styles the search field.
-                          inputDecoration: InputDecoration(
-                            labelText: 'Search',
-                            hintText: 'Start typing to search',
-                            prefixIcon: const Icon(Icons.search),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: const Color(0xFF8C98A8).withOpacity(0.2),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                    CustomTextfield(
+                      controller: country,
+                      width: .9.sw,
+                      height: 40.h,
+                      hint: 'Select here',
+                      hintSize: 14.sp,
+                      trailing: Image.asset(Assets.drop),
+                      textInputType: TextInputType.none,
+                      ontap: () {
+                        showCountryPicker(
+                          context: context,
+                          countryListTheme: CountryListThemeData(
+                            flagSize: 25,
+                            backgroundColor: Colors.white,
+                            textStyle: TextStyle(
+                                fontSize: 16.sp, color: Colors.blueGrey),
+                            bottomSheetHeight:
+                                .5.sh, // Optional. Country list modal height
+                            //Optional. Sets the border radius for the bottomsheet.
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(15.0),
+                              topRight: Radius.circular(15.0),
+                            ),
+                            //Optional. Styles the search field.
+                            inputDecoration: InputDecoration(
+                              labelText: 'Search',
+                              hintText: 'Start typing to search',
+                              prefixIcon: const Icon(Icons.search),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color:
+                                      const Color(0xFF8C98A8).withOpacity(0.2),
+                                ),
                               ),
                             ),
                           ),
+                          onSelect: (Country count) {
+                            country.text = count.name;
+                          },
+                        );
+                      },
+                    ),
+                    10.verticalSpace,
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 20.w),
+                        child: Text(
+                          "English Proficiency",
+                          style: TextStyle(
+                            fontFamily: "Pretendard",
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: textBlackColor,
+                            height: 17 / 14,
+                          ),
+                          textAlign: TextAlign.left,
                         ),
                         onSelect: (Country count) {
                           controller.country.text = count.name;
@@ -709,8 +1022,40 @@ class _NewFriendsState extends State<NewFriends> {
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    20.verticalSpace,
+                    SizedBox(
+                      width: .9.sw,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RoundedSmallButton(
+                            selected: true,
+                            onTap: () {
+                              Get.back();
+                            },
+                            textColor: textWhiteColor,
+                            shadow1: buttonBlackShadow1,
+                            shadow2: buttonBlackShadow2,
+                            selectedColor: buttonBlueColor2,
+                            width: 160.w,
+                            height: 35.h,
+                            text: 'Search',
+                          ),
+                          RoundedSmallButton(
+                            onTap: () {
+                              Get.back();
+                            },
+                            textColor: textBlackColor,
+                            width: 160.w,
+                            height: 35.h,
+                            text: 'Reset',
+                          ),
+                        ],
+                      ),
+                    ),
+                    20.verticalSpace,
+                  ],
+                ),
               ),
             );
           });

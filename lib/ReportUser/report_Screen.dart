@@ -134,7 +134,7 @@ class ReportScreen extends StatelessWidget {
                     shadow1: buttonBlackShadow1,
                     shadow2: buttonBlackShadow2,
                     selectedColor: buttonBlueColor2,
-                    width: 160.w,
+                    width: 170.w,
                     height: 35.h,
                     text: 'Send Report',
                   ),
@@ -143,7 +143,7 @@ class ReportScreen extends StatelessWidget {
                       Get.back();
                     },
                     textColor: textBlackColor,
-                    width: 160.w,
+                    width: 170.w,
                     height: 35.h,
                     text: 'Cancel',
                   ),

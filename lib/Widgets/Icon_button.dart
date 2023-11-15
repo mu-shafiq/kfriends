@@ -55,20 +55,21 @@ class IconRoundedButton extends StatelessWidget {
             ],
           ),
           child: Row(
-            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               icon,
-              Text(
-                text,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: 10.sp,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w700,
-                  height: 0,
+              Padding(
+                padding: const EdgeInsets.only(top: 0.0),
+                child: Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: textColor,
+                      fontSize: 10.sp,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                      height: 3.5),
                 ),
               ),
             ],

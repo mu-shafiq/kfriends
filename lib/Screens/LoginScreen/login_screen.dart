@@ -44,7 +44,7 @@ class LoginScreen extends StatelessWidget {
                               ),
                               textAlign: TextAlign.left,
                             ),
-                            50.verticalSpace,
+                            43.verticalSpace,
                             CustomTextfield(
                               controller: controller.emailController,
                               width: .9.sw,
@@ -52,7 +52,7 @@ class LoginScreen extends StatelessWidget {
                               hint: 'E-mail',
                               hintSize: 10.sp,
                             ),
-                            20.verticalSpace,
+                            13.verticalSpace,
                             CustomTextfield(
                               controller: controller.passwordController,
                               width: .9.sw,
@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                               hint: 'Password',
                               hintSize: 10.sp,
                             ),
-                            20.verticalSpace,
+                            16.verticalSpace,
                             RoundedButton(
                               onTap: () {
                                 String alertContent = '';
@@ -96,17 +96,15 @@ class LoginScreen extends StatelessWidget {
                             20.verticalSpace,
                             Text(
                               'Sign in with E-mail',
-                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 10.sp,
                                 fontFamily: 'Pretendard',
                                 fontWeight: FontWeight.w700,
-                                height: 0,
                               ),
                             ),
                             Container(
-                              width: .25.sw,
+                              width: .23.sw,
                               decoration: const ShapeDecoration(
                                 shape: RoundedRectangleBorder(
                                   side: BorderSide(
@@ -125,7 +123,7 @@ class LoginScreen extends StatelessWidget {
                                   decoration: const ShapeDecoration(
                                     shape: RoundedRectangleBorder(
                                       side: BorderSide(
-                                        width: .4,
+                                        width: .1,
                                         strokeAlign:
                                             BorderSide.strokeAlignCenter,
                                       ),
@@ -149,7 +147,7 @@ class LoginScreen extends StatelessWidget {
                                   decoration: const ShapeDecoration(
                                     shape: RoundedRectangleBorder(
                                       side: BorderSide(
-                                        width: .4,
+                                        width: .1,
                                         strokeAlign:
                                             BorderSide.strokeAlignCenter,
                                       ),
@@ -164,7 +162,10 @@ class LoginScreen extends StatelessWidget {
                                 Get.toNamed(Routes.joinFormScreen);
                               },
                               textColor: textWhiteColor,
-                              icon: Image.asset(Assets.apple),
+                              icon: Image.asset(
+                                Assets.apple,
+                                scale: .5,
+                              ),
                               shadow1: buttonBlackShadow1,
                               shadow2: buttonBlackShadow2,
                               bgColor: buttonBlackColor,
@@ -178,7 +179,10 @@ class LoginScreen extends StatelessWidget {
                                 Get.toNamed(Routes.joinFormScreen);
                               },
                               textColor: textWhiteColor,
-                              icon: Image.asset(Assets.oneline),
+                              icon: Image.asset(
+                                Assets.oneline,
+                                scale: .5,
+                              ),
                               shadow1: buttonBlackShadow1,
                               shadow2: buttonBlackShadow2,
                               bgColor: buttonGreenColor,
@@ -203,7 +207,10 @@ class LoginScreen extends StatelessWidget {
                                 }
                               },
                               textColor: textWhiteColor,
-                              icon: Image.asset(Assets.fb),
+                              icon: Image.asset(
+                                Assets.fb,
+                                scale: .5,
+                              ),
                               shadow1: buttonBlackShadow1,
                               shadow2: buttonBlackShadow2,
                               bgColor: buttonBlueColor,
@@ -217,7 +224,10 @@ class LoginScreen extends StatelessWidget {
                                 Get.toNamed(Routes.joinFormScreen);
                               },
                               textColor: textBlackColor,
-                              icon: Image.asset(Assets.google),
+                              icon: Image.asset(
+                                Assets.google,
+                                scale: .5,
+                              ),
                               shadow1: buttonBlackShadow1,
                               shadow2: buttonBlackShadow2,
                               bgColor: buttonWhiteColor,

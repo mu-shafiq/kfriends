@@ -46,6 +46,13 @@ class Assets {
   static const String more = '${pathIcons}more.png';
   static const String add = '${pathIcons}add.png';
   static const String blueTick2 = '${pathIcons}bluetick2.png';
+  static const String arrowForward = '${pathIcons}arrowForward.png';
+  static const String like = '${pathIcons}like.png';
+  static const String comment = '${pathIcons}comment.png';
+  static const String delete = '${pathIcons}delete.png';
+  static const String edit = '${pathIcons}edit.png';
+  static const String alert = '${pathIcons}alert.png';
+  static const String exclamation = '${pathIcons}exclamation.png';
 
   //image
   static const String joinFormImage = '${pathImages}joinFormImage.png';
@@ -58,4 +65,6 @@ class Assets {
   static const String widget3 = '${pathImages}widget3.png';
   static const String widget4 = '${pathImages}widget4.png';
   static const String widget5 = '${pathImages}widget5.png';
+  static const String postImage = '${pathImages}postImage.png';
+  static const String postimage2 = '${pathImages}postimage2.png';
 }

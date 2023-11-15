@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Widgets/call_user_tile.dart';
@@ -21,7 +23,7 @@ class _CallScreenState extends State<CallScreen> {
       height: 1.sh,
       width: 1.sw,
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(5.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +31,7 @@ class _CallScreenState extends State<CallScreen> {
               20.verticalSpace,
               Container(
                 alignment: Alignment.center,
-                width: .9.sw,
+                width: .94.sw,
                 height: 30.h,
                 decoration: ShapeDecoration(
                   color: boxBlueColor,
@@ -50,99 +52,102 @@ class _CallScreenState extends State<CallScreen> {
                     )
                   ],
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Total Call Duration',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: textWhiteColor,
-                            fontSize: 10.sp,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Total Call Duration',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: textWhiteColor,
+                              fontSize: 10.sp,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    20.horizontalSpace,
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '123:51',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: textWhiteColor,
-                            fontSize: 10.sp,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    20.horizontalSpace,
-                    Text(
-                      '|',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: textWhiteColor,
-                        fontSize: 10.sp,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
+                        ],
                       ),
-                    ),
-                    20.horizontalSpace,
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Remain Call Time',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: textWhiteColor,
-                            fontSize: 10.sp,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
+                      20.horizontalSpace,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '123:51',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: textWhiteColor,
+                              fontSize: 10.sp,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
                           ),
+                        ],
+                      ),
+                      20.horizontalSpace,
+                      Text(
+                        '|',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: textWhiteColor,
+                          fontSize: 10.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
                         ),
-                      ],
-                    ),
-                    20.horizontalSpace,
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '240:00',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: textWhiteColor,
-                            fontSize: 10.sp,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
+                      ),
+                      20.horizontalSpace,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Remain Call Time',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: textWhiteColor,
+                              fontSize: 10.sp,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      20.horizontalSpace,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '240:00',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: textWhiteColor,
+                              fontSize: 10.sp,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               20.verticalSpace,
@@ -234,18 +239,23 @@ class _CallScreenState extends State<CallScreen> {
                     itemCount: 10,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      return CallUserTile(
-                        date: '2023-06-27',
-                        status: index < 3
-                            ? 'recieved'
-                            : index.isEven
-                                ? 'dialed'
-                                : 'missed',
-                        verified: true,
-                        asset: Assets.user1,
-                        username: '김민준',
-                        about: '20 / FEMALE /  South Korea',
-                        time: '32:27',
+                      return GestureDetector(
+                        onTap: () {
+                          Get.toNamed(Routes.userInfo);
+                        },
+                        child: CallUserTile(
+                          date: '2023-06-27',
+                          status: index < 3
+                              ? 'recieved'
+                              : index.isEven
+                                  ? 'dialed'
+                                  : 'missed',
+                          verified: true,
+                          asset: Assets.user1,
+                          username: '김민준',
+                          about: '20 / FEMALE /  South Korea',
+                          time: '32:27',
+                        ),
                       );
                     }),
               )

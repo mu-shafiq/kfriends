@@ -175,6 +175,7 @@ class CommentTile extends StatelessWidget {
                     width: .7.sw,
                     child: ListView.builder(
                         shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
                         itemCount: 3,
                         itemBuilder: (context, index) {
                           return Padding(
@@ -196,6 +197,7 @@ class CommentTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Container(
           width: .9.sw,
+          height: 77.h,
           child: Stack(
             children: [
               ListTile(
@@ -243,6 +245,7 @@ class CommentTile extends StatelessWidget {
               Positioned(
                 right: 15.w,
                 top: 15.h,
+                bottom: 5.h,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [

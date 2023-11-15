@@ -5,16 +5,10 @@ import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/colors.dart';
 
 class KoreanGameTile extends StatelessWidget {
-  final bool isSeason;
-  final String seasonName;
   final int words;
   final String gameName;
   const KoreanGameTile(
-      {super.key,
-      required this.words,
-      required this.isSeason,
-      required this.seasonName,
-      required this.gameName});
+      {super.key, required this.words, required this.gameName});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +43,7 @@ class KoreanGameTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  isSeason ? 'SEASON($seasonName)' : gameName,
+                  gameName,
                   style: TextStyle(
                     color: textBlackColor,
                     fontSize: 13.sp,
@@ -88,7 +82,7 @@ class KoreanGameTile extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Get.toNamed(Routes.koreanGameScreen);
+                Get.toNamed(Routes.koreanSeasonScreen);
               },
               child: CircleAvatar(
                 radius: 30.r,

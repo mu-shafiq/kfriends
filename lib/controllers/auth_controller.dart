@@ -36,7 +36,7 @@ class AuthController extends GetxController {
   RxString englishProficiency = beginner.obs;
   RxString koreanProficiency = beginner.obs;
 
-  Rx<DateTime>? dateOfBirth;
+  DateTime? dateOfBirth;
 
   RxList<String> interests = <String>[].obs;
 

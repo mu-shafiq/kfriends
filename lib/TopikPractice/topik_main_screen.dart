@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Widgets/bottom_bar.dart';
@@ -47,7 +48,11 @@ class TopikMainScreen extends StatelessWidget {
                               )
                             ],
                           ),
-                          child: Image.asset(Assets.backArrow)),
+                          child: GestureDetector(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: Image.asset(Assets.backArrow))),
                       Container(
                         decoration: ShapeDecoration(
                           color: buttonWhiteColor,
@@ -189,7 +194,7 @@ class TopikMainScreen extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       )),
-                  10.verticalSpace,
+                  26.verticalSpace,
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -207,7 +212,7 @@ class TopikMainScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  20.verticalSpace,
+                  14.verticalSpace,
                   SizedBox(
                     width: .9.sw,
                     child: ListView.builder(

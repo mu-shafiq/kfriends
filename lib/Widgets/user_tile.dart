@@ -29,6 +29,7 @@ class UserTile extends StatelessWidget {
                 asset,
               ).image,
             ),
+            5.verticalSpace,
             Row(
               children: [
                 Text(
@@ -55,7 +56,7 @@ class UserTile extends StatelessWidget {
                 maxLines: 3,
                 style: TextStyle(
                     color: textBlackColor,
-                    fontSize: 10.sp,
+                    fontSize: 9.sp,
                     fontFamily: 'Pretendard',
                     fontWeight: FontWeight.w400,
                     height: 0,
@@ -66,10 +67,10 @@ class UserTile extends StatelessWidget {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: '999 ',
+                    text: '999  ',
                     style: TextStyle(
                       color: textPinkColor,
-                      fontSize: 9.sp,
+                      fontSize: 8.sp,
                       fontFamily: 'Pretendard',
                       fontWeight: FontWeight.w700,
                       height: 0,
@@ -79,7 +80,7 @@ class UserTile extends StatelessWidget {
                     text: 'Followers',
                     style: TextStyle(
                       color: textGreyColor,
-                      fontSize: 10.sp,
+                      fontSize: 9.sp,
                       fontFamily: 'Pretendard',
                       fontWeight: FontWeight.w700,
                       height: 0,

@@ -1,22 +1,45 @@
 import 'package:get/get.dart';
+import 'package:kfriends/AppSettings/app_settings.dart';
 import 'package:kfriends/CallScreens/incoming_call.dart';
 import 'package:kfriends/CallScreens/outgoing_call.dart';
 import 'package:kfriends/ChatScreens/ai_chat.dart';
 import 'package:kfriends/ChatScreens/chat_main.dart';
 import 'package:kfriends/ChatScreens/chat_settings.dart';
 import 'package:kfriends/ChatScreens/chating_Screen.dart';
+import 'package:kfriends/CommunityScreens/add_post.dart';
+import 'package:kfriends/CommunityScreens/community_main.dart';
+import 'package:kfriends/CommunityScreens/more_post.dart';
+import 'package:kfriends/CommunityScreens/post_view.dart';
+import 'package:kfriends/CommunityScreens/search_timeline.dart';
+import 'package:kfriends/CommunityScreens/timeline_view.dart';
+import 'package:kfriends/CommunityScreens/write_timeline.dart';
+import 'package:kfriends/CustomerCenter/customer_center.dart';
+import 'package:kfriends/CustomerCenter/inquiry_sent.dart';
+import 'package:kfriends/EditProfile/edit_profile.dart';
 import 'package:kfriends/KoreanGames/korean_main_screen.dart';
 import 'package:kfriends/KoreanGames/korean_game_Sheet.dart';
 import 'package:kfriends/KoreanGames/korean_game_result.dart';
 import 'package:kfriends/KoreanGames/korean_game_screen.dart';
+import 'package:kfriends/KoreanGames/season_Screen.dart';
+import 'package:kfriends/Notice/notice.dart';
+import 'package:kfriends/Notice/notice_view.dart';
+import 'package:kfriends/PaymentScreens/buy_package.dart';
+import 'package:kfriends/PaymentScreens/payment_list.dart';
+import 'package:kfriends/PhonAuth/enter_phone.dart';
+import 'package:kfriends/PhonAuth/verify_phone.dart';
 import 'package:kfriends/ReportUser/report_Screen.dart';
+import 'package:kfriends/ReportUser/report_sent.dart';
 import 'package:kfriends/Screens/BottomNavBar/bottom_nav_bar.dart';
+import 'package:kfriends/Screens/CallScreen/call_history.dart';
+import 'package:kfriends/Screens/CallScreen/call_screen.dart';
 import 'package:kfriends/Screens/CallScreen/contact_Screen.dart';
 import 'package:kfriends/Screens/CallScreen/contact_settings.dart';
 import 'package:kfriends/Screens/JoinFormScreen/join_form_screen.dart';
 import 'package:kfriends/Screens/LoginScreen/login_screen.dart';
+import 'package:kfriends/Screens/MyInfo/profile_Settings.dart';
 import 'package:kfriends/Screens/SplashScreen/splash_screen.dart';
 import 'package:kfriends/Screens/UserScreen/user_screen.dart';
+import 'package:kfriends/Terms/terms.dart';
 import 'package:kfriends/TopikPractice/topik_main_screen.dart';
 import 'package:kfriends/TopikPractice/topik_test_Screen.dart';
 import 'package:kfriends/TopikPractice/topik_test_result.dart';
@@ -116,7 +139,7 @@ final pages = [
   ),
   GetPage(
     name: Routes.reportSent,
-    page: () => const ContactScreen(),
+    page: () => const ReportSent(),
   ),
   GetPage(
     name: Routes.contactSettings,

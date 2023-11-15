@@ -26,50 +26,48 @@ class RoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          width: width,
-          height: height,
-          decoration: ShapeDecoration(
-            color: bgColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100),
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: ShapeDecoration(
+          color: bgColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+          ),
+          shadows: const [
+            BoxShadow(
+              color: buttonBlackShadow1,
+              blurRadius: 2,
+              offset: Offset(0, 2),
+              spreadRadius: 0,
             ),
-            shadows: const [
-              BoxShadow(
-                color: buttonBlackShadow1,
-                blurRadius: 2,
-                offset: Offset(0, 2),
-                spreadRadius: 0,
+            BoxShadow(
+              color: buttonBlackShadow2,
+              blurRadius: 8,
+              offset: Offset(0, 0),
+              spreadRadius: 0,
+            )
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: textColor,
+                fontSize: 10.sp,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w700,
+                height: 0,
               ),
-              BoxShadow(
-                color: buttonBlackShadow2,
-                blurRadius: 8,
-                offset: Offset(0, 0),
-                spreadRadius: 0,
-              )
-            ],
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                text,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: 10.sp,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w700,
-                  height: 0,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

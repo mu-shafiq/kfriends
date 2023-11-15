@@ -12,6 +12,7 @@ class IncomingCall extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Color(0xffFFFFFF),
           elevation: 0,
           scrolledUnderElevation: 0,
           leading: const SizedBox(),
@@ -95,6 +96,7 @@ class IncomingCall extends StatelessWidget {
                     )
                   ],
                 ),
+                5.verticalSpace,
                 SizedBox(
                   width: .8.sw,
                   child: Row(

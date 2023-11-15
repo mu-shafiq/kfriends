@@ -31,7 +31,7 @@ class _TopikTestResultState extends State<KoreanGameResult> {
                 },
                 child: Image.asset(Assets.backArrow)),
             title: Text(
-              'TOPIK TEST 01',
+              'SEASON1 (계절1)',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: textBlackColor,
@@ -94,66 +94,12 @@ class _TopikTestResultState extends State<KoreanGameResult> {
                     bgColor: buttonBlackColor,
                     shadow1: buttonBlackShadow1,
                     shadow2: buttonBlackShadow2,
-                    height: 35.h,
+                    height: 30.h,
                     width: 120.w,
                     text: 'RESULT',
                     textColor: textYellowColor,
                     onTap: () {}),
                 40.verticalSpace,
-                SizedBox(
-                  width: .9.sw,
-                  height: .3.sh,
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 5, // number of items in each row
-                      mainAxisSpacing: 20.0, // spacing between rows
-                      crossAxisSpacing: 3.0, // spacing between columns
-                    ),
-                    padding:
-                        const EdgeInsets.all(8.0), // padding around the grid
-                    itemCount: 10, // total number of items
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          CircleAvatar(
-                            radius: 15.r,
-                            backgroundColor:
-                                (index <= 4 ? index.isEven : index.isOdd)
-                                    ? buttonBlackColor
-                                    : textPinkColor,
-                            child: Text(
-                              'Q${index + 1}',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: textWhiteColor,
-                                fontSize: 10.sp,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w700,
-                                height: 0,
-                              ),
-                            ),
-                          ),
-                          5.verticalSpace,
-                          Text(
-                            (index <= 4 ? index.isEven : index.isOdd)
-                                ? 'O'
-                                : 'X',
-                            style: TextStyle(
-                              color: (index <= 4 ? index.isEven : index.isOdd)
-                                  ? textBlackColor
-                                  : textPinkColor,
-                              fontSize: 16.sp,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w600,
-                              height: 0,
-                            ),
-                          )
-                        ],
-                      );
-                    },
-                  ),
-                ),
                 Text(
                   'YOUR SCORE',
                   textAlign: TextAlign.center,
@@ -165,6 +111,7 @@ class _TopikTestResultState extends State<KoreanGameResult> {
                     height: 0,
                   ),
                 ),
+                10.verticalSpace,
                 Text(
                   '80.0 / 100',
                   textAlign: TextAlign.center,
@@ -215,6 +162,18 @@ class _TopikTestResultState extends State<KoreanGameResult> {
                 ),
                 30.verticalSpace,
                 Text(
+                  'WELL DONE',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: textBlackColor,
+                    fontSize: 24.sp,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w700,
+                    height: 0,
+                  ),
+                ),
+                10.verticalSpace,
+                Text(
                   'You can do better with Korean Friends!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -225,7 +184,7 @@ class _TopikTestResultState extends State<KoreanGameResult> {
                     height: 0.12,
                   ),
                 ),
-                70.verticalSpace,
+                .35.sh.verticalSpace,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -251,11 +210,12 @@ class _TopikTestResultState extends State<KoreanGameResult> {
                         Get.back();
 
                         Get.back();
+                        Get.back();
                       },
                       textColor: textWhiteColor,
                       width: 110.w,
                       height: 30.h,
-                      text: 'Next Test →',
+                      text: 'Next Game →',
                     ),
                   ],
                 ),

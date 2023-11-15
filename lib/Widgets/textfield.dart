@@ -5,7 +5,7 @@ import 'package:kfriends/Utils/colors.dart';
 class CustomTextfield extends StatelessWidget {
   final double height;
   final double width;
-  final String hint;
+  final String? hint;
   final TextEditingController controller;
   final double? hintSize;
   final Widget? trailing;
@@ -34,7 +34,7 @@ class CustomTextfield extends StatelessWidget {
       // padding: EdgeInsets.only(top: 5.h),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(7),
         boxShadow: const [
           BoxShadow(
             color: Color.fromARGB(255, 211, 205, 205),

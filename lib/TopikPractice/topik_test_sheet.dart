@@ -124,6 +124,7 @@ class _TopikTestSheetState extends State<TopikTestSheet> {
                           height: 0,
                         ),
                       ),
+                      20.verticalSpace,
                       Row(
                         children: [
                           10.horizontalSpace,
@@ -246,8 +247,8 @@ class _TopikTestSheetState extends State<TopikTestSheet> {
                       bgColor: const Color(0xFFF5F5F5),
                       shadow1: buttonBlackShadow1,
                       shadow2: buttonBlackShadow2,
-                      width: 110.w,
-                      height: 30.h,
+                      width: 130.w,
+                      height: 35.h,
                       text: '← BACK',
                     ),
                     50.horizontalSpace,
@@ -258,8 +259,8 @@ class _TopikTestSheetState extends State<TopikTestSheet> {
                         Get.toNamed(Routes.topikTestResult);
                       },
                       textColor: textWhiteColor,
-                      width: 110.w,
-                      height: 30.h,
+                      width: 130.w,
+                      height: 35.h,
                       text: 'Next →',
                     ),
                   ],
