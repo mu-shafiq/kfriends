@@ -34,7 +34,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   }
 }
 
-// Handle incoming call
+// Handle incoming call   
 void _handleIncomingCall(RemoteMessage message) async {
   print("Handling incoming call");
   final params = CallKitParams(
