@@ -45,6 +45,8 @@ import 'package:kfriends/TopikPractice/topik_test_Screen.dart';
 import 'package:kfriends/TopikPractice/topik_test_result.dart';
 import 'package:kfriends/TopikPractice/topik_test_sheet.dart';
 import 'package:kfriends/UserInfo/user_info.dart';
+import 'package:kfriends/Widgets/voice_calling_screen.dart';
+import 'package:kfriends/model/user.dart';
 
 class Routes {
   static String splashScreen = "/splashscreen";
@@ -72,28 +74,7 @@ class Routes {
   static String koreanGameScreen = "/koreangamescreen";
   static String koreanGameSheet = "/koreangamesheet";
   static String koreanGameResult = "/koreangameresult";
-  static String koreanSeasonScreen = "/koreanseasonscreen";
-  static String communityMain = "/communityMain";
-  static String morePosts = "/moreposts";
-  static String addPosts = "/addposts";
-  static String viewPosts = "/viewposts";
-  static String timelineview = "/timelineview";
-  static String timelineWrite = "/timelinewrite";
-  static String timelineSearch = "/timelinesearch";
-  static String profileSettings = "/profilesettings";
-  static String paymentList = "/paymentlist";
-  static String buyPayment = "/buypayment";
-  static String notice = "/notice";
-  static String noticeView = "/noticeview";
-  static String appSettings = "/appsettings";
-  static String customerCenter = "/customercenter";
-  static String callScreen = "/callscreen";
-  static String inquirySent = "/inquirysent";
-  static String terms = "/terms";
-  static String editprofile = "/editprofile";
-  static String callHistory = "/callhistory";
-  static String enterPhon = "/enterPhon";
-  static String verifyPhon = "/verifyPhon";
+  static String voiceCallScreen = "/VoiceCallScreen";
 }
 
 final pages = [
@@ -121,7 +102,12 @@ final pages = [
   ),
   GetPage(
     name: Routes.userInfo,
-    page: () => const UserInfo(),
+    page: () {
+      final UserModel user = Get.arguments as UserModel;
+      return UserInfo(
+        user: user,
+      );
+    },
   ),
   GetPage(
     name: Routes.incomingCall,
@@ -192,91 +178,15 @@ final pages = [
     page: () => const KoreanGameResult(),
   ),
   GetPage(
-    name: Routes.koreanSeasonScreen,
-    page: () => const KoreanSeasonScreen(),
-  ),
-  GetPage(
-    name: Routes.communityMain,
-    page: () => const CommunityMain(),
-  ),
-  GetPage(
-    name: Routes.morePosts,
-    page: () => const MorePosts(),
-  ),
-  GetPage(
-    name: Routes.addPosts,
-    page: () => const AddPost(),
-  ),
-  GetPage(
-    name: Routes.viewPosts,
-    page: () => const PostView(),
-  ),
-  GetPage(
-    name: Routes.timelineview,
-    page: () => const TimelineView(),
-  ),
-  GetPage(
-    name: Routes.timelineWrite,
-    page: () => const WriteTimeLine(),
-  ),
-  GetPage(
-    name: Routes.timelineSearch,
-    page: () => const TimelineSearch(),
-  ),
-  GetPage(
-    name: Routes.profileSettings,
-    page: () => const ProfileSettings(),
-  ),
-  GetPage(
-    name: Routes.paymentList,
-    page: () => const PaymentList(),
-  ),
-  GetPage(
-    name: Routes.buyPayment,
-    page: () => const BuyPackage(),
-  ),
-  GetPage(
-    name: Routes.notice,
-    page: () => const Notice(),
-  ),
-  GetPage(
-    name: Routes.noticeView,
-    page: () => const NoticeViews(),
-  ),
-  GetPage(
-    name: Routes.appSettings,
-    page: () => const AppSettings(),
-  ),
-  GetPage(
-    name: Routes.customerCenter,
-    page: () => const CustomerCenter(),
-  ),
-  GetPage(
-    name: Routes.callScreen,
-    page: () => CallScreen(),
-  ),
-  GetPage(
-    name: Routes.terms,
-    page: () => const Terms(),
-  ),
-  GetPage(
-    name: Routes.editprofile,
-    page: () => const EditProfile(),
-  ),
-  GetPage(
-    name: Routes.callHistory,
-    page: () => CallHistory(),
-  ),
-  GetPage(
-    name: Routes.enterPhon,
-    page: () => const EnterPhonNumber(),
-  ),
-  GetPage(
-    name: Routes.verifyPhon,
-    page: () => const VerifyPhon(),
-  ),
-  GetPage(
-    name: Routes.inquirySent,
-    page: () => const INquirySent(),
-  ),
+      name: Routes.voiceCallScreen,
+      page: () {
+        final String channelName = Get.arguments['channelName'] as String;
+        final String token = Get.arguments['token'] as String;
+        final int uid = Get.arguments['remoteUid'] as int;
+        return VoiceCallScreen(
+          channelName: channelName,
+          token: token,
+          uid: uid,
+        );
+      })
 ];

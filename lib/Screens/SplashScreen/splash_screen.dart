@@ -1,3 +1,5 @@
+import 'package:callkeep/callkeep.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -15,9 +17,10 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 3))
-        .then((value) => Get.toNamed(Routes.usersScreen));
     super.initState();
+
+    Future.delayed(const Duration(seconds: 3))
+        .then((value) => Get.toNamed(Routes.loginScreen));
   }
 
   @override

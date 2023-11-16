@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kfriends/Controllers/auth_controller.dart';
-import 'package:kfriends/Screens/JoinFormScreen/join_form_screen.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
+import 'package:kfriends/Utils/helper.dart';
 import 'package:kfriends/Widgets/Icon_button.dart';
 import 'package:kfriends/Widgets/rounded_button.dart';
 import 'package:kfriends/Widgets/textfield.dart';
@@ -63,7 +63,27 @@ class LoginScreen extends StatelessWidget {
                             16.verticalSpace,
                             RoundedButton(
                               onTap: () {
-                                Get.toNamed(Routes.enterPhon);
+                                String alertContent = '';
+                                if (controller.emailController.text.isEmpty) {
+                                  alertContent += 'Please enter your email';
+                                }
+                                if (!GetUtils.isEmail(
+                                        controller.emailController.text) &&
+                                    controller
+                                        .emailController.text.isNotEmpty) {
+                                  alertContent +=
+                                      '\nPlease enter a valid email';
+                                }
+                                if (controller
+                                    .passwordController.text.isEmpty) {
+                                  alertContent +=
+                                      '\nPlease enter your password';
+                                }
+                                if (alertContent.isNotEmpty) {
+                                  Helper().showAlertDialog(alertContent);
+                                } else {
+                                  controller.login();
+                                }
                               },
                               textColor: textGreenColor,
                               shadow1: buttonBlackShadow1,
@@ -173,7 +193,18 @@ class LoginScreen extends StatelessWidget {
                             15.verticalSpace,
                             IconRoundedButton(
                               onTap: () {
-                                Get.toNamed(Routes.joinFormScreen);
+                                if (controller.emailController.text.isEmpty) {
+                                  // toast in korean language
+                                  Helper().showToast("이메일을 입력해주세요");
+                                } else if (!GetUtils.isEmail(
+                                    controller.emailController.text)) {
+                                  Helper().showToast("유효한 이메일을 입력해 주세요");
+                                } else if (controller
+                                    .passwordController.text.isEmpty) {
+                                  Helper().showToast("비밀번호를 입력해주세요");
+                                } else {
+                                  Get.toNamed(Routes.joinFormScreen);
+                                }
                               },
                               textColor: textWhiteColor,
                               icon: Image.asset(

@@ -1,5 +1,5 @@
 class Keys {
-  static String serverIP = 'localhost';
+  static String serverIP = 'http://usdvault.com';
   static String status = 'status';
   static String message = 'message';
   static String data = 'data';
@@ -7,9 +7,20 @@ class Keys {
   static String success = 'success';
   static String id = 'id';
   static String bearerToken = 'bearerToken';
+  static String token = 'token';
+  static String url = 'url';
+  static String users = 'users';
+  static String user = 'user';
+  static String currentUser = 'currentUser';
 
   //functions
   static String generateId = 'generateId';
   static String uploadFileToServer = 'uploadFileToServer';
   static String register = 'register';
+  static String followUser = 'followUser';
+  static String unFollowUser = 'unFollowUser';
+
+  //folders
+  static String profileImage = 'profileImage';
+  static String featuredImage = 'featuredImage';
 }

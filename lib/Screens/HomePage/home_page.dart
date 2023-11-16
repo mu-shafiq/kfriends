@@ -20,29 +20,61 @@ class _HomePageState extends State<HomePage> {
   int selected = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          surfaceTintColor: Colors.transparent,
-          backgroundColor: bgWhiteColor,
-          leading: Padding(
-            padding: EdgeInsets.only(top: 18.0.h),
-            child: Container(
-                child: GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Image.asset(Assets.notification))),
-          ),
-          title: Padding(
-            padding: EdgeInsets.only(top: 18.0.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  decoration: ShapeDecoration(
-                    color: buttonWhiteColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
+    return SizedBox(
+      height: 1.sh,
+      width: 1.sw,
+      child: Padding(
+        padding: EdgeInsets.all(15.0.sp),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              10.verticalSpace,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      height: 35,
+                      width: 35,
+                      decoration: const ShapeDecoration(
+                        color: Color(0xFFF5F5F5),
+                        shape: OvalBorder(),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0x19000000),
+                            blurRadius: 4,
+                            offset: Offset(0, 2),
+                            spreadRadius: 0,
+                          ),
+                          BoxShadow(
+                            color: Color(0x19000000),
+                            blurRadius: 8,
+                            offset: Offset(0, 0),
+                            spreadRadius: 0,
+                          )
+                        ],
+                      ),
+                      child: Image.asset(Assets.notification)),
+                  Container(
+                    decoration: ShapeDecoration(
+                      color: buttonWhiteColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      shadows: const [
+                        BoxShadow(
+                          color: buttonBlackShadow1,
+                          blurRadius: 2,
+                          offset: Offset(0, 2),
+                          spreadRadius: 0,
+                        ),
+                        BoxShadow(
+                          color: buttonBlackShadow2,
+                          blurRadius: 8,
+                          offset: Offset(0, 0),
+                          spreadRadius: 0,
+                        )
+                      ],
                     ),
                     shadows: const [
                       BoxShadow(
@@ -169,8 +201,93 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '49,000 ',
+                              style: TextStyle(
+                                color: const Color(0xFFFFCC00),
+                                fontSize: 12.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'P',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 10.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                        textAlign: TextAlign.center,
+                      ),
+                      Container(
+                        width: 49.w,
+                        height: 1,
+                        decoration: const BoxDecoration(color: Colors.black),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              15.verticalSpace,
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.koreanMainScreen);
+                },
+                child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: SizedBox(
+                      width: .92.sw,
+                      child: Image.asset(
+                        Assets.koreangame,
+                        scale: .1,
+                        fit: BoxFit.fill,
+                      ),
+                    )),
+              ),
+              10.verticalSpace,
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.topikMainScreen);
+                },
+                child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: SizedBox(
+                      width: .96.sw,
+                      child: Image.asset(
+                        Assets.topikpractice,
+                        scale: .1,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+              ),
+              10.verticalSpace,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Suggested Korean Friends!",
+                    style: TextStyle(
+                      fontFamily: "Pretendard",
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: textBlackColor,
+                      height: 17 / 14,
                     ),
                   ),
                 ),
@@ -182,32 +299,16 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(top: 25.h, right: 15.w),
               child: Column(
                 children: [
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: '49,000 ',
-                          style: TextStyle(
-                            color: Color(0xFFFFCC00),
-                            fontSize: 12.sp,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'P',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 10.sp,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    textAlign: TextAlign.center,
+                  RoundedSmallButton2(
+                    selected: true,
+                    onTap: () {},
+                    textColor: textBlackColor,
+                    shadow1: buttonBlackShadow1,
+                    shadow2: buttonBlackShadow2,
+                    bgColor: buttonWhiteColor,
+                    width: 80.w,
+                    height: 25.h,
+                    text: '#K-CULTURE',
                   ),
                   Container(
                     width: 49.w,

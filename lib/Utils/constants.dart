@@ -1,3 +1,13 @@
+import 'package:kfriends/model/user.dart';
+
+UserModel? currentUser;
+String? token;
+
+const String agoraAppID = 'b3ab106250de472e9172588d33114ca1';
+
 const String beginner = 'beginner';
 const String intermediate = 'intermediate';
 const String advanced = 'advanced';
+
+const String korean = 'korean';
+const String global = 'global';
