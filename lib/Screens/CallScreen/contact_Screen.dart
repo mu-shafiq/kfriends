@@ -13,7 +13,6 @@ class ContactScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 1.sh,
       width: 1.sw,
       child: Padding(
         padding: const EdgeInsets.all(5.0),
@@ -34,7 +33,7 @@ class ContactScreen extends StatelessWidget {
                 width: .9.sw,
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 4,
+                    itemCount: 8,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return GestureDetector(
