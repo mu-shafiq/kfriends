@@ -75,13 +75,13 @@ class _TermsState extends State<Terms> {
                   ),
                   30.verticalSpace,
                   SizedBox(
-                      width: .9.sw,
+                      width: .92.sw,
                       child: Text.rich(TextSpan(children: [
                         TextSpan(
                           text: text,
                           style: TextStyle(
                             color: textBlackColor,
-                            fontSize: 10.sp,
+                            fontSize: 11.sp,
                             fontFamily: 'Pretendard',
                             fontWeight: FontWeight.w500,
                           ),
