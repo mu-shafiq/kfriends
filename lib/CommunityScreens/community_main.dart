@@ -35,7 +35,7 @@ class _CommunityMainState extends State<CommunityMain> {
       width: 1.sw,
       child: Column(
         children: [
-          20.verticalSpace,
+          10.verticalSpace,
           CustomTextfield(
               ontap: () {
                 Get.toNamed(Routes.searchTimeline);
@@ -44,7 +44,7 @@ class _CommunityMainState extends State<CommunityMain> {
               trailing: Image.asset(Assets.search),
               hintSize: 11.sp,
               height: 40.h,
-              width: .9.sw,
+              width: .92.sw,
               controller: TextEditingController()),
           27.verticalSpace,
           Padding(
@@ -94,7 +94,7 @@ class _CommunityMainState extends State<CommunityMain> {
           15.verticalSpace,
           Container(
             height: .42.sh,
-            width: .9.sw,
+            width: .92.sw,
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
@@ -164,7 +164,7 @@ class _CommunityMainState extends State<CommunityMain> {
           ),
           28.verticalSpace,
           SizedBox(
-            width: .9.sw,
+            width: .92.sw,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

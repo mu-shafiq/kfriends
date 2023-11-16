@@ -159,7 +159,7 @@ class LoginScreen extends StatelessWidget {
                             20.verticalSpace,
                             IconRoundedButton(
                               onTap: () {
-                                Get.toNamed(Routes.joinFormScreen);
+                                Get.toNamed(Routes.bottomNavBar);
                               },
                               textColor: textWhiteColor,
                               icon: Image.asset(

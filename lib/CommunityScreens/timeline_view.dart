@@ -13,6 +13,7 @@ class TimelineView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: bgWhiteColor,
         appBar: AppBar(
             surfaceTintColor: Colors.transparent,
             backgroundColor: bgWhiteColor,
@@ -198,178 +199,179 @@ class TimelineView extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.only(top: 15.0, left: 15, right: 15),
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                10.verticalSpace,
-                30.verticalSpace,
-                Text(
-                  'What’s On My Time Line',
-                  style: TextStyle(
-                    color: textBlackColor,
-                    fontSize: 16.sp,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w600,
-                    height: 0,
+            child: Container(
+              color: bgWhiteColor,
+              child: Column(
+                children: [
+                  Text(
+                    'What’s On My Time Line',
+                    style: TextStyle(
+                      color: textBlackColor,
+                      fontSize: 16.sp,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w600,
+                      height: 0,
+                    ),
                   ),
-                ),
-                10.verticalSpace,
-                SizedBox(
-                  width: 1.sw,
-                  child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: 4,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Get.toNamed(Routes.postView);
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(right: 0.w),
-                            child: Container(
-                              height: .485.sh,
-                              width: .9.sw,
-                              decoration: ShapeDecoration(
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                shadows: const [
-                                  BoxShadow(
-                                    color: Color(0x19000000),
-                                    blurRadius: 8,
-                                    offset: Offset(0, 0),
-                                    spreadRadius: 0,
-                                  ),
-                                  BoxShadow(
-                                    color: Color(0x19000000),
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2),
-                                    spreadRadius: 0,
-                                  )
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 14.w, vertical: 8.h),
-                                    child: Row(
+                  10.verticalSpace,
+                  SizedBox(
+                    width: 1.sw,
+                    child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: 4,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Get.toNamed(Routes.postView);
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 10.h),
+                              child: Container(
+                                height: .485.sh,
+                                width: .9.sw,
+                                decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  shadows: const [
+                                    BoxShadow(
+                                      color: Color(0x19000000),
+                                      blurRadius: 4,
+                                      offset: Offset(0, 0),
+                                      spreadRadius: 0,
+                                    ),
+                                    BoxShadow(
+                                      color: Color(0x19000000),
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 14.w, vertical: 8.h),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              CircleAvatar(
+                                                  radius: 15.r,
+                                                  child: Image.asset(
+                                                      Assets.user1)),
+                                              10.horizontalSpace,
+                                              Text(
+                                                '주희',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: textBlackColor,
+                                                  fontSize: 9.sp,
+                                                  fontFamily: 'Pretendard',
+                                                  fontWeight: FontWeight.w700,
+                                                  height: 0,
+                                                ),
+                                              ),
+                                              5.horizontalSpace,
+                                              Image.asset(
+                                                Assets.verified,
+                                                scale: .9.sp,
+                                              )
+                                            ],
+                                          ),
+                                          Icon(
+                                            Icons.more_horiz,
+                                            size: 30.sp,
+                                            color: textGreyColor,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      height: .3.sh,
+                                      width: .9.sw,
+                                      child: Image.asset(
+                                        Assets.postimage2,
+                                        scale: .5,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    10.verticalSpace,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15.0),
+                                      child: Text(
+                                        'This is my favorite Cafe☕ Do you guys like coffee? If you dont, it’s OK~~',
+                                        style: TextStyle(
+                                          color: textBlackColor,
+                                          fontSize: 10.sp,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    20.verticalSpace,
+                                    Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
+                                        const SizedBox(),
                                         Row(
                                           children: [
-                                            CircleAvatar(
-                                                radius: 15.r,
-                                                child:
-                                                    Image.asset(Assets.user1)),
-                                            10.horizontalSpace,
+                                            Image.asset(
+                                              Assets.like,
+                                              scale: 1.sp,
+                                            ),
+                                            5.horizontalSpace,
                                             Text(
-                                              '주희',
+                                              'Like',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: textBlackColor,
-                                                fontSize: 9.sp,
+                                                fontSize: 11.sp,
                                                 fontFamily: 'Pretendard',
                                                 fontWeight: FontWeight.w700,
                                                 height: 0,
                                               ),
-                                            ),
-                                            5.horizontalSpace,
-                                            Image.asset(
-                                              Assets.verified,
-                                              scale: .9.sp,
                                             )
                                           ],
                                         ),
-                                        Icon(
-                                          Icons.more_horiz,
-                                          size: 30.sp,
-                                          color: textGreyColor,
-                                        )
+                                        Row(
+                                          children: [
+                                            Image.asset(
+                                              Assets.comment,
+                                              scale: 1.sp,
+                                            ),
+                                            5.horizontalSpace,
+                                            Text(
+                                              'Comment',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: textBlackColor,
+                                                fontSize: 11.sp,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w700,
+                                                height: 0,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        const SizedBox(),
                                       ],
                                     ),
-                                  ),
-                                  Container(
-                                    height: .3.sh,
-                                    width: .9.sw,
-                                    child: Image.asset(
-                                      Assets.postimage2,
-                                      scale: .5,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  10.verticalSpace,
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15.0),
-                                    child: Text(
-                                      'This is my favorite Cafe☕ Do you guys like coffee? If you dont, it’s OK~~',
-                                      style: TextStyle(
-                                        color: textBlackColor,
-                                        fontSize: 10.sp,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                  20.verticalSpace,
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const SizedBox(),
-                                      Row(
-                                        children: [
-                                          Image.asset(
-                                            Assets.like,
-                                            scale: 1.sp,
-                                          ),
-                                          5.horizontalSpace,
-                                          Text(
-                                            'Like',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: textBlackColor,
-                                              fontSize: 11.sp,
-                                              fontFamily: 'Pretendard',
-                                              fontWeight: FontWeight.w700,
-                                              height: 0,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Image.asset(
-                                            Assets.comment,
-                                            scale: 1.sp,
-                                          ),
-                                          5.horizontalSpace,
-                                          Text(
-                                            'Comment',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: textBlackColor,
-                                              fontSize: 11.sp,
-                                              fontFamily: 'Pretendard',
-                                              fontWeight: FontWeight.w700,
-                                              height: 0,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(),
-                                    ],
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }),
-                ),
-              ],
+                          );
+                        }),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

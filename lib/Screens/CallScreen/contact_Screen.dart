@@ -20,7 +20,7 @@ class ContactScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              30.verticalSpace,
+              10.verticalSpace,
               CustomTextfield(
                   height: 40.h,
                   width: .92.sw,

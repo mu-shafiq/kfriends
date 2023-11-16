@@ -28,7 +28,6 @@ class _CallScreenState extends State<CallScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              20.verticalSpace,
               Container(
                 alignment: Alignment.center,
                 width: .94.sw,

@@ -150,7 +150,7 @@ class PaymentList extends StatelessWidget {
             ),
             20.verticalSpace,
             SizedBox(
-              width: .9.sw,
+              width: .92.sw,
               child: ListView.builder(
                   itemCount: 3,
                   shrinkWrap: true,
