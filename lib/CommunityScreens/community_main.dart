@@ -38,7 +38,7 @@ class _CommunityMainState extends State<CommunityMain> {
           20.verticalSpace,
           CustomTextfield(
               ontap: () {
-                Get.toNamed(Routes.timelineSearch);
+                Get.toNamed(Routes.searchTimeline);
               },
               hint: 'Enter your keyword 👀',
               trailing: Image.asset(Assets.search),
@@ -123,7 +123,7 @@ class _CommunityMainState extends State<CommunityMain> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          Get.toNamed(Routes.viewPosts);
+                          Get.toNamed(Routes.postView);
                         },
                         child: PostTile(
                             postTitle: 'My First visit to Gyeongbokgung! ',
@@ -137,7 +137,7 @@ class _CommunityMainState extends State<CommunityMain> {
                 15.verticalSpace,
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.morePosts);
+                    Get.toNamed(Routes.morePost);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -180,7 +180,7 @@ class _CommunityMainState extends State<CommunityMain> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.timelineview);
+                    Get.toNamed(Routes.timlineView);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -234,7 +234,7 @@ class _CommunityMainState extends State<CommunityMain> {
                     (BuildContext context, int itemIndex, int pageViewIndex) {
                   return GestureDetector(
                     onTap: () {
-                      Get.toNamed(Routes.viewPosts);
+                      Get.toNamed(Routes.postView);
                     },
                     child: Padding(
                       padding: EdgeInsets.only(right: 0.w),

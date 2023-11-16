@@ -12,6 +12,7 @@ class CustomTextfield extends StatelessWidget {
   final TextInputType? textInputType;
   final Function()? ontap;
   final Function(String)? onChanged;
+  final Color? hintColor;
 
   const CustomTextfield({
     super.key,
@@ -24,6 +25,7 @@ class CustomTextfield extends StatelessWidget {
     this.textInputType,
     this.ontap,
     this.onChanged,
+    this.hintColor,
   });
 
   @override
@@ -60,8 +62,9 @@ class CustomTextfield extends StatelessWidget {
             focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: borderBlueColor, width: 1.3)),
             hintText: hint,
-            hintStyle:
-                TextStyle(color: hintTextColor, fontSize: hintSize ?? 13.sp)),
+            hintStyle: TextStyle(
+                color: hintColor ?? hintTextColor,
+                fontSize: hintSize ?? 13.sp)),
       ),
     );
   }

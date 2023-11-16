@@ -98,6 +98,7 @@ class EnterPhonNumber extends StatelessWidget {
                 CustomTextfield(
                     height: 40.h,
                     width: .685.sw,
+                    hint: '',
                     controller: TextEditingController()),
               ],
             ),

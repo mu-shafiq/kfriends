@@ -85,7 +85,7 @@ class ProfileSettings extends StatelessWidget {
             InkWell(
               onTap: () {
                 print('message');
-                Get.toNamed(Routes.editprofile);
+                Get.toNamed(Routes.editProfile);
               },
               child: Container(
                 width: .92.sw,
@@ -222,7 +222,7 @@ class ProfileSettings extends StatelessWidget {
                 10.horizontalSpace,
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.buyPayment);
+                    Get.toNamed(Routes.buyPackage);
                   },
                   child: Container(
                     width: 165.w,

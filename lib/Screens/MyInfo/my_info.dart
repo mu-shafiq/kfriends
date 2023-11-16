@@ -37,7 +37,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
         actions: [
           GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.profileSettings);
+              Get.toNamed(Routes.profileSetting);
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),

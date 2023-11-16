@@ -82,7 +82,7 @@ class KoreanGameTile extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Get.toNamed(Routes.koreanSeasonScreen);
+                Get.toNamed(Routes.seasonScreen);
               },
               child: CircleAvatar(
                 radius: 30.r,

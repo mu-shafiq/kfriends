@@ -182,7 +182,7 @@ class TimelineView extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           child: GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.timelineWrite);
+              Get.toNamed(Routes.writetimeline);
             },
             child: CircleAvatar(
               backgroundColor: buttonBlueColor,
@@ -222,7 +222,7 @@ class TimelineView extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            Get.toNamed(Routes.viewPosts);
+                            Get.toNamed(Routes.postView);
                           },
                           child: Padding(
                             padding: EdgeInsets.only(right: 0.w),

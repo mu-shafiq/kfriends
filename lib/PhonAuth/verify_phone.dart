@@ -96,6 +96,7 @@ class VerifyPhon extends StatelessWidget {
                 CustomTextfield(
                     height: 40.h,
                     width: .685.sw,
+                    hint: '',
                     controller: TextEditingController()),
               ],
             ),
@@ -156,7 +157,7 @@ class VerifyPhon extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 12.0),
                                       child: Text(
-                                        '인증번호가 유호하지 않습니다.  다시 확인 후 입력해 주세요.',
+                                        '인증번호가 유호하지 않습니다. 다시 확인 후 입력해 주세요.',
                                         style: TextStyle(
                                           fontFamily: "Pretendard",
                                           fontSize: 12.sp,

@@ -10,6 +10,8 @@ import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Utils/helper.dart';
+import 'package:kfriends/Widgets/birthday_selector.dart';
+import 'package:kfriends/Widgets/job_selector.dart';
 import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Widgets/textfield.dart';
 import 'package:kfriends/Controllers/auth_controller.dart';
@@ -179,20 +181,6 @@ class JoinFormScreen extends StatelessWidget {
                               hintSize: 10.sp,
                               trailing: Image.asset(Assets.drop),
                               textInputType: TextInputType.none,
-                              hint: "Birthday",
-                              ontap: () async {
-                                DateTime? dateTime = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime.now()
-                                        .subtract(const Duration(days: 100000)),
-                                    lastDate: DateTime.now()
-                                        .add(const Duration(days: 100000)));
-                                if (dateTime != null) {
-                                  controller.dateOfBirth = dateTime.obs;
-                                  controller.update();
-                                }
-                              },
                             ),
                             10.verticalSpace,
                             Padding(

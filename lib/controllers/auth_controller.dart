@@ -148,7 +148,7 @@ class AuthController extends GetxController {
         email: emailController.text.trim(),
         password: passwordController.text,
         gender: male.value ? "male" : "female",
-        dateOfBirth: dateOfBirth!.value,
+        dateOfBirth: dateOfBirth!,
         userType: "global",
         country: countryController.text.trim(),
         englishProficiency: englishProficiency.value,

@@ -200,7 +200,7 @@ class _MorePostsState extends State<MorePosts> {
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.addPosts);
+              Get.toNamed(Routes.addPost);
             },
             child: CircleAvatar(
               backgroundColor: buttonBlueColor,

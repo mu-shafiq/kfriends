@@ -75,6 +75,29 @@ class Routes {
   static String koreanGameSheet = "/koreangamesheet";
   static String koreanGameResult = "/koreangameresult";
   static String voiceCallScreen = "/VoiceCallScreen";
+  static String appSettings = "/appsettings";
+  static String addPost = "/addpost";
+  static String communityMain = "/communitymain";
+  static String morePost = "/morepost";
+  static String postView = "/postview";
+  static String searchTimeline = "/searchtimeline";
+  static String timlineView = "/timelineview";
+  static String writetimeline = "/writetimeline";
+  static String customerCenter = "/writetimeline";
+  static String inquirySent = "/inquirySent";
+  static String editProfile = "/editProfile";
+  static String seasonScreen = "/seasonScreen";
+  static String notice = "/notice";
+  static String noticeView = "/noticeView";
+  static String buyPackage = "/buyPackage";
+  static String paymentList = "/paymentList";
+  static String enterPhone = "/enterPhone";
+  static String verifyPhon = "/verifyPhon";
+
+  static String callHistory = "/callHistory";
+  static String callScreen = "/callScreen";
+  static String profileSetting = "/profileSetting";
+  static String terms = "/terms";
 }
 
 final pages = [
@@ -188,5 +211,97 @@ final pages = [
           token: token,
           uid: uid,
         );
-      })
+      }),
+  GetPage(
+    name: Routes.addPost,
+    page: () => const AddPost(),
+  ),
+  GetPage(
+    name: Routes.communityMain,
+    page: () => const CommunityMain(),
+  ),
+  GetPage(
+    name: Routes.morePost,
+    page: () => const MorePosts(),
+  ),
+  GetPage(
+    name: Routes.postView,
+    page: () => const PostView(),
+  ),
+  GetPage(
+    name: Routes.searchTimeline,
+    page: () => const TimelineSearch(),
+  ),
+  GetPage(
+    name: Routes.timlineView,
+    page: () => const TimelineView(),
+  ),
+  GetPage(
+    name: Routes.writetimeline,
+    page: () => const WriteTimeLine(),
+  ),
+  GetPage(
+    name: Routes.customerCenter,
+    page: () => const CustomerCenter(),
+  ),
+  GetPage(
+    name: Routes.inquirySent,
+    page: () => const INquirySent(),
+  ),
+  GetPage(
+    name: Routes.editProfile,
+    page: () => const EditProfile(),
+  ),
+  GetPage(
+    name: Routes.notice,
+    page: () => const Notice(),
+  ),
+  GetPage(
+    name: Routes.noticeView,
+    page: () => const NoticeViews(),
+  ),
+  GetPage(
+    name: Routes.buyPackage,
+    page: () => const BuyPackage(),
+  ),
+  GetPage(
+    name: Routes.paymentList,
+    page: () => const PaymentList(),
+  ),
+  GetPage(
+    name: Routes.enterPhone,
+    page: () => const EnterPhonNumber(),
+  ),
+  GetPage(
+    name: Routes.verifyPhon,
+    page: () => const VerifyPhon(),
+  ),
+  GetPage(
+    name: Routes.appSettings,
+    page: () => const AppSettings(),
+  ),
+  GetPage(
+    name: Routes.seasonScreen,
+    page: () => const KoreanSeasonScreen(),
+  ),
+  GetPage(
+    name: Routes.callHistory,
+    page: () => CallHistory(),
+  ),
+  GetPage(
+    name: Routes.callScreen,
+    page: () => CallScreen(),
+  ),
+  GetPage(
+    name: Routes.contactScreen,
+    page: () => const ContactScreen(),
+  ),
+  GetPage(
+    name: Routes.profileSetting,
+    page: () => const ProfileSettings(),
+  ),
+  GetPage(
+    name: Routes.terms,
+    page: () => const Terms(),
+  ),
 ];
