@@ -130,6 +130,7 @@ class _NewFriendsState extends State<NewFriends> {
                                 asset: Assets.user1,
                                 username: user.username,
                                 about: user.intro!,
+                                userModel: user,
                               ),
                             );
                           });

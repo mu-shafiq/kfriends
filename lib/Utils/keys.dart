@@ -12,6 +12,9 @@ class Keys {
   static String users = 'users';
   static String user = 'user';
   static String currentUser = 'currentUser';
+  static String agoraUid = 'agoraUid';
+  static String uid = 'uid';
+  static String channelName = 'channelName';
 
   //functions
   static String generateId = 'generateId';
@@ -19,6 +22,7 @@ class Keys {
   static String register = 'register';
   static String followUser = 'followUser';
   static String unFollowUser = 'unFollowUser';
+  static String makeCall = 'makeCall';
 
   //folders
   static String profileImage = 'profileImage';
