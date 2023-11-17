@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:kfriends/Controllers/calls_controller.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/constants.dart';
@@ -16,17 +17,24 @@ class VoiceCallScreen extends StatefulWidget {
   final String channelName;
   final String token;
   final int uid;
+  final String callId;
+  final String receiverName;
+  final String receiverImage;
   const VoiceCallScreen(
       {super.key,
       required this.channelName,
       required this.token,
-      required this.uid});
+      required this.uid,
+      required this.callId,
+      required this.receiverName,
+      required this.receiverImage});
 
   @override
   State<VoiceCallScreen> createState() => _VoiceCallScreenState();
 }
 
 class _VoiceCallScreenState extends State<VoiceCallScreen> {
+  final callController = Get.find<CallsController>();
   int? _remoteUid;
   bool _isJoined = false;
   late RtcEngine agoraEngine;
@@ -66,6 +74,8 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
         onUserOffline: (RtcConnection connection, int remoteUid,
             UserOfflineReasonType reason) {
           Get.back();
+          // callController.endsACall(
+          //     widget.callId, _remoteUid != null ? "incoming" : "missed");
           // setState(() {
           //   _remoteUid = null;
           // });
@@ -104,7 +114,6 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
       options: options,
       uid: widget.uid,
     );
-    await agoraEngine.setEnableSpeakerphone(false);
   }
 
   void leave() {
@@ -199,7 +208,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
                           ),
                         ),
                         Text(
-                          '윤지',
+                          widget.receiverName,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: textBlackColor,
@@ -405,6 +414,8 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
                   InkWell(
                       onTap: () {
                         Get.back();
+                        // callController.endsACall(widget.callId,
+                        //     _remoteUid != null ? "incoming" : "missed");
                       },
                       child: Image.asset(Assets.reject))
                 ],

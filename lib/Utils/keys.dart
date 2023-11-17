@@ -15,6 +15,9 @@ class Keys {
   static String agoraUid = 'agoraUid';
   static String uid = 'uid';
   static String channelName = 'channelName';
+  static String callId = 'callId';
+  static String receiverName = 'receiverName';
+  static String receiverImage = 'receiverImage';
 
   //functions
   static String generateId = 'generateId';
@@ -23,6 +26,7 @@ class Keys {
   static String followUser = 'followUser';
   static String unFollowUser = 'unFollowUser';
   static String makeCall = 'makeCall';
+  static String endCall = 'endCall';
 
   //folders
   static String profileImage = 'profileImage';

@@ -1,6 +1,7 @@
 // Import necessary packages
 import 'dart:developer';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_callkit_incoming/entities/entities.dart';
 import 'package:flutter_callkit_incoming/entities/ios_params.dart';
@@ -12,6 +13,8 @@ import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:kfriends/Utils/keys.dart';
+import 'package:kfriends/firebase_options.dart';
+import 'package:kfriends/main.dart';
 import 'package:uuid/uuid.dart';
 import 'package:kfriends/Utils/helper.dart';
 
@@ -47,7 +50,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   // Handle incoming message
-  void _handleIncomingMessage(RemoteMessage message) {
+  Future<void> _handleIncomingMessage(RemoteMessage message) async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     if (message.data['type'] == 'call') {
       // Handle incoming call
       _handleIncomingCall(message);
@@ -64,21 +70,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   // Handle incoming call
   static Future<void> _handleIncomingCall(RemoteMessage message) async {
-    int agoraUid = int.parse(message.data[Keys.uid].toString());
-    String token = message.data[Keys.token];
-    String channelName = message.data[Keys.channelName];
-    Get.toNamed(
-      Routes.voiceCallScreen,
-      arguments: {
-        'channelName': channelName,
-        'remoteUid': agoraUid,
-        'token': token
-      },
-    );
-    return;
+    // return;
     final params = CallKitParams(
       id: const Uuid().v4(),
-      nameCaller: "Caller Name",
+      nameCaller: message.data[Keys.receiverName],
       appName: "K Friends",
       avatar: "https://i.pravatar.cc/100",
       handle: "+987456215",
@@ -119,7 +114,7 @@ class _SplashScreenState extends State<SplashScreen> {
         ringtonePath: 'system_ringtone_default',
       ),
     );
-    callListener(params);
+    callListener(message);
 
     try {
       log("ffff 9");
@@ -133,7 +128,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  static void callListener(CallKitParams params) {
+  static void callListener(RemoteMessage message) {
     log("ffff 11");
 
     FlutterCallkitIncoming.onEvent.listen((CallEvent? event) {
@@ -150,10 +145,26 @@ class _SplashScreenState extends State<SplashScreen> {
           break;
         case Event.actionCallAccept:
           Helper().showToast("Call accepted");
-
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Get.toNamed(Routes.callScreen);
-          });
+          int agoraUid = int.parse(message.data[Keys.uid].toString());
+          String token = message.data[Keys.token];
+          String channelName = message.data[Keys.channelName];
+          String callId = message.data[Keys.callId];
+          String receiverName = message.data[Keys.receiverName];
+          String receiverImage = message.data[Keys.receiverImage];
+          navigatorKey.currentState!.pushNamed(
+            Routes.voiceCallScreen,
+            arguments: {
+              'channelName': channelName,
+              'remoteUid': agoraUid,
+              'token': token,
+              'callId': callId,
+              'receiverName': receiverName,
+              'receiverImage': receiverImage,
+            },
+          );
+          // WidgetsBinding.instance.addPostFrameCallback((_) {
+          //   Get.toNamed(Routes.callScreen);
+          // });
           // TODO: accepted an incoming call
           // TODO: show screen calling in Flutter
           break;
