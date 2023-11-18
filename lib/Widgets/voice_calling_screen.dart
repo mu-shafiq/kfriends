@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kfriends/Controllers/calls_controller.dart';
@@ -10,7 +11,7 @@ import 'package:kfriends/Utils/constants.dart';
 import 'dart:async';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import 'package:proximity_sensor/proximity_sensor.dart';
+// import 'package:proximity_sensor/proximity_sensor.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 
 class VoiceCallScreen extends StatefulWidget {
@@ -39,20 +40,21 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
   bool _isJoined = false;
   late RtcEngine agoraEngine;
 
-  late StreamSubscription<dynamic> _proximitySubscription;
+  // late StreamSubscription<dynamic> _proximitySubscription;
   bool _isNear = false;
 
   @override
   void initState() {
     super.initState();
+    print('on page 1?');
     // Set up an instance of Agora engine
     setupVoiceSDKEngine().then((value) => join());
-    _initProximitySensor();
+    // _initProximitySensor();
   }
 
   Future<void> setupVoiceSDKEngine() async {
     // retrieve or request microphone permission
-    await [Permission.microphone].request();
+    // await [Permission.microphone].request();
 
     //create an instance of the Agora engine
     agoraEngine = createAgoraRtcEngine();
@@ -72,7 +74,8 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
           });
         },
         onUserOffline: (RtcConnection connection, int remoteUid,
-            UserOfflineReasonType reason) {
+            UserOfflineReasonType reason)  {
+             
           Get.back();
           // callController.endsACall(
           //     widget.callId, _remoteUid != null ? "incoming" : "missed");
@@ -84,23 +87,23 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
     );
   }
 
-  void _initProximitySensor() {
-    _proximitySubscription = ProximitySensor.events.listen((int event) {
-      print("Proximity sensor event: $event");
-      if (_isJoined && _remoteUid != null) {
-        _isNear = (event > 0) ? true : false;
+  // void _initProximitySensor() {
+  //   _proximitySubscription = ProximitySensor.events.listen((int event) {
+  //     print("Proximity sensor event: $event");
+  //     if (_isJoined && _remoteUid != null) {
+  //       _isNear = (event > 0) ? true : false;
 
-        // Use KeepScreenOn to control the screen state
-        if (_isNear) {
-          KeepScreenOn.turnOff(); // This will turn off the screen
-        } else {
-          KeepScreenOn.turnOn(); // This will turn the screen back on
-        }
-        log('Proximity sensor event: $_isNear');
-        setState(() {});
-      }
-    });
-  }
+  //       // Use KeepScreenOn to control the screen state
+  //       if (_isNear) {
+  //         KeepScreenOn.turnOff(); // This will turn off the screen
+  //       } else {
+  //         KeepScreenOn.turnOn(); // This will turn the screen back on
+  //       }
+  //       log('Proximity sensor event: $_isNear');
+  //       setState(() {});
+  //     }
+  //   });
+  // }
 
   void join() async {
     ChannelMediaOptions options = const ChannelMediaOptions(
@@ -128,7 +131,8 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
   void dispose() {
     agoraEngine.leaveChannel();
     agoraEngine.release();
-    _proximitySubscription.cancel();
+      FlutterCallkitIncoming.endAllCalls();
+    // _proximitySubscription.cancel();
     super.dispose();
   }
 
@@ -138,6 +142,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('on page 2?');
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
