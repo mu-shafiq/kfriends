@@ -148,7 +148,7 @@ class ProfileSettings extends StatelessWidget {
                           'Edit →',
                           textAlign: TextAlign.right,
                           style: TextStyle(
-                            color: Color(0xFFA0A0A0),
+                            color: const Color(0xFFA0A0A0),
                             fontSize: 10.sp,
                             fontFamily: 'Pretendard',
                             fontWeight: FontWeight.w700,
@@ -565,44 +565,47 @@ class ProfileSettings extends StatelessWidget {
               ),
             ),
             10.verticalSpace,
-            Container(
-              width: .92.sw,
-              height: 46.h,
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                shadows: const [
-                  BoxShadow(
-                    color: Color(0x19000000),
-                    blurRadius: 8,
-                    offset: Offset(0, 0),
-                    spreadRadius: 0,
-                  ),
-                  BoxShadow(
-                    color: Color(0x19000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 2),
-                    spreadRadius: 0,
-                  )
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Logout',
-                      style: TextStyle(
-                        color: textBlackColor,
-                        fontSize: 10.sp,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
-                      ),
+            GestureDetector(
+              onTap: () => Get.offAllNamed(Routes.loginScreen),
+              child: Container(
+                width: .92.sw,
+                height: 46.h,
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  shadows: const [
+                    BoxShadow(
+                      color: Color(0x19000000),
+                      blurRadius: 8,
+                      offset: Offset(0, 0),
+                      spreadRadius: 0,
                     ),
+                    BoxShadow(
+                      color: Color(0x19000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 2),
+                      spreadRadius: 0,
+                    )
                   ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Logout',
+                        style: TextStyle(
+                          color: textBlackColor,
+                          fontSize: 10.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

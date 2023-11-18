@@ -206,10 +206,16 @@ final pages = [
         final String channelName = Get.arguments['channelName'] as String;
         final String token = Get.arguments['token'] as String;
         final int uid = Get.arguments['remoteUid'] as int;
+        final String callId = Get.arguments['callId'] as String;
+        final String receiverName = Get.arguments['receiverName'] as String;
+        final String receiverImage = Get.arguments['receiverImage'] as String;
         return VoiceCallScreen(
           channelName: channelName,
           token: token,
           uid: uid,
+          callId: callId,
+          receiverName: receiverName,
+          receiverImage: receiverImage,
         );
       }),
   GetPage(

@@ -60,6 +60,7 @@ dependencies:
   uuid: ^4.2.1
   country_code_picker: ^3.0.0
   carousel_slider: ^4.2.1
+  keep_screen_on: ^3.0.0
 
 dev_dependencies:
   flutter_test:

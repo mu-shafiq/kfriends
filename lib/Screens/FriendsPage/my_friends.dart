@@ -63,6 +63,7 @@ class MyFriends extends StatelessWidget {
                                 username: user.username,
                                 about: user.intro!,
                                 agoraUid: user.agoraUid,
+                                userModel: user,
                               ),
                             );
                           });
