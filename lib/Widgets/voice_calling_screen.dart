@@ -5,14 +5,16 @@ import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kfriends/Controllers/calls_controller.dart';
+import 'package:kfriends/Controllers/mongodb_controller.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/constants.dart';
 import 'dart:async';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-// import 'package:proximity_sensor/proximity_sensor.dart';
-import 'package:keep_screen_on/keep_screen_on.dart';
+import 'package:kfriends/Utils/keys.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart';
 
 class VoiceCallScreen extends StatefulWidget {
   final String channelName;
@@ -36,27 +38,53 @@ class VoiceCallScreen extends StatefulWidget {
 
 class _VoiceCallScreenState extends State<VoiceCallScreen> {
   final callController = Get.find<CallsController>();
+  final mongodbController = Get.find<MongoDBController>();
   int? _remoteUid;
   bool _isJoined = false;
   late RtcEngine agoraEngine;
 
-  // late StreamSubscription<dynamic> _proximitySubscription;
-  bool _isNear = false;
+  IO.Socket? socket;
+  String room = "exampleRoom";
+  String user = "exampleUser";
+
+  final bool _isNear = false;
 
   @override
   void initState() {
     super.initState();
-    print('on page 1?');
-    // Set up an instance of Agora engine
-    setupVoiceSDKEngine().then((value) => join());
-    // _initProximitySensor();
+    initSocket();
+    setupVoiceSDKEngine();
+    checkIfUserDeclineTheCall();
+  }
+
+  void initSocket() {
+    print("socket init");
+
+    socket = IO.io(
+        '${Keys.serverIP}:3000',
+        OptionBuilder()
+            .setTransports(['websocket']) // for Flutter or Dart VM
+            .disableAutoConnect() // disable auto-connection
+            .setExtraHeaders({'foo': 'bar'}) // optional
+            .build());
+    socket!.connect();
+    socket!.onConnect((_) {
+      print('socket connected');
+      socket!.emit("join", {"room": room, "user": user});
+    });
+
+    socket!.on("new user joined", (data) {
+      print("socket ${data['user']} ${data['message']}");
+    });
+
+    socket!.on("callEnded", (data) {
+      print("socket ${data['user']} ${data['message']}");
+    });
   }
 
   Future<void> setupVoiceSDKEngine() async {
-    // retrieve or request microphone permission
-    // await [Permission.microphone].request();
+    await [Permission.microphone].request();
 
-    //create an instance of the Agora engine
     agoraEngine = createAgoraRtcEngine();
     await agoraEngine.initialize(const RtcEngineContext(appId: agoraAppID));
 
@@ -74,8 +102,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
           });
         },
         onUserOffline: (RtcConnection connection, int remoteUid,
-            UserOfflineReasonType reason)  {
-             
+            UserOfflineReasonType reason) {
           Get.back();
           // callController.endsACall(
           //     widget.callId, _remoteUid != null ? "incoming" : "missed");
@@ -127,11 +154,24 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
     agoraEngine.leaveChannel();
   }
 
+  Future<void> checkIfUserDeclineTheCall() async {
+    await Future.delayed((const Duration(seconds: 10)));
+    String callStatus = await mongodbController
+        .getDocument("calls", widget.callId)
+        .then(
+            (Map<String, dynamic>? value) => value!["data"]['call']['status']);
+    if (callStatus == "ended") {
+      Get.back();
+    }
+  }
+
   @override
   void dispose() {
     agoraEngine.leaveChannel();
     agoraEngine.release();
-      FlutterCallkitIncoming.endAllCalls();
+    FlutterCallkitIncoming.endAllCalls();
+    callController.endsACall(
+        widget.callId, _remoteUid != null ? "incoming" : "missed");
     // _proximitySubscription.cancel();
     super.dispose();
   }
@@ -419,8 +459,8 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
                   InkWell(
                       onTap: () {
                         Get.back();
-                        // callController.endsACall(widget.callId,
-                        //     _remoteUid != null ? "incoming" : "missed");
+                        callController.endsACall(widget.callId,
+                            _remoteUid != null ? "incoming" : "missed");
                       },
                       child: Image.asset(Assets.reject))
                 ],

@@ -6,6 +6,7 @@ class Keys {
   static String fail = 'fail';
   static String success = 'success';
   static String id = 'id';
+  static String userId = 'userId';
   static String bearerToken = 'bearerToken';
   static String token = 'token';
   static String url = 'url';

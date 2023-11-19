@@ -56,21 +56,19 @@ class CallsController extends GetxController {
 
   Future<void> endsACall(String callId, String callLogType) async {
     try {
-      EasyLoading.show();
       Map<String, dynamic>? res = await mongodbController.callFunction(
         Keys.endCall,
         data: {
           'callId': callId,
+          'callLogType': callLogType,
         },
       );
-      EasyLoading.dismiss();
       if (res![Keys.status] == Keys.success) {
-        Get.back();
+        // Get.back();
       } else {
         mongodbController.throwExpection(res);
       }
     } catch (e) {
-      EasyLoading.dismiss();
       printError(info: e.toString());
       Helper().showToast(e.toString());
     }

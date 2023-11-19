@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Screens/BottomNavBar/bottom_nav_bar.dart';
@@ -566,7 +567,11 @@ class ProfileSettings extends StatelessWidget {
             ),
             10.verticalSpace,
             GestureDetector(
-              onTap: () => Get.offAllNamed(Routes.loginScreen),
+              onTap: () async {
+                const storage = FlutterSecureStorage();
+                await storage.deleteAll();
+                Get.offAllNamed(Routes.loginScreen);
+              },
               child: Container(
                 width: .92.sw,
                 height: 46.h,

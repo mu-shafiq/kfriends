@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:image_picker/image_picker.dart';
 import 'package:kfriends/Routes/get_routes.dart';
@@ -27,6 +28,8 @@ class AuthController extends GetxController {
   TextEditingController countryController = TextEditingController();
   TextEditingController universityController = TextEditingController();
   TextEditingController introController = TextEditingController();
+
+  final _storage = const FlutterSecureStorage();
 
   RxBool male = true.obs;
   RxBool terms = true.obs;
@@ -174,10 +177,11 @@ class AuthController extends GetxController {
         ),
       );
       if (res.data[Keys.status] == Keys.success) {
-        await SharedPreferences.getInstance().then((value) {
-          value.setString(Keys.bearerToken, res.data[Keys.data][Keys.token]);
-          value.setString(Keys.currentUser, res.data[Keys.data][Keys.user]);
-        });
+        await _storage.write(
+            key: Keys.bearerToken, value: res.data[Keys.data][Keys.token]);
+        await _storage.write(
+            key: Keys.userId, value: res.data[Keys.data][Keys.user][Keys.id]);
+        currentUser = UserModel.fromJson(res.data[Keys.data][Keys.user]);
         Helper().showToast("User Registered Successfully");
         Get.back();
         Get.offAllNamed(Routes.bottomNavBar);
@@ -204,26 +208,17 @@ class AuthController extends GetxController {
         ),
       );
       EasyLoading.dismiss();
-      print("the agora uid raw ${res.data[Keys.data][Keys.user]['agoraUid']}");
-      print(
-          "the agora uid ${UserModel.fromJson(res.data[Keys.data][Keys.user]).agoraUid}");
       if (res.data[Keys.status] == Keys.success) {
         if (res.data[Keys.data] != null) {
-          // await SharedPreferences.getInstance().then((value) {
-          //   value.setString(Keys.bearerToken, res.data[Keys.data][Keys.token]);
-          //   value.setString(
-          //       Keys.currentUser,
-          //       jsonEncode(
-          //           (res.data[Keys.data][Keys.user] as Map<String, dynamic>)));
+          await _storage.write(
+              key: Keys.bearerToken, value: res.data[Keys.data][Keys.token]);
+          await _storage.write(
+              key: Keys.userId, value: res.data[Keys.data][Keys.user][Keys.id]);
           currentUser = UserModel.fromJson(res.data[Keys.data][Keys.user]);
-
-          token = res.data[Keys.data][Keys.token];
-
           String fcmToken = (await FirebaseMessaging.instance.getToken())!;
           if (currentUser!.fcmToken.isEmpty ||
               currentUser!.fcmToken != fcmToken) {
             currentUser!.fcmToken = fcmToken;
-            print(fcmToken);
             await Get.find<MongoDBController>()
                 .patchDocument(Keys.users, currentUser!.id!, {
               "fcmToken": fcmToken,
@@ -243,6 +238,22 @@ class AuthController extends GetxController {
       EasyLoading.dismiss();
       printError(info: e.toString());
       Helper().showToast("Error in Logging In User");
+    }
+  }
+
+  Future<void> getCurrentUser() async {
+    try {
+      String userId = (await _storage.read(key: Keys.userId))!;
+      Map<String, dynamic>? res =
+          await Get.find<MongoDBController>().getDocument(Keys.users, userId);
+      if (res![Keys.status] == Keys.success) {
+        currentUser = UserModel.fromJson(res[Keys.data][Keys.user]);
+        print(currentUser!.toJson());
+      } else {
+        throw Exception(res[Keys.message]);
+      }
+    } catch (e) {
+      printError(info: e.toString());
     }
   }
 }

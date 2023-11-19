@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as parser;
 import 'package:dio/dio.dart';
@@ -11,16 +12,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // Create a custom interceptor
 class AuthInterceptor extends Interceptor {
-  final String bearerToken;
-  AuthInterceptor(this.bearerToken);
+  AuthInterceptor();
 
   @override
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    // String token = await SharedPreferences.getInstance()
-    //     .then((value) => value.getString(Keys.bearerToken) ?? "");
-    // Add the bearer token to the headers
-    options.headers["Authorization"] = "Bearer ${token ?? ''}";
+    const storage = FlutterSecureStorage();
+    String? token = await storage.read(key: Keys.bearerToken);
+    options.headers["Authorization"] = "Bearer ${token ?? ""}";
     super.onRequest(options, handler);
   }
 }
@@ -33,7 +32,7 @@ class MongoDBController extends GetxController {
   onInit() {
     super.onInit();
     Future.delayed(const Duration(seconds: 1), () async {
-      dio.interceptors.add(AuthInterceptor(token ?? ''));
+      dio.interceptors.add(AuthInterceptor());
     });
   }
 

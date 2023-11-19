@@ -62,6 +62,9 @@ dependencies:
   country_code_picker: ^3.0.0
   carousel_slider: ^4.2.1
   keep_screen_on: ^3.0.0
+  flutter_secure_storage: ^9.0.0
+  socket_io_client: ^2.0.3+1
+  # socket_io_client: ^2.0.3+1
 
 dev_dependencies:
   flutter_test:

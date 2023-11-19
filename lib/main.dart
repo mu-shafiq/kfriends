@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_callkit_incoming/entities/android_params.dart';
 // import 'package:flutter_callkit_incoming/entities/call_event.dart';
 import 'package:flutter_callkit_incoming/entities/call_kit_params.dart';
+import 'package:flutter_callkit_incoming/entities/entities.dart';
 import 'package:flutter_callkit_incoming/entities/ios_params.dart';
 import 'package:flutter_callkit_incoming/entities/notification_params.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:kfriends/Controllers/auth_controller.dart';
 import 'package:kfriends/Controllers/calls_controller.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Screens/SplashScreen/splash_screen.dart';
@@ -29,10 +31,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   }
 }
 
-// Handle incoming call
 Future<void> _handleIncomingCall(RemoteMessage message) async {
-  log('data ${message.data}');
-  // return;
+  await FlutterCallkitIncoming.endAllCalls();
   final params = CallKitParams(
     id: const Uuid().v4(),
     nameCaller: message.data[Keys.receiverName],
@@ -49,7 +49,7 @@ Future<void> _handleIncomingCall(RemoteMessage message) async {
       subtitle: "Missed call",
       callbackText: "Call back",
     ),
-    extra: message.data as Map<String, dynamic>,
+    extra: message.data,
     headers: <String, dynamic>{"apiKey": "Abc@123!", "platform": "flutter"},
     android: const AndroidParams(
       isCustomNotification: true,
@@ -76,6 +76,20 @@ Future<void> _handleIncomingCall(RemoteMessage message) async {
       ringtonePath: 'system_ringtone_default',
     ),
   );
+  FlutterCallkitIncoming.onEvent.listen((event) async {
+    if (event!.event == Event.actionCallDecline) {
+      String callId = message.data[Keys.callId];
+      final mongodbController = Get.find<MongoDBController>();
+      Map<String, dynamic>? res = await mongodbController.callFunction(
+        Keys.endCall,
+        data: {
+          'callId': callId,
+          'callLogType': "missed",
+        },
+      );
+      Helper().showToast("Call ended");
+    }
+  });
 
   await FlutterCallkitIncoming.showCallkitIncoming(params);
 }
@@ -91,16 +105,12 @@ void main() async {
 Future<void> _initializeFirebaseMessaging() async {
   FirebaseMessaging.instance.requestPermission();
 
-  // Foreground message listener
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    // Handle incoming messages
     if (message.data['type'] == 'call') {
-      // Handle incoming call
       _handleIncomingCall(message);
     }
   });
 
-  // Background message handler
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 }
 
@@ -112,51 +122,24 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  String? _currentUuid;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    //  FlutterCallkitIncoming.endAllCalls();
-
     WidgetsBinding.instance.addObserver(this);
-    //Check call when open app from terminated
-    // checkAndNavigationCallingPage();
   }
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    print(state);
     if (state == AppLifecycleState.resumed) {
-      print('??????????????? app resumed');
-      //Check call when open app from background
       checkAndNavigationCallingPage();
-    }
-  }
-
-  Future<dynamic> getCurrentCall() async {
-    //check current call from pushkit if possible
-
-    var calls = await FlutterCallkitIncoming.activeCalls();
-
-    log('all calls? ${calls}');
-    if (calls is List) {
-      if (calls.isNotEmpty) {
-        print('DATA: $calls');
-        // _currentUuid = calls[0]['id'];
-        return calls[0];
-      } else {
-        // _currentUuid = "";
-        return null;
-      }
     }
   }
 
   Future<void> checkAndNavigationCallingPage() async {
     var currentCall = await getCurrentCall();
-    log("currentCall ${currentCall}");
     if (currentCall != null) {
       Helper().showToast("Call accepted");
+      log("extra ${currentCall['extra']}");
       int agoraUid = int.parse(currentCall['extra'][Keys.uid].toString());
       String token = currentCall['extra'][Keys.token];
       String channelName = currentCall['extra'][Keys.channelName];
@@ -175,9 +158,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     }
   }
 
+  Future<dynamic> getCurrentCall() async {
+    var calls = await FlutterCallkitIncoming.activeCalls();
+    if (calls is List) {
+      log("all calls length ${calls.length}");
+      log("all calls $calls");
+      if (calls.isNotEmpty) {
+        return calls.last;
+      } else {
+        return null;
+      }
+    }
+  }
+
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
   }
@@ -194,6 +189,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         initialBinding: BindingsBuilder(() {
           Get.put(MongoDBController(), permanent: true);
           Get.put(CallsController(), permanent: true);
+          Get.put(AuthController(), permanent: true);
         }),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
