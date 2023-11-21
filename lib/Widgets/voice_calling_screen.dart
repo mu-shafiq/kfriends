@@ -54,7 +54,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
     super.initState();
     initSocket();
     setupVoiceSDKEngine();
-    checkIfUserDeclineTheCall();
+    checkIfUserDeclineTheCall().then((value) => join());
   }
 
   void initSocket() {

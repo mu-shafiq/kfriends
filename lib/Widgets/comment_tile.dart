@@ -175,7 +175,7 @@ class CommentTile extends StatelessWidget {
                     width: .7.sw,
                     child: ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: 3,
                         itemBuilder: (context, index) {
                           return Padding(
@@ -195,7 +195,7 @@ class CommentTile extends StatelessWidget {
   Widget reply(bool isme, String username, String comment, String time) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Container(
+        child: SizedBox(
           width: .9.sw,
           height: 77.h,
           child: Stack(
@@ -208,7 +208,7 @@ class CommentTile extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        isme ? Image.asset(Assets.reply) : SizedBox(),
+                        isme ? Image.asset(Assets.reply) : const SizedBox(),
                         Text(
                           isme ? 'My Reply' : username,
                           textAlign: TextAlign.center,
