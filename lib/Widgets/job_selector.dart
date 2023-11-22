@@ -76,7 +76,7 @@ class _JobSelectorState extends State<JobSelector> {
                 children: <Widget>[
                   Text(
                     widget.controller.text.isEmpty
-                        ? 'Select your Job'
+                        ? widget.hint
                         : widget.controller.text,
                     style: TextStyle(
                       color: widget.controller.text.isEmpty

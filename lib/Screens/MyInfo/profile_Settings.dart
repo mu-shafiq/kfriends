@@ -30,7 +30,7 @@ class ProfileSettings extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         title: Text(
-          'SETTING',
+          'SETTING'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,
@@ -73,7 +73,7 @@ class ProfileSettings extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'My Profile',
+              'My Profile'.tr,
               style: TextStyle(
                 color: textBlackColor,
                 fontSize: 14.sp,
@@ -133,7 +133,7 @@ class ProfileSettings extends StatelessWidget {
                       subtitle: SizedBox(
                         width: 171,
                         child: Text(
-                          '33 / MALE / Canada',
+                          '33 / ${'MALE'.tr} / Canada',
                           style: TextStyle(
                             color: textBlackColor,
                             fontSize: 10.sp,
@@ -146,7 +146,7 @@ class ProfileSettings extends StatelessWidget {
                       trailing: Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: Text(
-                          'Edit →',
+                          'Edit →'.tr,
                           textAlign: TextAlign.right,
                           style: TextStyle(
                             color: const Color(0xFFA0A0A0),
@@ -194,7 +194,7 @@ class ProfileSettings extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Remain Call Time',
+                          'Remain Call Time'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: textBlueColor,
@@ -249,7 +249,7 @@ class ProfileSettings extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        'Buy Call Package',
+                        'Buy Call Package'.tr,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: textWhiteColor,
@@ -266,7 +266,7 @@ class ProfileSettings extends StatelessWidget {
             ),
             35.verticalSpace,
             Text(
-              'Settting',
+              'Setting'.tr,
               style: TextStyle(
                 color: textBlackColor,
                 fontSize: 14.sp,
@@ -308,7 +308,7 @@ class ProfileSettings extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Notice',
+                        'Notice'.tr,
                         style: TextStyle(
                           color: textBlackColor,
                           fontSize: 10.sp,
@@ -366,7 +366,7 @@ class ProfileSettings extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Payment List',
+                        'Payment List'.tr,
                         style: TextStyle(
                           color: textBlackColor,
                           fontSize: 10.sp,
@@ -424,7 +424,7 @@ class ProfileSettings extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Call History',
+                        'Call History'.tr,
                         style: TextStyle(
                           color: textBlackColor,
                           fontSize: 10.sp,
@@ -482,7 +482,7 @@ class ProfileSettings extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'App Setting',
+                        'App Setting'.tr,
                         style: TextStyle(
                           color: textBlackColor,
                           fontSize: 10.sp,
@@ -540,7 +540,7 @@ class ProfileSettings extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Customer Center',
+                        'Customer Center'.tr,
                         style: TextStyle(
                           color: textBlackColor,
                           fontSize: 10.sp,
@@ -600,7 +600,7 @@ class ProfileSettings extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Logout',
+                        'Logout'.tr,
                         style: TextStyle(
                           color: textBlackColor,
                           fontSize: 10.sp,

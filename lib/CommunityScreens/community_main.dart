@@ -35,12 +35,11 @@ class _CommunityMainState extends State<CommunityMain> {
       width: 1.sw,
       child: Column(
         children: [
-          10.verticalSpace,
           CustomTextfield(
               ontap: () {
                 Get.toNamed(Routes.searchTimeline);
               },
-              hint: 'Enter your keyword 👀',
+              hint: 'Enter your keyword 👀'.tr,
               trailing: Image.asset(Assets.search),
               hintSize: 11.sp,
               height: 40.h,
@@ -52,7 +51,7 @@ class _CommunityMainState extends State<CommunityMain> {
             child: Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                'HOT TOPICS🔥',
+                'HOT TOPICS🔥'.tr,
                 style: TextStyle(
                   fontFamily: "Pretendard",
                   fontSize: 16.sp,
@@ -169,7 +168,7 @@ class _CommunityMainState extends State<CommunityMain> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'What Are You Thinking Now?',
+                  'What Are You Thinking Now?'.tr,
                   style: TextStyle(
                     color: textBlackColor,
                     fontSize: 16.sp,
@@ -337,7 +336,7 @@ class _CommunityMainState extends State<CommunityMain> {
                                     ),
                                     5.horizontalSpace,
                                     Text(
-                                      'Like',
+                                      'Like'.tr,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: textBlackColor,
@@ -357,7 +356,7 @@ class _CommunityMainState extends State<CommunityMain> {
                                     ),
                                     5.horizontalSpace,
                                     Text(
-                                      'Comment',
+                                      'Comment'.tr,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: textBlackColor,

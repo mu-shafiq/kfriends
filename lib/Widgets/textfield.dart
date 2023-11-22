@@ -49,11 +49,14 @@ class CustomTextfield extends StatelessWidget {
       child: TextFormField(
         textAlignVertical: TextAlignVertical.top,
         controller: controller,
-        keyboardType: textInputType,
+        keyboardType: textInputType ?? TextInputType.text,
         onTap: ontap,
         onChanged: onChanged,
         expands: true,
         maxLines: null,
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
         decoration: InputDecoration(
             contentPadding: EdgeInsets.all(8.h),
             suffixIcon: trailing ?? const SizedBox(),

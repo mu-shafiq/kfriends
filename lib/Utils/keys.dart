@@ -19,6 +19,9 @@ class Keys {
   static String callId = 'callId';
   static String receiverName = 'receiverName';
   static String receiverImage = 'receiverImage';
+  static String locale = 'locale';
+  static String english = 'english';
+  static String korean = 'korean';
 
   //functions
   static String generateId = 'generateId';

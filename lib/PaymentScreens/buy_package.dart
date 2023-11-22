@@ -26,7 +26,7 @@ class BuyPackage extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         title: Text(
-          'BUY CALL PACKAGE',
+          'BUY CALL PACKAGE'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,

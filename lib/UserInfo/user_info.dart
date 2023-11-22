@@ -35,7 +35,7 @@ class UserInfo extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          'PROFILE',
+          'PROFILE'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,
@@ -101,7 +101,7 @@ class UserInfo extends StatelessWidget {
                       ),
                       10.horizontalSpace,
                       Text(
-                        '${user.age} / ${user.gender.toUpperCase()} / ${user.country}',
+                        '${user.age} / ${user.gender.toUpperCase().tr} / ${user.country}',
                         style: TextStyle(
                           color: textBlackColor,
                           fontSize: 12.sp,
@@ -130,7 +130,7 @@ class UserInfo extends StatelessWidget {
                               ),
                             ),
                             TextSpan(
-                              text: 'Followers',
+                              text: 'Followers'.tr,
                               style: TextStyle(
                                 color: textGreyColor,
                                 fontSize: 12.sp,
@@ -158,7 +158,7 @@ class UserInfo extends StatelessWidget {
                               ),
                             ),
                             TextSpan(
-                              text: 'Following',
+                              text: 'Following'.tr,
                               style: TextStyle(
                                 color: textBlueColor,
                                 fontSize: 12.sp,
@@ -241,8 +241,8 @@ class UserInfo extends StatelessWidget {
                         width: 106.w,
                         height: 30.h,
                         text: user.followers.contains(currentUser!.id)
-                            ? 'Following'
-                            : 'Follow',
+                            ? 'Following'.tr
+                            : 'Follow'.tr,
                       ),
                       10.horizontalSpace,
                       RoundedSmallButton(
@@ -251,7 +251,7 @@ class UserInfo extends StatelessWidget {
                         textColor: textBlackColor,
                         width: 106.w,
                         height: 30.h,
-                        text: 'Private Chat',
+                        text: 'Private Chat'.tr,
                       ),
                       10.horizontalSpace,
                       RoundedSmallButton(
@@ -262,7 +262,7 @@ class UserInfo extends StatelessWidget {
                         textColor: textBlackColor,
                         width: 106.w,
                         height: 30.h,
-                        text: 'Call',
+                        text: 'Call'.tr,
                       ),
                     ],
                   ),
@@ -288,7 +288,7 @@ class UserInfo extends StatelessWidget {
                       height: 40.h,
                       width: .9.sw,
                       hintSize: 10.sp,
-                      hint: 'Leave your comment',
+                      hint: 'Leave your comment'.tr,
                       controller: TextEditingController()),
                   30.verticalSpace,
                 ],

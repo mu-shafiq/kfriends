@@ -17,7 +17,7 @@ class IncomingCall extends StatelessWidget {
           scrolledUnderElevation: 0,
           leading: const SizedBox(),
           title: Text(
-            'INCOMING CALL',
+            'INCOMING CALL'.tr,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: textBlackColor,

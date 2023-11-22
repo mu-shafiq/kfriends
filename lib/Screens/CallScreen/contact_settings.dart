@@ -23,7 +23,7 @@ class ContactSettings extends StatelessWidget {
               CustomTextfield(
                   height: 40.h,
                   width: .92.sw,
-                  hint: 'Search by name',
+                  hint: 'Search by name'.tr,
                   hintSize: 10.sp,
                   trailing: Image.asset(Assets.search),
                   controller: TextEditingController()),

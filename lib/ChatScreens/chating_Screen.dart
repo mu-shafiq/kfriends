@@ -86,7 +86,7 @@ class ChatingScreen extends StatelessWidget {
                 height: 40.h,
                 width: .80.sw,
                 hintSize: 10.sp,
-                hint: 'Enter your message here💬',
+                hint: 'Enter your message here💬'.tr,
                 controller: TextEditingController())
           ],
         ),

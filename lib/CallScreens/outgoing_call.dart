@@ -24,7 +24,7 @@ class _OutgoingCallState extends State<OutgoingCall> {
           scrolledUnderElevation: 0,
           leading: const SizedBox(),
           title: Text(
-            'CALL',
+            'CALL'.tr,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: textBlackColor,
@@ -100,13 +100,13 @@ class _OutgoingCallState extends State<OutgoingCall> {
                         ),
                         50.verticalSpace,
                         Image.asset(
-                          Assets.incomingblack,
+                          Assets.outgoing,
                           color: textBlackColor,
                           scale: 1,
                         ),
                         30.verticalSpace,
                         Text(
-                          'Waiting for Haley to pick up the phone...',
+                          'Waiting for Haley to pick up the phone...'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: textGreyColor,
@@ -168,7 +168,7 @@ class _OutgoingCallState extends State<OutgoingCall> {
                             ),
                             5.verticalSpace,
                             Text(
-                              'Speaker',
+                              'Speaker'.tr,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: textGreyColor,
@@ -217,7 +217,7 @@ class _OutgoingCallState extends State<OutgoingCall> {
                             ),
                             5.verticalSpace,
                             Text(
-                              'Mute',
+                              'Mute'.tr,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: textGreyColor,
@@ -266,7 +266,7 @@ class _OutgoingCallState extends State<OutgoingCall> {
                             ),
                             5.verticalSpace,
                             Text(
-                              'Record',
+                              'Record'.tr,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: textGreyColor,

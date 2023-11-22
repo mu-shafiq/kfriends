@@ -16,6 +16,8 @@ class MyInfoScreen extends StatefulWidget {
 
 class _MyInfoScreenState extends State<MyInfoScreen> {
   int selected = 0;
+  final bool isEnglish = Get.locale == const Locale('en', 'US');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +26,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
         leading: const SizedBox(),
         centerTitle: true,
         title: Text(
-          'MY HOME',
+          'MY HOME'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,
@@ -103,7 +105,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                    '33 / MALE / Canada',
+                    '33 / ${'MALE'.tr} / Canada',
                     style: TextStyle(
                       color: textBlackColor,
                       fontSize: 12.sp,
@@ -133,7 +135,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         ),
                       ),
                       TextSpan(
-                        text: 'Followers',
+                        text: 'Followers'.tr,
                         style: TextStyle(
                           color: textGreyColor,
                           fontSize: 12.sp,
@@ -161,7 +163,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         ),
                       ),
                       TextSpan(
-                        text: 'Following',
+                        text: 'Following'.tr,
                         style: TextStyle(
                           color: textGreyColor,
                           fontSize: 12.sp,
@@ -189,7 +191,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         ),
                       ),
                       TextSpan(
-                        text: 'Points',
+                        text: 'Points'.tr,
                         style: TextStyle(
                           color: textGreyColor,
                           fontSize: 12.sp,
@@ -217,39 +219,41 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
               ),
             ),
             40.verticalSpace,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                RoundedSmallButton(
-                  selected: selected == 0,
-                  onTap: () {
-                    setState(() {
-                      selected = 0;
-                    });
-                  },
-                  textColor: textBlackColor,
-                  width: 160.w,
-                  height: 30.h,
-                  text: 'COMMENTS',
-                  unselectedtextColor: textBlackColor,
-                ),
-                10.horizontalSpace,
-                RoundedSmallButton(
-                  selected: selected == 1,
-                  onTap: () {
-                    setState(() {
-                      selected = 1;
-                    });
-                  },
-                  textColor: textBlackColor,
-                  width: 160.w,
-                  height: 30.h,
-                  text: 'PRACTICE',
-                  unselectedtextColor: textBlackColor,
-                ),
-              ],
-            ),
-            30.verticalSpace,
+            isEnglish
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RoundedSmallButton(
+                        selected: selected == 0,
+                        onTap: () {
+                          setState(() {
+                            selected = 0;
+                          });
+                        },
+                        textColor: textBlackColor,
+                        width: 160.w,
+                        height: 30.h,
+                        text: 'COMMENTS',
+                        unselectedtextColor: textBlackColor,
+                      ),
+                      10.horizontalSpace,
+                      RoundedSmallButton(
+                        selected: selected == 1,
+                        onTap: () {
+                          setState(() {
+                            selected = 1;
+                          });
+                        },
+                        textColor: textBlackColor,
+                        width: 160.w,
+                        height: 30.h,
+                        text: 'PRACTICE',
+                        unselectedtextColor: textBlackColor,
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
+            isEnglish ? 30.verticalSpace : 10.verticalSpace,
             selected == 0
                 ? SizedBox(
                     width: .9.sw,

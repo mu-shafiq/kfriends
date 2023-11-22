@@ -26,7 +26,7 @@ class PaymentList extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         title: Text(
-          'PAYMENT LIST',
+          'PAYMENT LIST'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,

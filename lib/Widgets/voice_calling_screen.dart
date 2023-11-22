@@ -189,7 +189,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
           scrolledUnderElevation: 0,
           leading: const SizedBox(),
           title: Text(
-            'CALL',
+            'CALL'.tr,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: textBlackColor,
@@ -338,7 +338,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
                             ),
                             5.verticalSpace,
                             Text(
-                              'Speaker',
+                              'Speaker'.tr,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: textGreyColor,
@@ -391,7 +391,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
                             ),
                             5.verticalSpace,
                             Text(
-                              'Mute',
+                              'Mute'.tr,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: textGreyColor,
@@ -440,7 +440,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
                             ),
                             5.verticalSpace,
                             Text(
-                              'Record',
+                              'Record'.tr,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: textGreyColor,
@@ -474,11 +474,11 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
     String statusText;
 
     if (!_isJoined) {
-      statusText = 'Connecting...';
+      statusText = 'Connecting...'.tr;
     } else if (_remoteUid == null) {
-      statusText = 'Waiting for a user to join...';
+      statusText = 'Waiting for a user to join...'.tr;
     } else {
-      statusText = 'Connected to user';
+      statusText = 'Connected to user'.tr;
     }
 
     return statusText;

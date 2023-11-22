@@ -33,7 +33,7 @@ class _FriendsState extends State<Friends> {
                   },
                   child: Image.asset(Assets.backArrow)),
               title: Text(
-                'FRIENDS',
+                'FRIENDS'.tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: textBlackColor,
@@ -84,7 +84,7 @@ class _FriendsState extends State<Friends> {
                   textColor: textBlackColor,
                   width: 135.w,
                   height: 37.h,
-                  text: 'My Friends',
+                  text: 'My Friends'.tr,
                 ),
                 10.horizontalSpace,
                 RoundedSmallButton(
@@ -97,7 +97,7 @@ class _FriendsState extends State<Friends> {
                   textColor: textBlackColor,
                   width: 135.w,
                   height: 37.h,
-                  text: 'Find New Friends',
+                  text: 'Find New Friends'.tr,
                 ),
               ],
             ),

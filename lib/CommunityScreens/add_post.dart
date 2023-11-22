@@ -11,7 +11,8 @@ import 'package:kfriends/Widgets/tag_selector.dart';
 import 'package:kfriends/Widgets/textfield.dart';
 
 class AddPost extends StatelessWidget {
-  const AddPost({super.key});
+  AddPost({super.key});
+  final bool isEnglish = Get.locale == const Locale('en', 'US');
 
   @override
   Widget build(BuildContext context) {
@@ -19,146 +20,40 @@ class AddPost extends StatelessWidget {
       child: Scaffold(
         backgroundColor: bgWhiteColor,
         bottomNavigationBar: const BottomBar(index: 0),
-        body: Padding(
-          padding: EdgeInsets.all(15.0.sp),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                10.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        appBar: !isEnglish
+            ? AppBar(
+                leading: GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Image.asset(Assets.notification)),
+                elevation: 0,
+                scrolledUnderElevation: 0,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                        height: 35.h,
-                        width: 35.w,
-                        decoration: const ShapeDecoration(
-                          color: Color(0xFFF5F5F5),
-                          shape: OvalBorder(),
-                          shadows: [
-                            BoxShadow(
-                              color: Color(0x19000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 2),
-                              spreadRadius: 0,
-                            ),
-                            BoxShadow(
-                              color: Color(0x19000000),
-                              blurRadius: 8,
-                              offset: Offset(0, 0),
-                              spreadRadius: 0,
-                            )
-                          ],
-                        ),
-                        child: GestureDetector(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: Image.asset(Assets.backArrow))),
-                    Container(
-                      decoration: ShapeDecoration(
-                        color: buttonWhiteColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        shadows: const [
-                          BoxShadow(
-                            color: buttonBlackShadow1,
-                            blurRadius: 2,
-                            offset: Offset(0, 2),
-                            spreadRadius: 0,
-                          ),
-                          BoxShadow(
-                            color: buttonBlackShadow2,
-                            blurRadius: 8,
-                            offset: Offset(0, 0),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Get.offAndToNamed(Routes.bottomNavBar);
-                              },
-                              child: Container(
-                                width: 110.w,
-                                height: 26.h,
-                                decoration: null,
-                                child: GestureDetector(
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'PRACTICE ',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: textGreyColor,
-                                          fontSize: 10.sp,
-                                          fontFamily: 'Pretendard',
-                                          fontWeight: FontWeight.w700,
-                                          height: 0,
-                                        ),
-                                      ),
-                                      3.horizontalSpace,
-                                      Text(
-                                        '✍️',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: textYellowColor,
-                                            fontSize: 15.sp,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w700,
-                                            height: -0.5),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              child: Container(
-                                width: 110.w,
-                                height: 26.h,
-                                decoration: ShapeDecoration(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                  gradient: const LinearGradient(
-                                      end: Alignment.center,
-                                      begin: Alignment.topCenter,
-                                      colors: [
-                                        Color.fromARGB(255, 235, 226, 226),
-                                        Color.fromARGB(255, 231, 227, 227),
-                                        Color.fromARGB(255, 231, 227, 227),
-                                        Color.fromARGB(255, 243, 240, 240)
-                                      ]),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'COMMUNITY 🌏',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: textBlueColor,
-                                      fontSize: 10.sp,
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.w800,
-                                      height: 0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    Image.asset(
+                      Assets.appLogo2,
+                      scale: 15.sp,
                     ),
-                    Column(
+                    Text(
+                      'K-FRIENDS',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: textBlackColor,
+                        fontSize: 10.sp,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                ),
+                centerTitle: true,
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0, right: 15),
+                    child: Column(
                       children: [
                         Text.rich(
                           TextSpan(
@@ -166,7 +61,7 @@ class AddPost extends StatelessWidget {
                               TextSpan(
                                 text: '49,000 ',
                                 style: TextStyle(
-                                  color: Color(0xFFFFCC00),
+                                  color: textYellowColor,
                                   fontSize: 12.sp,
                                   fontFamily: 'Pretendard',
                                   fontWeight: FontWeight.w700,
@@ -193,14 +88,201 @@ class AddPost extends StatelessWidget {
                           decoration: const BoxDecoration(color: Colors.black),
                         ),
                       ],
-                    )
-                  ],
-                ),
-                30.verticalSpace,
+                    ),
+                  )
+                ],
+              )
+            : null,
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.0.sp),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                isEnglish ? 10.verticalSpace : 0.verticalSpace,
+                isEnglish
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              height: 35.h,
+                              width: 35.w,
+                              decoration: const ShapeDecoration(
+                                color: Color(0xFFF5F5F5),
+                                shape: OvalBorder(),
+                                shadows: [
+                                  BoxShadow(
+                                    color: Color(0x19000000),
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2),
+                                    spreadRadius: 0,
+                                  ),
+                                  BoxShadow(
+                                    color: Color(0x19000000),
+                                    blurRadius: 8,
+                                    offset: Offset(0, 0),
+                                    spreadRadius: 0,
+                                  )
+                                ],
+                              ),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    Get.back();
+                                  },
+                                  child: Image.asset(Assets.backArrow))),
+                          Container(
+                            decoration: ShapeDecoration(
+                              color: buttonWhiteColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              shadows: const [
+                                BoxShadow(
+                                  color: buttonBlackShadow1,
+                                  blurRadius: 2,
+                                  offset: Offset(0, 2),
+                                  spreadRadius: 0,
+                                ),
+                                BoxShadow(
+                                  color: buttonBlackShadow2,
+                                  blurRadius: 8,
+                                  offset: Offset(0, 0),
+                                  spreadRadius: 0,
+                                )
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.offAndToNamed(Routes.bottomNavBar);
+                                    },
+                                    child: Container(
+                                      width: 110.w,
+                                      height: 26.h,
+                                      decoration: null,
+                                      child: GestureDetector(
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'PRACTICE ',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: textGreyColor,
+                                                fontSize: 10.sp,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w700,
+                                                height: 0,
+                                              ),
+                                            ),
+                                            3.horizontalSpace,
+                                            Text(
+                                              '✍️',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: textYellowColor,
+                                                  fontSize: 15.sp,
+                                                  fontFamily: 'Pretendard',
+                                                  fontWeight: FontWeight.w700,
+                                                  height: -0.5),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    child: Container(
+                                      width: 110.w,
+                                      height: 26.h,
+                                      decoration: ShapeDecoration(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                        ),
+                                        gradient: const LinearGradient(
+                                            end: Alignment.center,
+                                            begin: Alignment.topCenter,
+                                            colors: [
+                                              Color.fromARGB(
+                                                  255, 235, 226, 226),
+                                              Color.fromARGB(
+                                                  255, 231, 227, 227),
+                                              Color.fromARGB(
+                                                  255, 231, 227, 227),
+                                              Color.fromARGB(255, 243, 240, 240)
+                                            ]),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'COMMUNITY 🌏',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: textBlueColor,
+                                            fontSize: 10.sp,
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w800,
+                                            height: 0,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Text.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: '49,000 ',
+                                      style: TextStyle(
+                                        color: Color(0xFFFFCC00),
+                                        fontSize: 12.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w700,
+                                        height: 0,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: 'P',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 10.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w700,
+                                        height: 0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              Container(
+                                width: 49.w,
+                                height: 1,
+                                decoration:
+                                    const BoxDecoration(color: Colors.black),
+                              ),
+                            ],
+                          )
+                        ],
+                      )
+                    : const SizedBox(),
+                isEnglish ? 30.verticalSpace : 0.verticalSpace,
                 TagSelector(
                     height: 40.h,
                     width: .9.sw,
-                    hint: 'Title',
+                    hint: 'Title'.tr,
                     hintSize: 10.sp,
                     trailing: Image.asset(Assets.drop),
                     controller: TextEditingController()),
@@ -208,14 +290,14 @@ class AddPost extends StatelessWidget {
                 CustomTextfield(
                     height: 40.h,
                     width: .9.sw,
-                    hint: 'Title',
+                    hint: 'Title'.tr,
                     hintSize: 10.sp,
                     controller: TextEditingController()),
                 20.verticalSpace,
                 CustomTextfield(
                     height: .4.sh,
                     width: .9.sw,
-                    hint: 'Enter your Contents...',
+                    hint: 'Enter your Contents...'.tr,
                     hintSize: 10.sp,
                     controller: TextEditingController()),
                 Row(
@@ -244,9 +326,10 @@ class AddPost extends StatelessWidget {
                                   Positioned(
                                     top: 22.h,
                                     right: 5.w,
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.close,
                                       color: Colors.white,
+                                      size: 15.sp,
                                     ),
                                   )
                                 ],
@@ -349,7 +432,7 @@ class AddPost extends StatelessWidget {
                                     bgColor: buttonBlueColor2,
                                     width: 160.w,
                                     height: 30.h,
-                                    text: 'Ok',
+                                    text: 'Ok'.tr,
                                   ),
                                 )
                               ],
@@ -363,7 +446,7 @@ class AddPost extends StatelessWidget {
                       shadow2: buttonBlackShadow2,
                       width: 170.w,
                       height: 35.h,
-                      text: 'Ok',
+                      text: 'Ok'.tr,
                     ),
                     5.horizontalSpace,
                     RoundedSmallButton(
@@ -373,7 +456,7 @@ class AddPost extends StatelessWidget {
                       textColor: textWhiteColor,
                       width: 170.w,
                       height: 35.h,
-                      text: 'Cancel',
+                      text: 'Cancel'.tr,
                     ),
                   ],
                 ),

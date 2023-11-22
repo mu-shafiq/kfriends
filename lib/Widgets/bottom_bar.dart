@@ -51,14 +51,14 @@ class BottomBar extends StatelessWidget {
             showUnselectedLabels: true,
             items: [
               BottomNavigationBarItem(
-                  icon: bottombaritem(Assets.home), label: "HOME"),
+                  icon: bottombaritem(Assets.home), label: "HOME".tr),
               BottomNavigationBarItem(
-                  icon: bottombaritem(Assets.friends), label: "FRIENDS"),
+                  icon: bottombaritem(Assets.friends), label: "FRIENDS".tr),
               BottomNavigationBarItem(icon: bottombaritem('logo'), label: ""),
               BottomNavigationBarItem(
-                  icon: bottombaritem(Assets.call), label: "CALL"),
+                  icon: bottombaritem(Assets.call), label: "CALL".tr),
               BottomNavigationBarItem(
-                  icon: bottombaritem(Assets.profile), label: "MY INFO"),
+                  icon: bottombaritem(Assets.profile), label: "MY INFO".tr),
             ],
           ),
         ),

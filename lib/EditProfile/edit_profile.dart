@@ -102,7 +102,7 @@ class EditProfile extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Nickname",
+                                "Nickname".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -122,7 +122,7 @@ class EditProfile extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Gender",
+                                "Gender".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -144,7 +144,7 @@ class EditProfile extends StatelessWidget {
                                   textColor: textBlackColor,
                                   width: 160.w,
                                   height: 30.h,
-                                  text: 'Male',
+                                  text: 'Male'.tr,
                                 ),
                                 RoundedSmallButton(
                                   selected: !controller.male.value,
@@ -154,7 +154,7 @@ class EditProfile extends StatelessWidget {
                                   textColor: textBlackColor,
                                   width: 160.w,
                                   height: 30.h,
-                                  text: 'Female',
+                                  text: 'Female'.tr,
                                 ),
                               ],
                             ),
@@ -162,7 +162,7 @@ class EditProfile extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Birthday",
+                                "Birthday".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -201,7 +201,7 @@ class EditProfile extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Job",
+                                "Job".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -216,7 +216,7 @@ class EditProfile extends StatelessWidget {
                               controller: controller.jobController,
                               width: .9.sw,
                               height: 40.h,
-                              hint: 'Select your Job',
+                              hint: 'Select your Job'.tr,
                               hintSize: 10.sp,
                               trailing: Image.asset(Assets.drop),
                             ),
@@ -224,7 +224,7 @@ class EditProfile extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Country",
+                                "Country".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -239,7 +239,7 @@ class EditProfile extends StatelessWidget {
                               controller: controller.countryController,
                               width: .9.sw,
                               height: 40.h,
-                              hint: 'Select your Country',
+                              hint: 'Select your Country'.tr,
                               hintSize: 10.sp,
                               trailing: Image.asset(Assets.drop),
                               textInputType: TextInputType.none,
@@ -285,7 +285,7 @@ class EditProfile extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Region",
+                                "Region".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -307,7 +307,7 @@ class EditProfile extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "English Proficiency",
+                                "English Proficiency".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -366,7 +366,7 @@ class EditProfile extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Korean Proficiency",
+                                "Korean Proficiency".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -425,7 +425,7 @@ class EditProfile extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Interests",
+                                "Interests".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -556,7 +556,7 @@ class EditProfile extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Text(
-                                    "University",
+                                    "University".tr,
                                     style: TextStyle(
                                       fontFamily: "Pretendard",
                                       fontSize: 14.sp,
@@ -568,7 +568,7 @@ class EditProfile extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Text(
-                                      " (Optional)",
+                                      " (Optional)".tr,
                                       style: TextStyle(
                                         fontFamily: "Pretendard",
                                         fontSize: 10.sp,
@@ -591,7 +591,7 @@ class EditProfile extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Introduce yourself",
+                                "Introduce yourself".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -608,7 +608,8 @@ class EditProfile extends StatelessWidget {
                               height: .25.sh,
                               hintSize: 10.sp,
                               hint:
-                                  'Hi, Nice to meet you guys. I’m looking for new friends!',
+                                  'Hi, Nice to meet you guys. I’m looking for new friends!'
+                                      .tr,
                             ),
                             20.verticalSpace,
                             Row(
@@ -707,7 +708,7 @@ class EditProfile extends StatelessWidget {
                                                   selected: true,
                                                   width: 160.w,
                                                   height: 30.h,
-                                                  text: 'Ok',
+                                                  text: 'Ok'.tr,
                                                 ),
                                               )
                                             ],
@@ -724,7 +725,7 @@ class EditProfile extends StatelessWidget {
                                   selectedColor: buttonBlueColor2,
                                   width: 160.w,
                                   height: 35.h,
-                                  text: 'Ok',
+                                  text: 'Ok'.tr,
                                 ),
                               ],
                             ),

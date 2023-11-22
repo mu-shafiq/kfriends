@@ -64,7 +64,7 @@ class _CallScreenState extends State<CallScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Total Call Duration',
+                            'Total Call Duration'.tr,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: textWhiteColor,
@@ -114,7 +114,7 @@ class _CallScreenState extends State<CallScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Remain Call Time',
+                            'Remain Call Time'.tr,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: textWhiteColor,

@@ -115,7 +115,7 @@ final pages = [
   ),
   GetPage(
     name: Routes.joinFormScreen,
-    page: () => const JoinFormScreen(),
+    page: () => JoinFormScreen(),
   ),
   GetPage(
     name: Routes.bottomNavBar,
@@ -220,7 +220,7 @@ final pages = [
       }),
   GetPage(
     name: Routes.addPost,
-    page: () => const AddPost(),
+    page: () => AddPost(),
   ),
   GetPage(
     name: Routes.communityMain,
@@ -232,7 +232,7 @@ final pages = [
   ),
   GetPage(
     name: Routes.postView,
-    page: () => const PostView(),
+    page: () => PostView(),
   ),
   GetPage(
     name: Routes.searchTimeline,
@@ -240,11 +240,11 @@ final pages = [
   ),
   GetPage(
     name: Routes.timlineView,
-    page: () => const TimelineView(),
+    page: () => TimelineView(),
   ),
   GetPage(
     name: Routes.writetimeline,
-    page: () => const WriteTimeLine(),
+    page: () => WriteTimeLine(),
   ),
   GetPage(
     name: Routes.customerCenter,

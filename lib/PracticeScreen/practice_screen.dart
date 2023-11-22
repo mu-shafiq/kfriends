@@ -20,7 +20,6 @@ class PracticeScreen extends StatelessWidget {
           padding: EdgeInsets.only(left: 15.w, right: 15.w),
           child: Column(
             children: [
-              15.verticalSpace,
               GestureDetector(
                 onTap: () {
                   Get.toNamed(Routes.koreanMainScreen);

@@ -29,7 +29,7 @@ class Notice extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         title: Text(
-          'NOTICE',
+          'NOTICE'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,
@@ -74,7 +74,7 @@ class Notice extends StatelessWidget {
             CustomTextfield(
                 height: 40.h,
                 width: .92.sw,
-                hint: 'Enter your keyword 👀',
+                hint: 'Enter your keyword 👀'.tr,
                 trailing: Image.asset(Assets.search),
                 controller: TextEditingController()),
             30.verticalSpace,

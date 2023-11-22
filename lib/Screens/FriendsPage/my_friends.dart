@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,11 +21,11 @@ class MyFriends extends StatelessWidget {
         builder: (controller) {
           return Column(
             children: [
-              30.verticalSpace,
+              5.verticalSpace,
               CustomTextfield(
                 height: 40.h,
                 width: .9.sw,
-                hint: 'Search by name',
+                hint: 'Search by name'.tr,
                 hintSize: 12.sp,
                 trailing: Image.asset(Assets.search),
                 controller: controller.myFriendController,
@@ -44,7 +46,7 @@ class MyFriends extends StatelessWidget {
                       }
                       List<UserModel> users = snapshot.data ?? [];
                       if (users.isEmpty) {
-                        return const Center(child: Text('No friends'));
+                        return Center(child: Text('No friends'.tr));
                       }
                       return ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
@@ -52,9 +54,9 @@ class MyFriends extends StatelessWidget {
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             UserModel user = users[index];
+                            log(user.toJson().toString());
                             return InkWell(
                               onTap: () {
-                                
                                 Get.toNamed(Routes.userInfo, arguments: user);
                               },
                               child: UserTile2(

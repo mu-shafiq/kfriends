@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
           await Get.find<AuthController>().getCurrentUser();
           Get.offAllNamed(Routes.bottomNavBar);
         } else {
-          Get.offAllNamed(Routes.loginScreen);
+          Get.offAllNamed(Routes.usersScreen);
         }
       });
     });

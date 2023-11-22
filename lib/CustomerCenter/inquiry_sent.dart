@@ -23,7 +23,7 @@ class INquirySent extends StatelessWidget {
               },
               child: Image.asset(Assets.backArrow)),
           title: Text(
-            'CUSTOMER CENTER',
+            'CUSTOMER CENTER'.tr,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: textBlackColor,
@@ -44,7 +44,7 @@ class INquirySent extends StatelessWidget {
               Image.asset(Assets.blueTick2),
               5.verticalSpace,
               Text(
-                'Your inquiry has been successfully sent!',
+                'Your inquiry has been successfully sent!'.tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: textBlackColor,
@@ -58,7 +58,8 @@ class INquirySent extends StatelessWidget {
               SizedBox(
                 width: .65.sw,
                 child: Text(
-                  'We’ll check it and  take appropriate action.We’re trying to respond back as soon as possible.Thank you!  ',
+                  'We’ll check it and  take appropriate action.We’re trying to respond back as soon as possible.Thank you!  '
+                      .tr,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: textBlackColor,
@@ -80,7 +81,7 @@ class INquirySent extends StatelessWidget {
                 selectedColor: buttonBlueColor2,
                 width: 160.w,
                 height: 35.h,
-                text: 'Back',
+                text: 'Back'.tr,
               ),
             ],
           ),

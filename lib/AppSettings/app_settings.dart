@@ -17,6 +17,8 @@ class AppSettings extends StatefulWidget {
 
 class _AppSettingsState extends State<AppSettings> {
   int selected = 0;
+  final bool isEnglish = Get.locale == const Locale('en', 'US');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +35,7 @@ class _AppSettingsState extends State<AppSettings> {
         elevation: 0,
         scrolledUnderElevation: 0,
         title: Text(
-          'APP SETTING',
+          'APP SETTING'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,
@@ -79,7 +81,7 @@ class _AppSettingsState extends State<AppSettings> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Chat Push',
+                  'Chat Push'.tr,
                   style: TextStyle(
                     color: textBlackColor,
                     fontSize: 10.sp,
@@ -220,7 +222,7 @@ class _AppSettingsState extends State<AppSettings> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Notice Push',
+                  'Notice Push'.tr,
                   style: TextStyle(
                     color: textBlackColor,
                     fontSize: 10.sp,
@@ -362,7 +364,7 @@ class _AppSettingsState extends State<AppSettings> {
                 Get.toNamed(Routes.terms);
               },
               child: Text(
-                'Use & Terms',
+                'Use & Terms'.tr,
                 style: TextStyle(
                   color: textBlackColor,
                   fontSize: 10.sp,
@@ -372,9 +374,27 @@ class _AppSettingsState extends State<AppSettings> {
                 ),
               ),
             ),
+            !isEnglish ? 20.verticalSpace : 0.verticalSpace,
+            !isEnglish
+                ? GestureDetector(
+                    onTap: () {
+                      Get.toNamed(Routes.terms);
+                    },
+                    child: Text(
+                      '개인정보처리방침',
+                      style: TextStyle(
+                        color: textBlackColor,
+                        fontSize: 10.sp,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w700,
+                        height: 0,
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
             20.verticalSpace,
             Text(
-              'Delete Account',
+              isEnglish ? 'Delete Account' : '회원탈퇴',
               style: TextStyle(
                 color: textBlackColor,
                 fontSize: 10.sp,

@@ -53,7 +53,8 @@ class UserTile2 extends StatelessWidget {
           ),
           child: ListTile(
             horizontalTitleGap: 5.w,
-            contentPadding: EdgeInsets.only(left: 5.w, top: 10.h, bottom: 10.h),
+            contentPadding: EdgeInsets.only(
+                left: 5.w, top: 10.h, bottom: 10.h, right: 10.w),
             leading: CircleAvatar(
               radius: 35.r,
               backgroundImage: Image.asset(
@@ -106,7 +107,10 @@ class UserTile2 extends StatelessWidget {
                       onTap: () {
                         Get.toNamed(Routes.chatMainScreen);
                       },
-                      child: Image.asset(Assets.message)),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.sp),
+                        child: Image.asset(Assets.message),
+                      )),
                   10.horizontalSpace,
                   GetBuilder<CallsController>(
                       init: CallsController(),
@@ -121,31 +125,34 @@ class UserTile2 extends StatelessWidget {
                               userModel.id!,
                             );
                           },
-                          child: Container(
-                            height: 20,
-                            width: 20,
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFF5F5F5),
-                              shape: OvalBorder(),
-                              shadows: [
-                                BoxShadow(
-                                  color: Color(0x19000000),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 2),
-                                  spreadRadius: 0,
-                                ),
-                                BoxShadow(
-                                  color: Color(0x19000000),
-                                  blurRadius: 8,
-                                  offset: Offset(0, 0),
-                                  spreadRadius: 0,
-                                )
-                              ],
-                            ),
-                            child: Image.asset(
-                              Assets.call,
-                              scale: 1.9.sp,
-                              color: textBlackColor,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10.sp),
+                            child: Container(
+                              height: 20,
+                              width: 20,
+                              decoration: const ShapeDecoration(
+                                color: Color(0xFFF5F5F5),
+                                shape: OvalBorder(),
+                                shadows: [
+                                  BoxShadow(
+                                    color: Color(0x19000000),
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2),
+                                    spreadRadius: 0,
+                                  ),
+                                  BoxShadow(
+                                    color: Color(0x19000000),
+                                    blurRadius: 8,
+                                    offset: Offset(0, 0),
+                                    spreadRadius: 0,
+                                  )
+                                ],
+                              ),
+                              child: Image.asset(
+                                Assets.call,
+                                scale: 1.9.sp,
+                                color: textBlackColor,
+                              ),
                             ),
                           ),
                         );

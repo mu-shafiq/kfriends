@@ -17,13 +17,14 @@ class CallHistory extends StatefulWidget {
 
 class _CallHistoryState extends State<CallHistory> {
   int selected = 0;
+  final bool isEnglish = Get.locale == const Locale('en', 'US');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        leading: selected != 2
+        leading: selected != 2 && isEnglish
             ? GestureDetector(
                 onTap: () {
                   Get.toNamed(Routes.bottomNavBar);
@@ -87,7 +88,7 @@ class _CallHistoryState extends State<CallHistory> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'CALL HISTORY ',
+                          'CALL HISTORY'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color:
@@ -100,7 +101,7 @@ class _CallHistoryState extends State<CallHistory> {
                         ),
                         3.horizontalSpace,
                         Text(
-                          '📞',
+                          ' 📞',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color:
@@ -143,7 +144,7 @@ class _CallHistoryState extends State<CallHistory> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'CONTACT ',
+                          'CONTACT'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: selected == 1 || selected == 2
@@ -159,7 +160,7 @@ class _CallHistoryState extends State<CallHistory> {
                         Ink(
                           color: textPinkColor,
                           child: Text(
-                            '☎️',
+                            ' ☎️',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: selected == 1 || selected == 2

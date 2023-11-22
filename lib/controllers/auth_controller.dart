@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -224,6 +225,7 @@ class AuthController extends GetxController {
               "fcmToken": fcmToken,
             });
           }
+          log(res.data.toString());
           // });
           Helper().showToast("User Logged In Successfully");
           Get.back();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:kfriends/Screens/CallScreen/call_history.dart';
 import 'package:kfriends/Screens/CallScreen/call_screen.dart';
 import 'package:kfriends/Screens/FriendsPage/friends.dart';
@@ -10,7 +11,8 @@ import 'package:kfriends/Utils/colors.dart';
 
 class BottomNavBar extends StatefulWidget {
   final int initialIndex;
-  const BottomNavBar({super.key, required this.initialIndex});
+  final int? homeIndex;
+  const BottomNavBar({super.key, required this.initialIndex, this.homeIndex});
 
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
@@ -19,8 +21,10 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   late int _selectedTab = widget.initialIndex;
 
-  final List _pages = [
-    const HomePage(),
+  late final List _pages = [
+    HomePage(
+      index: widget.homeIndex ?? 0,
+    ),
     const Friends(),
     const SizedBox(),
     CallHistory(),
@@ -85,15 +89,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 showUnselectedLabels: true,
                 items: [
                   BottomNavigationBarItem(
-                      icon: bottombaritem(Assets.home), label: "HOME"),
+                      icon: bottombaritem(Assets.home), label: "HOME".tr),
                   BottomNavigationBarItem(
-                      icon: bottombaritem(Assets.friends), label: "FRIENDS"),
+                      icon: bottombaritem(Assets.friends), label: "FRIENDS".tr),
                   BottomNavigationBarItem(
                       icon: bottombaritem('logo'), label: ""),
                   BottomNavigationBarItem(
-                      icon: bottombaritem(Assets.call), label: "CALL"),
+                      icon: bottombaritem(Assets.call), label: "CALL".tr),
                   BottomNavigationBarItem(
-                      icon: bottombaritem(Assets.profile), label: "MY INFO"),
+                      icon: bottombaritem(Assets.profile), label: "MY INFO".tr),
                 ],
               ),
             ),

@@ -28,7 +28,7 @@ class _ChatSettingsState extends State<ChatSettings> {
             },
             child: Image.asset(Assets.blueTick)),
         title: Text(
-          'MY CHAT',
+          'MY CHAT'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,

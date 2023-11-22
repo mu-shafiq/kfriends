@@ -30,7 +30,7 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
             },
             child: Image.asset(Assets.settings)),
         title: Text(
-          'MY CHAT',
+          'MY CHAT'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,

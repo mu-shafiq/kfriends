@@ -2,12 +2,8 @@ import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_callkit_incoming/entities/android_params.dart';
 // import 'package:flutter_callkit_incoming/entities/call_event.dart';
-import 'package:flutter_callkit_incoming/entities/call_kit_params.dart';
 import 'package:flutter_callkit_incoming/entities/entities.dart';
-import 'package:flutter_callkit_incoming/entities/ios_params.dart';
-import 'package:flutter_callkit_incoming/entities/notification_params.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -15,6 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kfriends/Controllers/auth_controller.dart';
 import 'package:kfriends/Controllers/calls_controller.dart';
+import 'package:kfriends/Languages/languages.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Screens/SplashScreen/splash_screen.dart';
 import 'package:kfriends/Controllers/mongodb_controller.dart';
@@ -23,6 +20,7 @@ import 'package:kfriends/Utils/keys.dart';
 import 'package:kfriends/Utils/navigation_service.dart';
 // import 'package:kfriends/Widgets/voice_calling_screen.dart';
 import 'package:kfriends/firebase_options.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -98,8 +96,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   _initializeFirebaseMessaging();
-
-  runApp(const MyApp());
+  String locale = await getLocale();
+  runApp(MyApp(
+    local: locale,
+  ));
 }
 
 Future<void> _initializeFirebaseMessaging() async {
@@ -114,8 +114,14 @@ Future<void> _initializeFirebaseMessaging() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 }
 
+Future<String> getLocale() async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  return sharedPreferences.getString('locale') ?? '';
+}
+
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final String local;
+  const MyApp({Key? key, required this.local}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -183,6 +189,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       designSize: const Size(375, 812),
       builder: (context, _) => GetMaterialApp(
         navigatorKey: NavigationService.instance.navigationKey,
+        translations: Languages(),
+        locale: widget.local.isEmpty || widget.local == Keys.english
+            ? const Locale('en', 'US')
+            : const Locale('ko', 'KR'),
+        fallbackLocale: const Locale('en', 'US'),
         title: 'K Friends',
         getPages: pages,
         builder: EasyLoading.init(),
