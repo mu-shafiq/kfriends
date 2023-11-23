@@ -43,7 +43,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
   bool _isJoined = false;
   late RtcEngine agoraEngine;
 
-  IO.Socket? socket;
+  Socket? socket;
   String room = "exampleRoom";
   String user = "exampleUser";
 
@@ -52,35 +52,32 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
   @override
   void initState() {
     super.initState();
-    initSocket();
+
     setupVoiceSDKEngine();
     checkIfUserDeclineTheCall().then((value) => join());
   }
 
-  void initSocket() {
-    print("socket init");
+  // void initSocket() {
+  //   log("socket init");
 
-    socket = IO.io(
-        '${Keys.serverIP}:3000',
-        OptionBuilder()
-            .setTransports(['websocket']) // for Flutter or Dart VM
-            .disableAutoConnect() // disable auto-connection
-            .setExtraHeaders({'foo': 'bar'}) // optional
-            .build());
-    socket!.connect();
-    socket!.onConnect((_) {
-      print('socket connected');
-      socket!.emit("join", {"room": room, "user": user});
-    });
+  //   socket = IO.io('${Keys.serverIP}:3000', <String, dynamic>{
+  //     'transports': ['websocket'],
+  //     'autoConnect': true,
+  //   });
+  //   socket!.connect();
+  //   socket!.onConnect((_) {
+  //     log('socket connected............');
+  //     socket!.emit("join", {"room": room, "user": user});
+  //   });
 
-    socket!.on("new user joined", (data) {
-      print("socket ${data['user']} ${data['message']}");
-    });
+  //   socket!.on("new user joined", (data) {
+  //     print("socket ${data['user']} ${data['message']}");
+  //   });
 
-    socket!.on("callEnded", (data) {
-      print("socket ${data['user']} ${data['message']}");
-    });
-  }
+  //   socket!.on("callEnded", (data) {
+  //     print("socket ${data['user']} ${data['message']}");
+  //   });
+  // }
 
   Future<void> setupVoiceSDKEngine() async {
     await [Permission.microphone].request();

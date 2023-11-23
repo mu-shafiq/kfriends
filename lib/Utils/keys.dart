@@ -1,5 +1,7 @@
 class Keys {
   static String serverIP = 'http://usdvault.com';
+  static String localHostIP = 'http://192.168.18.90';
+
   static String status = 'status';
   static String message = 'message';
   static String data = 'data';

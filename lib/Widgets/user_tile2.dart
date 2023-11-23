@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,6 +8,7 @@ import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/helper.dart';
+import 'package:kfriends/Utils/socket.dart';
 import 'package:kfriends/model/user.dart';
 
 class UserTile2 extends StatelessWidget {
@@ -105,7 +108,8 @@ class UserTile2 extends StatelessWidget {
                 children: [
                   InkWell(
                       onTap: () {
-                        Get.toNamed(Routes.chatMainScreen);
+                        // Get.toNamed(Routes.chatMainScreen);
+                        log(SocketNew.socket.acks.toString());
                       },
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 10.sp),

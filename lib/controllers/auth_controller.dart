@@ -15,6 +15,7 @@ import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Utils/helper.dart';
 import 'package:kfriends/Utils/keys.dart';
+import 'package:kfriends/Utils/socket.dart';
 import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Controllers/mongodb_controller.dart';
 import 'package:kfriends/model/user.dart';
@@ -257,5 +258,11 @@ class AuthController extends GetxController {
     } catch (e) {
       printError(info: e.toString());
     }
+  }
+
+  @override
+  void onInit() {
+    getCurrentUser();
+    super.onInit();
   }
 }

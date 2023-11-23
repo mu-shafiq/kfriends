@@ -18,10 +18,14 @@ import 'package:kfriends/Controllers/mongodb_controller.dart';
 import 'package:kfriends/Utils/helper.dart';
 import 'package:kfriends/Utils/keys.dart';
 import 'package:kfriends/Utils/navigation_service.dart';
+import 'package:kfriends/Utils/socket.dart';
 // import 'package:kfriends/Widgets/voice_calling_screen.dart';
 import 'package:kfriends/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
+
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (message.data['type'] == 'call') {
@@ -97,10 +101,26 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   _initializeFirebaseMessaging();
   String locale = await getLocale();
+  SocketNew.connectSocket();
   runApp(MyApp(
     local: locale,
   ));
 }
+
+// void testSocket() async {
+//   log("socket init");
+//   Socket socket = IO.io('${Keys.serverIP}:3000', <String, dynamic>{
+//     'transports': ['websocket'],
+//     'autoConnect': true,
+//   });
+//   socket.connect();
+//   socket.onError((data) {
+//     log('here is the errorrr..........\n$data');
+//   });
+//   socket.onConnect((_) {
+//     log('socket connected........................');
+//   });
+// }
 
 Future<void> _initializeFirebaseMessaging() async {
   FirebaseMessaging.instance.requestPermission();
