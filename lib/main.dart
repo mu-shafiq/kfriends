@@ -13,19 +13,15 @@ import 'package:kfriends/Controllers/auth_controller.dart';
 import 'package:kfriends/Controllers/calls_controller.dart';
 import 'package:kfriends/Languages/languages.dart';
 import 'package:kfriends/Routes/get_routes.dart';
+import 'package:kfriends/Screens/BottomNavBar/bottom_nav_bar.dart';
 import 'package:kfriends/Screens/SplashScreen/splash_screen.dart';
 import 'package:kfriends/Controllers/mongodb_controller.dart';
 import 'package:kfriends/Utils/helper.dart';
 import 'package:kfriends/Utils/keys.dart';
 import 'package:kfriends/Utils/navigation_service.dart';
-import 'package:kfriends/Utils/socket.dart';
-// import 'package:kfriends/Widgets/voice_calling_screen.dart';
 import 'package:kfriends/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-
-import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:socket_io_client/socket_io_client.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -137,6 +133,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+
     checkAndNavigationCallingPage();
   }
 
@@ -148,6 +145,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   Future<void> checkAndNavigationCallingPage() async {
+    log('this functions is called.......');
     var currentCall = await getCurrentCall();
     if (currentCall != null) {
       Helper().showToast("Call accepted");
@@ -158,8 +156,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       String callId = currentCall['extra'][Keys.callId];
       String receiverName = currentCall['extra'][Keys.receiverName];
       String receiverImage = currentCall['extra'][Keys.receiverImage];
-      NavigationService.instance
-          .pushNamedIfNotCurrent(Routes.voiceCallScreen, args: {
+
+      NavigationService.instance.pushNamed(Routes.voiceCallScreen, args: {
         'channelName': channelName,
         'remoteUid': agoraUid,
         'token': token,

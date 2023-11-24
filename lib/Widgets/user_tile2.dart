@@ -9,6 +9,7 @@ import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/helper.dart';
 import 'package:kfriends/Utils/socket.dart';
+import 'package:kfriends/controllers/chat_controller.dart';
 import 'package:kfriends/model/user.dart';
 
 class UserTile2 extends StatelessWidget {
@@ -108,9 +109,8 @@ class UserTile2 extends StatelessWidget {
                 children: [
                   InkWell(
                       onTap: () {
-                        // Get.toNamed(Routes.chatMainScreen);
-                        SocketNew.sendMessageSocket(
-                            'userid', 'hello my friend');
+                        Get.find<ChatController>().setSelectedUser(userModel);
+                        Get.toNamed(Routes.chatingScreen);
                       },
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 10.sp),

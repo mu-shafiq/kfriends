@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kfriends/Controllers/calls_controller.dart';
 import 'package:kfriends/Controllers/mongodb_controller.dart';
+import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/constants.dart';
@@ -52,7 +53,6 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
   @override
   void initState() {
     super.initState();
-
     setupVoiceSDKEngine();
     checkIfUserDeclineTheCall().then((value) => join());
   }
@@ -100,7 +100,8 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
         },
         onUserOffline: (RtcConnection connection, int remoteUid,
             UserOfflineReasonType reason) {
-          Get.back();
+          callSessionEnded();
+
           // callController.endsACall(
           //     widget.callId, _remoteUid != null ? "incoming" : "missed");
           // setState(() {
@@ -158,7 +159,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
         .then(
             (Map<String, dynamic>? value) => value!["data"]['call']['status']);
     if (callStatus == "ended") {
-      Get.back();
+      callSessionEnded();
     }
   }
 
@@ -169,6 +170,8 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
     FlutterCallkitIncoming.endAllCalls();
     callController.endsACall(
         widget.callId, _remoteUid != null ? "incoming" : "missed");
+    callSessionEnded();
+
     // _proximitySubscription.cancel();
     super.dispose();
   }
@@ -277,7 +280,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
                             fontWeight: FontWeight.w400,
                             height: 0,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ],
@@ -455,7 +458,8 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
                   30.verticalSpace,
                   InkWell(
                       onTap: () {
-                        Get.back();
+                        callSessionEnded();
+
                         callController.endsACall(widget.callId,
                             _remoteUid != null ? "incoming" : "missed");
                       },
@@ -479,5 +483,16 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
     }
 
     return statusText;
+  }
+
+  callSessionEnded() {
+    if (Get.previousRoute.compareTo('/VoiceCallScreen') == 0 ||
+        Get.previousRoute.compareTo('/') == 0) {
+      1.5.seconds.delay().then((value) {
+        Get.offAllNamed(Routes.bottomNavBar);
+      });
+    } else {
+      Get.back();
+    }
   }
 }

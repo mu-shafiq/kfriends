@@ -27,7 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
       inLoggedIn().then((value) async {
         if (value) {
           await Get.find<AuthController>().getCurrentUser();
-          Get.offAllNamed(Routes.bottomNavBar);
+
+          if (Get.currentRoute.compareTo('/VoiceCallScreen') != 0) {
+            Get.offAllNamed(Routes.bottomNavBar);
+          }
         } else {
           Get.offAllNamed(Routes.usersScreen);
         }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -17,6 +19,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late int selected = widget.index ?? 0;
   final bool isEnglish = Get.locale == const Locale('en', 'US');
+  @override
+  void initState() {
+    log('here is current ${Get.currentRoute}');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

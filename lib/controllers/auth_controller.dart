@@ -47,6 +47,7 @@ class AuthController extends GetxController {
 
   Rx<File>? profileImage;
   Rx<File>? featuredImage;
+  UserModel? userModel;
 
   void updateJob(String newJob) {
     selectedJob.value = newJob;
@@ -222,6 +223,7 @@ class AuthController extends GetxController {
           if (currentUser!.fcmToken.isEmpty ||
               currentUser!.fcmToken != fcmToken) {
             currentUser!.fcmToken = fcmToken;
+            userModel = currentUser;
             await Get.find<MongoDBController>()
                 .patchDocument(Keys.users, currentUser!.id!, {
               "fcmToken": fcmToken,
@@ -252,6 +254,8 @@ class AuthController extends GetxController {
           await Get.find<MongoDBController>().getDocument(Keys.users, userId);
       if (res![Keys.status] == Keys.success) {
         currentUser = UserModel.fromJson(res[Keys.data][Keys.user]);
+        userModel = currentUser;
+
         print(currentUser!.toJson());
       } else {
         throw Exception(res[Keys.message]);

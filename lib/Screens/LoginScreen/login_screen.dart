@@ -121,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                                   RoundedButton(
                                     onTap: () {
                                       controller.emailController.text =
-                                          'aaaa@gmail.com';
+                                          'user7@gmail.com';
                                       controller.passwordController.text =
                                           '123456';
 

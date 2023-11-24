@@ -29,11 +29,12 @@ class SocketNew {
 
   static sendMessageSocket(
     userid,
+    myid,
     text,
   ) async {
     socket.emit('private_message', {
-      'reciever_id': 'vvgiL5juitxseeebcv',
-      'my_id': 'vvgiL5juitxseeeb',
+      'reciever_id': userid,
+      'sender_id': myid,
       'msg': text,
       'sort': DateTime.now().microsecondsSinceEpoch,
     });
