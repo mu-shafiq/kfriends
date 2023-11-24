@@ -109,7 +109,8 @@ class UserTile2 extends StatelessWidget {
                   InkWell(
                       onTap: () {
                         // Get.toNamed(Routes.chatMainScreen);
-                        log(SocketNew.socket.acks.toString());
+                        SocketNew.sendMessageSocket(
+                            'userid', 'hello my friend');
                       },
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 10.sp),
