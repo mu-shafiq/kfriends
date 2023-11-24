@@ -1,12 +1,10 @@
 import 'dart:developer';
-
-import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Utils/keys.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
 class SocketNew {
-  static Socket socket = IO.io('${Keys.serverIP}:3000', <String, dynamic>{
+  static Socket socket = IO.io('${Keys.localHostIP}:3000', <String, dynamic>{
     'transports': ['websocket'],
     'autoConnect': false,
   });
@@ -24,7 +22,7 @@ class SocketNew {
     });
     socket.onDisconnect((data) => log('soket io server disconcted'));
 
-    socket.on('private_message', (data) {
+    socket.on('new_message', (data) {
       log('new message recieved........');
     });
   }
@@ -34,8 +32,8 @@ class SocketNew {
     text,
   ) async {
     socket.emit('private_message', {
-      'reciever_id': userid,
-      'my_id': userid,
+      'reciever_id': 'vvgiL5juitxseeebcv',
+      'my_id': 'vvgiL5juitxseeeb',
       'msg': text,
       'sort': DateTime.now().microsecondsSinceEpoch,
     });
