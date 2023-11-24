@@ -27,6 +27,7 @@ import 'package:uuid/uuid.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (message.data['type'] == 'call') {
     _handleIncomingCall(message);
@@ -34,6 +35,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> _handleIncomingCall(RemoteMessage message) async {
+  // todo this line is causing issue for background
   await FlutterCallkitIncoming.endAllCalls();
   final params = CallKitParams(
     id: const Uuid().v4(),
@@ -42,7 +44,7 @@ Future<void> _handleIncomingCall(RemoteMessage message) async {
     avatar: "https://i.pravatar.cc/100",
     handle: "+987456215",
     type: 0,
-    duration: 30000,
+    duration: 20000,
     textAccept: "Accept",
     textDecline: "Decline",
     missedCallNotification: const NotificationParams(
@@ -86,7 +88,7 @@ Future<void> _handleIncomingCall(RemoteMessage message) async {
         Keys.endCall,
         data: {
           'callId': callId,
-          'callLogType': "missed",
+          'callLogType': "declined",
         },
       );
       Helper().showToast("Call ended");
@@ -107,20 +109,20 @@ void main() async {
   ));
 }
 
-// void testSocket() async {
-//   log("socket init");
-//   Socket socket = IO.io('${Keys.serverIP}:3000', <String, dynamic>{
-//     'transports': ['websocket'],
-//     'autoConnect': true,
-//   });
-//   socket.connect();
-//   socket.onError((data) {
-//     log('here is the errorrr..........\n$data');
-//   });
-//   socket.onConnect((_) {
-//     log('socket connected........................');
-//   });
-// }
+void testSocket() async {
+  log("socket init");
+  Socket socket = IO.io('${Keys.serverIP}:3000', <String, dynamic>{
+    'transports': ['websocket'],
+    'autoConnect': true,
+  });
+  socket.connect();
+  socket.onError((data) {
+    log('here is the errorrr..........\n$data');
+  });
+  socket.onConnect((_) {
+    log('socket connected........................');
+  });
+}
 
 Future<void> _initializeFirebaseMessaging() async {
   FirebaseMessaging.instance.requestPermission();
@@ -152,6 +154,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    checkAndNavigationCallingPage();
   }
 
   @override
@@ -159,6 +162,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       checkAndNavigationCallingPage();
     }
+    // if (state == AppLifecycleState.hidden) {
+    //   checkAndNavigationCallingPage();
+    // }
+    // if (state == AppLifecycleState.inactive) {
+    //   checkAndNavigationCallingPage();
+    // }
   }
 
   Future<void> checkAndNavigationCallingPage() async {
