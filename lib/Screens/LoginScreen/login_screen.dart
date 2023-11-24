@@ -94,6 +94,51 @@ class LoginScreen extends StatelessWidget {
                               text: 'LOGIN',
                             ),
                             20.verticalSpace,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RoundedButton(
+                                    onTap: () {
+                                      controller.emailController.text =
+                                          'john@gmail.com';
+                                      controller.passwordController.text =
+                                          '123456';
+
+                                      controller.login();
+                                    },
+                                    textColor: textGreenColor,
+                                    shadow1: buttonBlackShadow1,
+                                    shadow2: buttonBlackShadow2,
+                                    bgColor: buttonBlackColor,
+                                    width: .43.sw,
+                                    height: 30.h,
+                                    text: 'John',
+                                  ),
+                                  RoundedButton(
+                                    onTap: () {
+                                      controller.emailController.text =
+                                          'aaaa@gmail.com';
+                                      controller.passwordController.text =
+                                          '123456';
+
+                                      controller.login();
+                                    },
+                                    textColor: textGreenColor,
+                                    shadow1: buttonBlackShadow1,
+                                    shadow2: buttonBlackShadow2,
+                                    bgColor: buttonBlackColor,
+                                    width: .43.sw,
+                                    height: 30.h,
+                                    text: 'AAAA',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            20.verticalSpace,
                             Text(
                               'Sign in with E-mail',
                               style: TextStyle(

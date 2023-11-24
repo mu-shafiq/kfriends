@@ -195,6 +195,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> login() async {
+    log(emailController.text);
     try {
       EasyLoading.show();
       Response res = await Dio().post(
