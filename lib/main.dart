@@ -35,7 +35,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> _handleIncomingCall(RemoteMessage message) async {
-  // todo this line is causing issue for background
   await FlutterCallkitIncoming.endAllCalls();
   final params = CallKitParams(
     id: const Uuid().v4(),
@@ -44,7 +43,7 @@ Future<void> _handleIncomingCall(RemoteMessage message) async {
     avatar: "https://i.pravatar.cc/100",
     handle: "+987456215",
     type: 0,
-    duration: 20000,
+    duration: 30000,
     textAccept: "Accept",
     textDecline: "Decline",
     missedCallNotification: const NotificationParams(
@@ -88,7 +87,7 @@ Future<void> _handleIncomingCall(RemoteMessage message) async {
         Keys.endCall,
         data: {
           'callId': callId,
-          'callLogType': "declined",
+          'callLogType': "missed",
         },
       );
       Helper().showToast("Call ended");
@@ -103,25 +102,9 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   _initializeFirebaseMessaging();
   String locale = await getLocale();
-  SocketNew.connectSocket();
   runApp(MyApp(
     local: locale,
   ));
-}
-
-void testSocket() async {
-  log("socket init");
-  Socket socket = IO.io('${Keys.serverIP}:3000', <String, dynamic>{
-    'transports': ['websocket'],
-    'autoConnect': true,
-  });
-  socket.connect();
-  socket.onError((data) {
-    log('here is the errorrr..........\n$data');
-  });
-  socket.onConnect((_) {
-    log('socket connected........................');
-  });
 }
 
 Future<void> _initializeFirebaseMessaging() async {
@@ -150,21 +133,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  bool isLoading = true;
-  bool hasActiveCall = false;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     checkAndNavigationCallingPage();
-    // Initialize the future for checking active calls
-    // _currentCall = checkAndNavigationCallingPage();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
   }
 
   @override
@@ -172,29 +145,19 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       checkAndNavigationCallingPage();
     }
-    // if (state == AppLifecycleState.hidden) {
-    //   checkAndNavigationCallingPage();
-    // }
-    // if (state == AppLifecycleState.inactive) {
-    //   checkAndNavigationCallingPage();
-    // }
   }
 
-  Future<dynamic> checkAndNavigationCallingPage() async {
+  Future<void> checkAndNavigationCallingPage() async {
     var currentCall = await getCurrentCall();
     if (currentCall != null) {
-      // If there's an active call, navigate to the call screen and return null to prevent showing the splash screen
       Helper().showToast("Call accepted");
+      log("extra ${currentCall['extra']}");
       int agoraUid = int.parse(currentCall['extra'][Keys.uid].toString());
       String token = currentCall['extra'][Keys.token];
       String channelName = currentCall['extra'][Keys.channelName];
       String callId = currentCall['extra'][Keys.callId];
       String receiverName = currentCall['extra'][Keys.receiverName];
       String receiverImage = currentCall['extra'][Keys.receiverImage];
-      setState(() {
-        hasActiveCall = true;
-        isLoading = false;
-      });
       NavigationService.instance
           .pushNamedIfNotCurrent(Routes.voiceCallScreen, args: {
         'channelName': channelName,
@@ -203,11 +166,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         'callId': callId,
         'receiverName': receiverName,
         'receiverImage': receiverImage,
-      });
-    } else {
-      setState(() {
-        hasActiveCall = false;
-        isLoading = false;
       });
     }
   }
@@ -226,91 +184,37 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
-      builder: (context, _) {
-        if (isLoading) {
-          // Show loading indicator while checking for active calls
-          return Container(
-              color: Colors.white); // Placeholder for loading state
-        }
-        if (hasActiveCall) {
-          // Active call exists, don't show SplashScreen
-          return Container(); // Empty container or another placeholder
-        }
-        // No active call, show SplashScreen
-        return buildGetMaterialApp();
-      },
-    );
-  }
-
-  GetMaterialApp buildGetMaterialApp() {
-    return GetMaterialApp(
-      navigatorKey: NavigationService.instance.navigationKey,
-      translations: Languages(),
-      locale: widget.local.isEmpty || widget.local == Keys.english
-          ? const Locale('en', 'US')
-          : const Locale('ko', 'KR'),
-      fallbackLocale: const Locale('en', 'US'),
-      title: 'K Friends',
-      getPages: pages,
-      builder: EasyLoading.init(),
-      initialBinding: BindingsBuilder(() {
-        Get.put(MongoDBController(), permanent: true);
-        Get.put(CallsController(), permanent: true);
-        Get.put(AuthController(), permanent: true);
-      }),
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+      builder: (context, _) => GetMaterialApp(
+        navigatorKey: NavigationService.instance.navigationKey,
+        translations: Languages(),
+        locale: widget.local.isEmpty || widget.local == Keys.english
+            ? const Locale('en', 'US')
+            : const Locale('ko', 'KR'),
+        fallbackLocale: const Locale('en', 'US'),
+        title: 'K Friends',
+        getPages: pages,
+        builder: EasyLoading.init(),
+        initialBinding: BindingsBuilder(() {
+          Get.put(MongoDBController(), permanent: true);
+          Get.put(CallsController(), permanent: true);
+          Get.put(AuthController(), permanent: true);
+        }),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const SplashScreen(),
       ),
-      home: const SplashScreen(),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return ScreenUtilInit(
-  //     designSize: const Size(375, 812),
-  //     builder: (context, _) => FutureBuilder(
-  //       future: _currentCall,
-  //       builder: (context, snapshot) {
-  //         if (snapshot.connectionState == ConnectionState.done) {
-  //           if (snapshot.data == null) {
-  //             // Active call exists, so we don't show SplashScreen
-  //             return Container(); // Empty container or another placeholder
-  //           }
-  //           // No active call, show SplashScreen
-  //           return GetMaterialApp(
-  //             navigatorKey: NavigationService.instance.navigationKey,
-  //             translations: Languages(),
-  //             locale: widget.local.isEmpty || widget.local == Keys.english
-  //                 ? const Locale('en', 'US')
-  //                 : const Locale('ko', 'KR'),
-  //             fallbackLocale: const Locale('en', 'US'),
-  //             title: 'K Friends',
-  //             getPages: pages,
-  //             builder: EasyLoading.init(),
-  //             initialBinding: BindingsBuilder(() {
-  //               Get.put(MongoDBController(), permanent: true);
-  //               Get.put(CallsController(), permanent: true);
-  //               Get.put(AuthController(), permanent: true);
-  //             }),
-  //             debugShowCheckedModeBanner: false,
-  //             theme: ThemeData(
-  //               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-  //               useMaterial3: true,
-  //             ),
-  //             home: const SplashScreen(),
-  //           );
-  //         }
-  //         // While waiting, show a loading screen or an empty container
-  //         return Container(
-  //             color: Colors.white); // Placeholder for loading state
-  //       },
-  //     ),
-  //   );
-  // }
 }
