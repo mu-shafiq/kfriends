@@ -20,8 +20,7 @@ class Helper {
         source: source,
       );
       return await cropImage(res!.path);
-    } on PlatformException catch (e) {
-      log("error in pick image ${e.message!}");
+    } on PlatformException catch (e) { 
       showToast(e.message!);
       return null;
     }
@@ -48,8 +47,7 @@ class Helper {
         ],
       ))!
           .path);
-    } on PlatformException catch (e) {
-      log("error in crop image ${e.message!}");
+    } on PlatformException catch (e) { 
       showToast(e.message!);
       return null;
     }
@@ -62,6 +60,7 @@ class Helper {
     if (response![Keys.status] == Keys.success) {
       return response[Keys.data][Keys.url];
     } else {
+      
       Get.find<MongoDBController>().throwExpection(response);
       return null;
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:kfriends/Controllers/chat_controller.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
@@ -57,19 +58,40 @@ class UserInfo extends StatelessWidget {
                   Stack(
                     alignment: Alignment.center,
                     children: [
-                      Image.asset(
-                        Assets.cover,
-                        scale: .5,
+                      SizedBox(
+                        width: 1.sw,
+                        height: .3.sh,
+                        child: Image.network(
+                          user.featuredImage,
+                          scale: .5,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              Assets.joinFormImage,
+                              fit: BoxFit.cover,
+                            );
+                          },
+                        ),
                       ),
                       Positioned(
                         bottom: 20.h,
                         child: CircleAvatar(
                           radius: 70.r,
-                          child: Image.asset(
-                            Assets.user1,
+                          backgroundImage: Image.network(
+                            user.profileImage,
                             fit: BoxFit.contain,
                             scale: .5,
-                          ),
+                            errorBuilder: (context, error, stackTrace) {
+                              return CircleAvatar(
+                                radius: 70.r,
+                                backgroundImage: Image.asset(
+                                  Assets.user1,
+                                  fit: BoxFit.cover,
+                                  scale: .1,
+                                ).image,
+                              );
+                            },
+                          ).image,
                         ),
                       ),
                       Positioned(
@@ -77,9 +99,11 @@ class UserInfo extends StatelessWidget {
                         child: Wrap(
                           spacing: 6.w,
                           runSpacing: 6.h,
-                          children: user.interests!
-                              .map((e) => interest(Colors.white, e))
-                              .toList(),
+                          children: user.interests == null
+                              ? []
+                              : user.interests!
+                                  .map((e) => interest(e))
+                                  .toList(),
                         ),
                       )
                     ],
@@ -205,7 +229,7 @@ class UserInfo extends StatelessWidget {
                   SizedBox(
                     width: .7.sw,
                     child: Text(
-                      user.intro!,
+                      user.intro ?? "",
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -247,7 +271,10 @@ class UserInfo extends StatelessWidget {
                       10.horizontalSpace,
                       RoundedSmallButton(
                         icon: Image.asset(Assets.privatechat),
-                        onTap: () {},
+                        onTap: () {
+                          Get.find<ChatController>().setSelectedUser(user);
+                          Get.toNamed(Routes.chatingScreen);
+                        },
                         textColor: textBlackColor,
                         width: 106.w,
                         height: 30.h,
@@ -298,12 +325,26 @@ class UserInfo extends StatelessWidget {
     );
   }
 
-  Widget interest(Color color, String interest) {
+  Widget interest(String e) {
     return Container(
       width: 80,
       height: 22,
       decoration: ShapeDecoration(
-        color: color,
+        color: e.toLowerCase().contains('food')
+            ? food
+            : e.toLowerCase().contains('travel')
+                ? travel
+                : e.toLowerCase().contains('game')
+                    ? game
+                    : e.toLowerCase().contains('culture')
+                        ? culture
+                        : e.toLowerCase().contains('beauty')
+                            ? beauty
+                            : e.toLowerCase().contains('pop')
+                                ? pop
+                                : e.toLowerCase().contains('pet')
+                                    ? pet
+                                    : const Color(0xFF09E1FF),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100),
         ),
@@ -322,7 +363,7 @@ class UserInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            interest,
+            e,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: textBlackColor,

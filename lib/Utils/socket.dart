@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'package:get/get.dart';
 import 'package:kfriends/Utils/keys.dart';
+import 'package:kfriends/Controllers/auth_controller.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -10,7 +12,9 @@ class SocketNew {
   });
 
   static connectSocket() async {
-    socket.io.options!['extraHeaders'] = {'client_id': 'vvgiL5juitxseeebcv'};
+    socket.io.options!['extraHeaders'] = {
+      'client_id': Get.find<AuthController>().userModel!.id
+    };
     socket.connect();
 
     socket.onConnect((data) {
@@ -32,6 +36,7 @@ class SocketNew {
     myid,
     text,
   ) async {
+    log(myid);
     socket.emit('private_message', {
       'reciever_id': userid,
       'sender_id': myid,

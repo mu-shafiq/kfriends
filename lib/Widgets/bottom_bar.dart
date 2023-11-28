@@ -36,7 +36,7 @@ class BottomBar extends StatelessWidget {
             unselectedItemColor: textBlackColor,
             selectedLabelStyle: TextStyle(
               color: textBlackColor,
-              fontSize: 12.sp,
+              fontSize: 11.sp,
               fontFamily: 'Pretendard',
               fontWeight: FontWeight.w400,
               height: 2,

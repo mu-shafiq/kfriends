@@ -54,7 +54,6 @@ class MyFriends extends StatelessWidget {
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             UserModel user = users[index];
-                            log(user.toJson().toString());
                             return InkWell(
                               onTap: () {
                                 Get.toNamed(Routes.userInfo, arguments: user);

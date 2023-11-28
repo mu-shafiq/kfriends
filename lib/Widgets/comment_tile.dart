@@ -252,7 +252,7 @@ class CommentTile extends StatelessWidget {
               ),
               Positioned(
                 right: 15.w,
-                top: 15.h,
+                top: 12.h,
                 bottom: 5.h,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,

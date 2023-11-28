@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
+import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Widgets/call_user_tile.dart';
 import 'package:kfriends/Widgets/user_tile2.dart';
+import 'package:kfriends/model/user.dart';
 
 class CallScreen extends StatefulWidget {
   CallScreen({super.key});
@@ -240,7 +242,7 @@ class _CallScreenState extends State<CallScreen> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          Get.toNamed(Routes.userInfo);
+                          Get.toNamed(Routes.userInfo, arguments: currentUser);
                         },
                         child: CallUserTile(
                           date: '2023-06-27',

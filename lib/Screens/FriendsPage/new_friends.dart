@@ -226,8 +226,7 @@ class _NewFriendsState extends State<NewFriends> {
                           children: [
                             const SizedBox(),
                             InkWell(
-                              onTap: () {
-                                log('message');
+                              onTap: () { 
                                 showModalBottomSheet(
                                     context: context,
                                     builder: (context) {
@@ -273,8 +272,7 @@ class _NewFriendsState extends State<NewFriends> {
                             ),
                             Image.asset(Assets.equal),
                             InkWell(
-                              onTap: () {
-                                log('message');
+                              onTap: () { 
                                 showModalBottomSheet(
                                     context: context,
                                     builder: (context) {
@@ -472,8 +470,7 @@ class _NewFriendsState extends State<NewFriends> {
                           const SizedBox(),
                           const SizedBox(),
                           InkWell(
-                            onTap: () async {
-                              log('message');
+                            onTap: () async { 
                               await showModalBottomSheet(
                                   context: context,
                                   builder: (context) {
@@ -517,8 +514,7 @@ class _NewFriendsState extends State<NewFriends> {
                           ),
                           Image.asset(Assets.equal),
                           InkWell(
-                            onTap: () {
-                              log('message');
+                            onTap: () { 
                               showModalBottomSheet(
                                   context: context,
                                   builder: (context) {

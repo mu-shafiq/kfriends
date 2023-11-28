@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,7 +8,9 @@ import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Widgets/bottom_bar.dart';
 import 'package:kfriends/Widgets/textfield.dart';
-import 'package:kfriends/controllers/chat_controller.dart';
+import 'package:kfriends/Controllers/auth_controller.dart';
+import 'package:kfriends/Controllers/chat_controller.dart';
+import 'package:kfriends/model/message.dart';
 
 class ChatingScreen extends StatelessWidget {
   const ChatingScreen({super.key});
@@ -21,20 +25,17 @@ class ChatingScreen extends StatelessWidget {
               onTap: () {
                 Get.back();
               },
-              child: CircleAvatar(
-                  radius: 15.r,
-                  backgroundImage:
-                      Image.network(controller.selectedUser!.profileImage)
-                          .image)),
+              child: Image.asset(Assets.backArrow)),
           elevation: 0,
           scrolledUnderElevation: 0,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
-                radius: 12.r,
-                child: Image.asset(Assets.user1),
-              ),
+                  radius: 15.r,
+                  backgroundImage:
+                      Image.network(controller.selectedUser!.profileImage)
+                          .image),
               3.horizontalSpace,
               Text(
                 controller.selectedUser!.username,
@@ -87,13 +88,21 @@ class ChatingScreen extends StatelessWidget {
                 Assets.add,
                 scale: .8,
               ),
-              7.horizontalSpace,
+              6.horizontalSpace,
               CustomTextfield(
                   height: 40.h,
                   width: .80.sw,
                   hintSize: 10.sp,
+                  trailing: InkWell(
+                      onTap: () {
+                        controller.sendMessage();
+                      },
+                      child: const Icon(
+                        Icons.send,
+                        color: textPinkColor,
+                      )),
                   hint: 'Enter your message here💬'.tr,
-                  controller: TextEditingController())
+                  controller: controller.controller)
             ],
           ),
         ),
@@ -114,7 +123,7 @@ class ChatingScreen extends StatelessWidget {
             children: [
               10.verticalSpace,
               Text(
-                '2023-06-19',
+                '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
                 style: TextStyle(
                   color: textBlackColor,
                   fontSize: 10.sp,
@@ -128,15 +137,17 @@ class ChatingScreen extends StatelessWidget {
                 width: .94.sw,
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 5,
+                    itemCount: controller.selectedUserChat.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
+                      Message message = controller.selectedUserChat[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 8.0, horizontal: 8),
                         child: messageTile(
-                            '반가워요! 저와 함께 대화 하면서 한국 문화와 한국어를 많이 알아갈 수 있으면 좋겠네요!',
-                            index.isEven,
+                            message.msg,
+                            message.senderId !=
+                                Get.find<AuthController>().userModel!.id,
                             '15:43',
                             '15:43'),
                       );

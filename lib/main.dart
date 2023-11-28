@@ -19,6 +19,7 @@ import 'package:kfriends/Controllers/mongodb_controller.dart';
 import 'package:kfriends/Utils/helper.dart';
 import 'package:kfriends/Utils/keys.dart';
 import 'package:kfriends/Utils/navigation_service.dart';
+import 'package:kfriends/Controllers/chat_controller.dart';
 import 'package:kfriends/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
@@ -145,11 +146,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   Future<void> checkAndNavigationCallingPage() async {
-    log('this functions is called.......');
     var currentCall = await getCurrentCall();
     if (currentCall != null) {
       Helper().showToast("Call accepted");
-      log("extra ${currentCall['extra']}");
       int agoraUid = int.parse(currentCall['extra'][Keys.uid].toString());
       String token = currentCall['extra'][Keys.token];
       String channelName = currentCall['extra'][Keys.channelName];
@@ -171,8 +170,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Future<dynamic> getCurrentCall() async {
     var calls = await FlutterCallkitIncoming.activeCalls();
     if (calls is List) {
-      log("all calls length ${calls.length}");
-      log("all calls $calls");
       if (calls.isNotEmpty) {
         return calls.last;
       } else {
@@ -205,6 +202,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           Get.put(MongoDBController(), permanent: true);
           Get.put(CallsController(), permanent: true);
           Get.put(AuthController(), permanent: true);
+          Get.put(ChatController(), permanent: true);
         }),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

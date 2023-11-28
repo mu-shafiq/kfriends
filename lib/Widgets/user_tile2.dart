@@ -9,7 +9,7 @@ import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/helper.dart';
 import 'package:kfriends/Utils/socket.dart';
-import 'package:kfriends/controllers/chat_controller.dart';
+import 'package:kfriends/Controllers/chat_controller.dart';
 import 'package:kfriends/model/user.dart';
 
 class UserTile2 extends StatelessWidget {

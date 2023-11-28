@@ -49,6 +49,26 @@ class AuthController extends GetxController {
   Rx<File>? featuredImage;
   UserModel? userModel;
 
+  void setValues() {
+    usernameController.text = userModel!.username;
+    regionController.text = userModel!.region ?? '';
+    jobController.text = userModel!.job ?? "";
+    countryController.text = userModel!.country ?? "";
+    universityController.text = userModel!.universityName ?? "";
+    introController.text = userModel!.intro ?? "";
+    englishProficiency.value = userModel!.englishProficiency;
+    koreanProficiency.value = userModel!.koreanProficiency;
+    interests.value = userModel!.interests ?? [];
+    male.value = userModel!.gender == 'male';
+    profileImage = File(userModel!.profileImage).obs;
+    featuredImage = File(userModel!.featuredImage).obs;
+    dateOfBirth = userModel!.dateOfBirth;
+    profileImage = null;
+    featuredImage = null;
+
+    update();
+  }
+
   void updateJob(String newJob) {
     selectedJob.value = newJob;
     jobController.text = newJob;
@@ -155,6 +175,9 @@ class AuthController extends GetxController {
         password: passwordController.text,
         gender: male.value ? "male" : "female",
         dateOfBirth: dateOfBirth!,
+        age:
+            (DateTime.now().difference(dateOfBirth ?? DateTime.now()).inDays) ~/
+                12,
         userType: "global",
         country: countryController.text.trim(),
         englishProficiency: englishProficiency.value,
@@ -186,6 +209,8 @@ class AuthController extends GetxController {
             key: Keys.userId, value: res.data[Keys.data][Keys.user][Keys.id]);
         currentUser = UserModel.fromJson(res.data[Keys.data][Keys.user]);
         Helper().showToast("User Registered Successfully");
+        SocketNew.connectSocket();
+
         Get.back();
         Get.offAllNamed(Routes.bottomNavBar);
       }
@@ -196,7 +221,6 @@ class AuthController extends GetxController {
   }
 
   Future<void> login() async {
-    log(emailController.text);
     try {
       EasyLoading.show();
       Response res = await Dio().post(
@@ -229,9 +253,10 @@ class AuthController extends GetxController {
               "fcmToken": fcmToken,
             });
           }
-          log(res.data.toString());
           // });
           Helper().showToast("User Logged In Successfully");
+          SocketNew.connectSocket();
+
           Get.back();
           Get.offAllNamed(Routes.bottomNavBar);
         } else {
@@ -247,6 +272,58 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<void> updateUser() async {
+    try {
+      EasyLoading.show();
+      userModel!.profileImage = profileImage != null
+          ? (await Helper()
+              .uploadImage(profileImage!.value, Keys.profileImage))!
+          : userModel!.profileImage;
+      userModel!.featuredImage = featuredImage != null
+          ? (await Helper()
+              .uploadImage(profileImage!.value, Keys.profileImage))!
+          : userModel!.featuredImage;
+      userModel!.username = usernameController.text.trim();
+      userModel!.gender = male.value ? "male" : "female";
+      userModel!.dateOfBirth = dateOfBirth!;
+      userModel!.age =
+          (DateTime.now().difference(dateOfBirth ?? DateTime.now()).inDays) ~/
+              12;
+      userModel!.job = jobController.text.trim();
+      userModel!.country = countryController.text.trim();
+      userModel!.region = regionController.text.trim();
+      userModel!.englishProficiency = englishProficiency.value;
+      userModel!.koreanProficiency = koreanProficiency.value;
+      userModel!.interests = interests;
+      userModel!.universityName = universityController.text.trim();
+      userModel!.intro = introController.text.trim();
+
+      Response res = await Dio().patch(
+        '${Keys.serverIP}:3000/api/v1/users/${userModel!.id}',
+        data: userModel!.toJson(),
+        options: Options(
+          validateStatus: (status) {
+            return status! <= 500;
+          },
+        ),
+      );
+      EasyLoading.dismiss();
+      if (res.data[Keys.status] == Keys.success) {
+        getCurrentUser();
+        Helper().showToast("User Updated Successfully");
+
+        Get.back();
+      } else {
+        getCurrentUser();
+        throw Exception(res.data[Keys.message]);
+      }
+    } catch (e) {
+      getCurrentUser();
+      EasyLoading.dismiss();
+      Helper().showToast("Error in Updating User");
+    }
+  }
+
   Future<void> getCurrentUser() async {
     try {
       String userId = (await _storage.read(key: Keys.userId))!;
@@ -255,19 +332,21 @@ class AuthController extends GetxController {
       if (res![Keys.status] == Keys.success) {
         currentUser = UserModel.fromJson(res[Keys.data][Keys.user]);
         userModel = currentUser;
-
-        print(currentUser!.toJson());
+        setValues();
+        log(currentUser!.toJson().toString());
       } else {
         throw Exception(res[Keys.message]);
       }
     } catch (e) {
       printError(info: e.toString());
     }
+    update();
   }
 
   @override
-  void onInit() {
-    getCurrentUser();
+  void onInit() async {
+    await getCurrentUser();
+    SocketNew.connectSocket();
     super.onInit();
   }
 }

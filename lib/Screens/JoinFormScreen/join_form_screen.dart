@@ -258,8 +258,7 @@ class JoinFormScreen extends StatelessWidget {
                                   ),
                                   context: context,
                                   showSearch: true,
-                                  onSelect: (Country count) {
-                                    log(count.name);
+                                  onSelect: (Country count) { 
                                     controller.countryController.text =
                                         count.name;
                                   },
@@ -599,8 +598,7 @@ class JoinFormScreen extends StatelessWidget {
                                         ),
                                         context: context,
                                         showSearch: true,
-                                        onSelect: (Country count) {
-                                          log(count.name);
+                                        onSelect: (Country count) { 
                                           controller.countryController.text =
                                               count.name;
                                         },

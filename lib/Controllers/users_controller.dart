@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +7,6 @@ import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Utils/helper.dart';
 import 'package:kfriends/Utils/keys.dart';
 import 'package:kfriends/model/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'mongodb_controller.dart';
 
@@ -154,6 +153,7 @@ class UsersController extends GetxController {
 
   Future<bool> followUser(String followId) async {
     print("followId: $followId");
+    print('myid ${currentUser!.id}');
     try {
       Map<String, dynamic>? res = await mongodbController.callFunction(
         Keys.followUser,
@@ -170,7 +170,7 @@ class UsersController extends GetxController {
         return false;
       }
     } catch (e) {
-      printError(info: e.toString());
+      log(e.toString());
       Helper().showToast("Error in following user");
       return false;
     }

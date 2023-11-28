@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
   final bool isEnglish = Get.locale == const Locale('en', 'US');
   @override
   void initState() {
-    log('here is current ${Get.currentRoute}');
     super.initState();
   }
 

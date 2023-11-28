@@ -17,7 +17,6 @@ class CallsController extends GetxController {
   Future<void> makeACall(String receiverUserId) async {
     try {
       EasyLoading.show();
-      log("receiverUserId: $receiverUserId");
       Map<String, dynamic>? res = await mongodbController.callFunction(
         Keys.makeCall,
         data: {
@@ -26,7 +25,6 @@ class CallsController extends GetxController {
       );
       EasyLoading.dismiss();
       if (res![Keys.status] == Keys.success) {
-        log(res[Keys.data].toString());
         int agoraUid = res[Keys.data][Keys.uid];
         String token = res[Keys.data][Keys.token];
         String channelName = res[Keys.data][Keys.channelName];

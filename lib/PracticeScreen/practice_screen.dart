@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
+import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Widgets/small_button.dart';
+import 'package:kfriends/model/user.dart';
 
 import '../Routes/get_routes.dart';
 import '../Widgets/user_tile.dart';
@@ -181,7 +183,7 @@ class PracticeScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.userInfo);
+                    Get.toNamed(Routes.userInfo, arguments: currentUser);
                   },
                   child: const UserTile(
                     verified: true,

@@ -79,7 +79,6 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            log('message');
                             Get.toNamed(Routes.chatingScreen);
                           },
                           child: const ChatTile(
