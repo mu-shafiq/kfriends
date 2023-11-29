@@ -10,24 +10,23 @@ import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/helper.dart';
 import 'package:kfriends/Utils/socket.dart';
 import 'package:kfriends/Controllers/chat_controller.dart';
+import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/model/user.dart';
 
-class UserTile2 extends StatelessWidget {
+class FollowTile extends StatelessWidget {
   final String asset;
   final String username;
   final String about;
   final bool verified;
-  final int? agoraUid;
   final UserModel userModel;
 
-  const UserTile2({
+  const FollowTile({
     super.key,
     required this.asset,
     required this.username,
     required this.about,
     required this.verified,
     required this.userModel,
-    this.agoraUid,
   });
 
   @override
@@ -61,7 +60,7 @@ class UserTile2 extends StatelessWidget {
                 left: 5.w, top: 10.h, bottom: 10.h, right: 10.w),
             leading: CircleAvatar(
               radius: 35.r,
-              backgroundImage: Image.asset(
+              backgroundImage: Image.network(
                 asset,
               ).image,
             ),
@@ -108,62 +107,17 @@ class UserTile2 extends StatelessWidget {
               child: Row(
                 children: [
                   InkWell(
-                      onTap: () {
-                        Get.find<ChatController>().setSelectedUser(userModel);
-                        Get.find<ChatController>().getAllMessages();
-
-                        Get.toNamed(Routes.chatingScreen);
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.sp),
-                        child: Image.asset(Assets.message),
-                      )),
-                  10.horizontalSpace,
-                  GetBuilder<CallsController>(
-                      init: CallsController(),
-                      builder: (controller) {
-                        return InkWell(
-                          onTap: () async {
-                            if (agoraUid == null) {
-                              Helper().showToast("User Needs to login first");
-                              return;
-                            }
-                            await controller.makeACall(
-                              userModel.id!,
-                            );
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10.sp),
-                            child: Container(
-                              height: 20,
-                              width: 20,
-                              decoration: const ShapeDecoration(
-                                color: Color(0xFFF5F5F5),
-                                shape: OvalBorder(),
-                                shadows: [
-                                  BoxShadow(
-                                    color: Color(0x19000000),
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2),
-                                    spreadRadius: 0,
-                                  ),
-                                  BoxShadow(
-                                    color: Color(0x19000000),
-                                    blurRadius: 8,
-                                    offset: Offset(0, 0),
-                                    spreadRadius: 0,
-                                  )
-                                ],
-                              ),
-                              child: Image.asset(
-                                Assets.call,
-                                scale: 1.9.sp,
-                                color: textBlackColor,
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
+                    onTap: () async {},
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.sp),
+                      child: RoundedSmallButton(
+                          height: 25.h,
+                          width: 60.w,
+                          text: 'Unfollow',
+                          textColor: textBlueColor,
+                          onTap: () {}),
+                    ),
+                  ),
                 ],
               ),
             ),

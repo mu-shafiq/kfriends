@@ -79,7 +79,7 @@ class _ChatSettingsState extends State<ChatSettings> {
                                 Assets.crossblack,
                                 scale: 1.1.sp,
                               ),
-                            )
+                            ),
                           ],
                         );
                       }),

@@ -319,6 +319,7 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       getCurrentUser();
+      log(e.toString());
       EasyLoading.dismiss();
       Helper().showToast("Error in Updating User");
     }

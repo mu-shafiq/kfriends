@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -71,9 +72,9 @@ class MongoDBController extends GetxController {
           },
         ),
       );
+
       return res.data;
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -141,7 +142,7 @@ class MongoDBController extends GetxController {
     try {
       printInfo(info: "${baseUrl}functions/$functionName");
       Response res = await dio.post(
-        "${baseUrl}functions/$functionName",
+        "${baseUrl}$functionName",
         data: data ?? {},
         options: Options(
           validateStatus: (status) {
@@ -190,10 +191,14 @@ class MongoDBController extends GetxController {
       );
       request.files.add(mpFile);
       request.fields['folder'] = folderName;
+      request.headers.addAll({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${currentUser!.fcmToken}',
+      });
 
       var streamRes = await request.send();
       var res = await http.Response.fromStream(streamRes);
-
       return json.decode(res.body);
     } catch (e) {
       printInfo(info: e.toString());

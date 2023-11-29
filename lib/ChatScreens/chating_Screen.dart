@@ -1,19 +1,47 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
+import 'package:kfriends/Utils/helper.dart';
+import 'package:kfriends/Utils/keys.dart';
 import 'package:kfriends/Widgets/bottom_bar.dart';
+import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Widgets/textfield.dart';
 import 'package:kfriends/Controllers/auth_controller.dart';
 import 'package:kfriends/Controllers/chat_controller.dart';
 import 'package:kfriends/model/message.dart';
 
-class ChatingScreen extends StatelessWidget {
+class ChatingScreen extends StatefulWidget {
   const ChatingScreen({super.key});
+
+  @override
+  State<ChatingScreen> createState() => _ChatingScreenState();
+}
+
+class _ChatingScreenState extends State<ChatingScreen> {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 200),
+        );
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +112,64 @@ class ChatingScreen extends StatelessWidget {
           width: .94.sw,
           child: Row(
             children: [
-              Image.asset(
-                Assets.add,
-                scale: .8,
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return Container(
+                          color: bgWhiteColor,
+                          height: 120.h,
+                          width: 1.sw,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                  child: Text(
+                                    'Camera',
+                                    style: TextStyle(
+                                        color: textBlackColor, fontSize: 15.sp),
+                                  ),
+                                  onPressed: () async {
+                                    Get.back();
+                                    File? file = await Helper()
+                                        .imagePicker(ImageSource.camera);
+                                    if (file != null) {
+                                      log(file.path);
+                                      String url = (await Helper().uploadImage(
+                                          file, Keys.profileImage))!;
+                                      log('url $url');
+                                      controller.sendMessage(
+                                          type: 'url', url: url);
+                                    }
+                                  }),
+                              TextButton(
+                                  child: Text(
+                                    'Gallery',
+                                    style: TextStyle(
+                                        color: textBlackColor, fontSize: 15.sp),
+                                  ),
+                                  onPressed: () async {
+                                    Get.back();
+                                    File? file = await Helper()
+                                        .imagePicker(ImageSource.gallery);
+                                    if (file != null) {
+                                      String url = (await Helper().uploadImage(
+                                          file, Keys.profileImage))!;
+                                      controller.sendMessage(
+                                          type: 'url', url: url);
+                                    }
+                                  }),
+                            ],
+                          ),
+                        );
+                      });
+                },
+                child: Image.asset(
+                  Assets.add,
+                  scale: .8,
+                ),
               ),
               6.horizontalSpace,
               CustomTextfield(
@@ -119,48 +202,58 @@ class ChatingScreen extends StatelessWidget {
                 Color(0xffFFE6AF),
                 Color(0xffFFE6AF)
               ])),
-          child: Column(
-            children: [
-              10.verticalSpace,
-              Text(
-                '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
-                style: TextStyle(
-                  color: textBlackColor,
-                  fontSize: 10.sp,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w700,
-                  height: 0,
-                ),
+          child: CupertinoScrollbar(
+            controller: _scrollController,
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                children: [
+                  10.verticalSpace,
+                  Text(
+                    '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
+                    style: TextStyle(
+                      color: textBlackColor,
+                      fontSize: 10.sp,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                      height: 0,
+                    ),
+                  ),
+                  20.verticalSpace,
+                  SizedBox(
+                    width: .94.sw,
+                    child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller.selectedUserChat.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          Message message = controller.selectedUserChat[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 8),
+                            child: messageTile(
+                                message.msg,
+                                message.senderId !=
+                                    Get.find<AuthController>().userModel!.id,
+                                '15:43',
+                                '15:43',
+                                message.type,
+                                message.attachmentUrl.toString()),
+                          );
+                        }),
+                  ),
+                  60.verticalSpace
+                ],
               ),
-              20.verticalSpace,
-              SizedBox(
-                width: .94.sw,
-                child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: controller.selectedUserChat.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      Message message = controller.selectedUserChat[index];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 8),
-                        child: messageTile(
-                            message.msg,
-                            message.senderId !=
-                                Get.find<AuthController>().userModel!.id,
-                            '15:43',
-                            '15:43'),
-                      );
-                    }),
-              ),
-            ],
+            ),
           ),
         ),
       );
     });
   }
 
-  Widget messageTile(String text, bool isme, String time1, String time2) {
+  Widget messageTile(String text, bool isme, String time1, String time2,
+      String type, String url) {
     return SizedBox(
       width: 1.sw,
       child: Row(
@@ -222,22 +315,27 @@ class ChatingScreen extends StatelessWidget {
                 )
               ],
             ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 14.0, vertical: 5),
-              child: SizedBox(
-                width: .35.sw,
-                child: Text(
-                  text,
-                  maxLines: null,
-                  style: TextStyle(
-                    color: textBlackColor,
-                    fontSize: 10.sp,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
+            child: SizedBox(
+              width: .35.sw,
+              child: type == 'url'
+                  ? Image.network(
+                      url,
+                      fit: BoxFit.cover,
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14.0, vertical: 5),
+                      child: Text(
+                        text,
+                        maxLines: null,
+                        style: TextStyle(
+                          color: textBlackColor,
+                          fontSize: 10.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
             ),
           ),
           5.horizontalSpace,

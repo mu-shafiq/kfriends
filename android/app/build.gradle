@@ -52,10 +52,10 @@ android {
     }
     signingConfigs {
      release {
-        storeFile file("/Users/jz/Desktop/old_key_jks_files/87-75/key.jks")
-        storePassword "123456"
-        keyAlias "key"
-        keyPassword "123456"
+        storeFile file("C:/Users/Dev1/keystore.jks")
+        storePassword "shafiq"
+        keyAlias "shafiq"
+        keyPassword "shafiq"
      }
     }
 

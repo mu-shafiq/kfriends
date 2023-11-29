@@ -273,6 +273,8 @@ class UserInfo extends StatelessWidget {
                         icon: Image.asset(Assets.privatechat),
                         onTap: () {
                           Get.find<ChatController>().setSelectedUser(user);
+                          Get.find<ChatController>().getAllMessages();
+
                           Get.toNamed(Routes.chatingScreen);
                         },
                         textColor: textBlackColor,

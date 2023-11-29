@@ -151,6 +151,11 @@ class UsersController extends GetxController {
     }
   }
 
+  Future<UserModel> getUser(String userId) async {
+    return UserModel.fromJson(((await mongodbController.getDocument(
+        Keys.users, userId))!)['data']['user']);
+  }
+
   Future<bool> followUser(String followId) async {
     print("followId: $followId");
     print('myid ${currentUser!.id}');

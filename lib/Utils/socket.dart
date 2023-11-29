@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:kfriends/Utils/keys.dart';
 import 'package:kfriends/Controllers/auth_controller.dart';
+import 'package:kfriends/model/message.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -31,17 +32,7 @@ class SocketNew {
     });
   }
 
-  static sendMessageSocket(
-    userid,
-    myid,
-    text,
-  ) async {
-    log(myid);
-    socket.emit('private_message', {
-      'reciever_id': userid,
-      'sender_id': myid,
-      'msg': text,
-      'sort': DateTime.now().microsecondsSinceEpoch,
-    });
+  static sendMessageSocket(Message message) async {
+    socket.emit('private_message', message.toJson());
   }
 }

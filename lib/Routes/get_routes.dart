@@ -16,6 +16,8 @@ import 'package:kfriends/CommunityScreens/write_timeline.dart';
 import 'package:kfriends/CustomerCenter/customer_center.dart';
 import 'package:kfriends/CustomerCenter/inquiry_sent.dart';
 import 'package:kfriends/EditProfile/edit_profile.dart';
+import 'package:kfriends/Followers/followers.dart';
+import 'package:kfriends/Followings/followings.dart';
 import 'package:kfriends/KoreanGames/korean_main_screen.dart';
 import 'package:kfriends/KoreanGames/korean_game_Sheet.dart';
 import 'package:kfriends/KoreanGames/korean_game_result.dart';
@@ -98,6 +100,8 @@ class Routes {
   static String callScreen = "/callScreen";
   static String profileSetting = "/profileSetting";
   static String terms = "/terms";
+  static String followers = "/followers";
+  static String followings = "/followings";
 }
 
 final pages = [
@@ -309,5 +313,17 @@ final pages = [
   GetPage(
     name: Routes.terms,
     page: () => const Terms(),
+  ),
+  GetPage(
+    name: Routes.followers,
+    page: () => Followers(
+      followers: Get.arguments,
+    ),
+  ),
+  GetPage(
+    name: Routes.followings,
+    page: () => Followings(
+      followings: Get.arguments,
+    ),
   ),
 ];

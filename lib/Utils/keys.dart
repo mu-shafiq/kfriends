@@ -35,6 +35,6 @@ class Keys {
   static String endCall = 'endCall';
 
   //folders
-  static String profileImage = 'profileImage';
+  static String profileImage = 'profileimages';
   static String featuredImage = 'featuredImage';
 }

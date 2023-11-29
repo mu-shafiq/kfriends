@@ -134,56 +134,68 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        myInfo.followers.length.toString(),
-                        style: TextStyle(
-                          color: textPinkColor,
-                          fontSize: 12.sp,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(Routes.followers,
+                          arguments: myInfo.followers);
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          myInfo.followers.length.toString(),
+                          style: TextStyle(
+                            color: textPinkColor,
+                            fontSize: 12.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ),
                         ),
-                      ),
-                      3.horizontalSpace,
-                      Text(
-                        'Followers'.tr,
-                        style: TextStyle(
-                          color: textGreyColor,
-                          fontSize: 12.sp,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
+                        3.horizontalSpace,
+                        Text(
+                          'Followers'.tr,
+                          style: TextStyle(
+                            color: textGreyColor,
+                            fontSize: 12.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   30.horizontalSpace,
-                  Row(
-                    children: [
-                      Text(
-                        myInfo.following.length.toString(),
-                        style: TextStyle(
-                          color: textBlueColor,
-                          fontSize: 12.sp,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(Routes.followings,
+                          arguments: myInfo.following);
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          myInfo.following.length.toString(),
+                          style: TextStyle(
+                            color: textBlueColor,
+                            fontSize: 12.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ),
                         ),
-                      ),
-                      3.horizontalSpace,
-                      Text(
-                        'Following'.tr,
-                        style: TextStyle(
-                          color: textGreyColor,
-                          fontSize: 12.sp,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
+                        3.horizontalSpace,
+                        Text(
+                          'Following'.tr,
+                          style: TextStyle(
+                            color: textGreyColor,
+                            fontSize: 12.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   30.horizontalSpace,
                   Text.rich(

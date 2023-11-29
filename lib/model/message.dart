@@ -3,7 +3,7 @@ class Message {
   String recieverId;
   String msg;
   int sort;
-  DateTime timeSent;
+  String timeSent;
   String type;
   String? attachmentUrl;
 

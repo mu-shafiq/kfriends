@@ -20,7 +20,7 @@ class Helper {
         source: source,
       );
       return await cropImage(res!.path);
-    } on PlatformException catch (e) { 
+    } on PlatformException catch (e) {
       showToast(e.message!);
       return null;
     }
@@ -47,7 +47,7 @@ class Helper {
         ],
       ))!
           .path);
-    } on PlatformException catch (e) { 
+    } on PlatformException catch (e) {
       showToast(e.message!);
       return null;
     }
@@ -55,12 +55,14 @@ class Helper {
 
   Future<String?> uploadImage(File? image, String folder) async {
     Uint8List? bytes = await image!.readAsBytes();
+    log(image.path);
     Map<String, dynamic>? response =
         await Get.find<MongoDBController>().uploadPNG(bytes, folder);
     if (response![Keys.status] == Keys.success) {
+      log(response['data'].toString());
       return response[Keys.data][Keys.url];
     } else {
-      
+      showToast(response['message'].toString());
       Get.find<MongoDBController>().throwExpection(response);
       return null;
     }
