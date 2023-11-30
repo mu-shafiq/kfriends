@@ -66,7 +66,7 @@ class MongoDBController extends GetxController {
       String collectionName, String documentId) async {
     try {
       Response res = await dio.get(
-        'http://192.168.18.90:3000/api/v1/' + '$collectionName/$documentId',
+        '$baseUrl$collectionName/$documentId',
         options: Options(
           validateStatus: (status) {
             return status! <= 500;
@@ -85,7 +85,7 @@ class MongoDBController extends GetxController {
     try {
       log(baseUrl + collectionName);
       Response res = await dio.post(
-        'http://192.168.18.90:3000/api/v1/' + collectionName,
+        baseUrl + collectionName,
         data: data,
         options: Options(
           validateStatus: (status) {

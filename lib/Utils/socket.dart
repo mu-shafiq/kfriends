@@ -7,7 +7,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
 class SocketNew {
-  static Socket socket = IO.io('${Keys.localHostIP}:3000', <String, dynamic>{
+  static Socket socket = IO.io('${Keys.serverIP}:3000', <String, dynamic>{
     'transports': ['websocket'],
     'autoConnect': false,
   });
