@@ -104,7 +104,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    myInfo.username,
+                    myInfo.nickname,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: textBlackColor,

@@ -29,8 +29,10 @@ class Keys {
   static String generateId = 'generateId';
   static String uploadFileToServer = 'uploadFileToServer';
   static String register = 'register';
-  static String followUser = 'followUser';
-  static String unFollowUser = 'unFollowUser';
+  static String followUser = 'follow';
+  static String unFollowUser = 'unfollow';
+  static String followers = 'followers';
+  static String following = 'following';
   static String makeCall = 'makeCall';
   static String endCall = 'endCall';
 

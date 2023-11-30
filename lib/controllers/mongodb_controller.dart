@@ -45,7 +45,7 @@ class MongoDBController extends GetxController {
       for (var query in queries) {
         queryString += "&$query";
       }
-      printInfo(info: baseUrl + collectionName + queryString);
+      // printInfo(info: baseUrl + collectionName + queryString);
       Response res = await dio.get(
         baseUrl + collectionName + queryString,
         options: Options(
@@ -54,6 +54,7 @@ class MongoDBController extends GetxController {
           },
         ),
       );
+
       return res.data;
     } catch (e) {
       printInfo(info: e.toString());
@@ -65,7 +66,7 @@ class MongoDBController extends GetxController {
       String collectionName, String documentId) async {
     try {
       Response res = await dio.get(
-        '$baseUrl$collectionName/$documentId',
+        'http://192.168.18.90:3000/api/v1/' + '$collectionName/$documentId',
         options: Options(
           validateStatus: (status) {
             return status! <= 500;
@@ -82,8 +83,9 @@ class MongoDBController extends GetxController {
   Future<Map<String, dynamic>?> postDocument(
       String collectionName, Map<String, dynamic> data) async {
     try {
+      log(baseUrl + collectionName);
       Response res = await dio.post(
-        baseUrl + collectionName,
+        'http://192.168.18.90:3000/api/v1/' + collectionName,
         data: data,
         options: Options(
           validateStatus: (status) {
@@ -137,6 +139,47 @@ class MongoDBController extends GetxController {
     }
   }
 
+  Future<Map<String, dynamic>?> putConnectionFunction(String functionName,
+      {Map<String, dynamic>? data}) async {
+    try {
+      printInfo(info: "${baseUrl}connection/$functionName");
+      Response res = await dio.put(
+        "${baseUrl}connection/$functionName",
+        data: data ?? {},
+        options: Options(
+          validateStatus: (status) {
+            return status! <= 500;
+          },
+        ),
+      );
+      return res.data;
+    } catch (e) {
+      printError(info: e.toString());
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> getConnectionFunction(
+      String functionName, String id,
+      {Map<String, dynamic>? data}) async {
+    try {
+      printInfo(info: "${baseUrl}connection/$functionName/$id");
+      Response res = await dio.get(
+        "${baseUrl}connection/$functionName/$id",
+        data: data ?? {},
+        options: Options(
+          validateStatus: (status) {
+            return status! <= 500;
+          },
+        ),
+      );
+      return res.data;
+    } catch (e) {
+      printError(info: e.toString());
+      return null;
+    }
+  }
+
   Future<Map<String, dynamic>?> callFunction(String functionName,
       {Map<String, dynamic>? data}) async {
     try {
@@ -185,20 +228,23 @@ class MongoDBController extends GetxController {
       var mpFile = http.MultipartFile.fromBytes('file', bytes,
           filename: DateTime.now().millisecondsSinceEpoch.toString(),
           contentType: parser.MediaType("image", "png"));
+
       var request = http.MultipartRequest(
         'POST',
         Uri.parse("${baseUrl}functions/${Keys.uploadFileToServer}"),
       );
+
       request.files.add(mpFile);
       request.fields['folder'] = folderName;
       request.headers.addAll({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ${currentUser!.fcmToken}',
+        // 'Authorization': 'Bearer ${currentUser!.fcmToken}',
       });
 
       var streamRes = await request.send();
       var res = await http.Response.fromStream(streamRes);
+
       return json.decode(res.body);
     } catch (e) {
       printInfo(info: e.toString());

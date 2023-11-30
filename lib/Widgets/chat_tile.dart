@@ -53,7 +53,7 @@ class ChatTile extends StatelessWidget {
                 EdgeInsets.only(left: 5.w, top: 10.h, bottom: 10.h, right: 5.w),
             leading: CircleAvatar(
               radius: 35.r,
-              backgroundImage: Image.asset(
+              backgroundImage: Image.network(
                 asset,
               ).image,
             ),

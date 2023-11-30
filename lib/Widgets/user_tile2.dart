@@ -109,8 +109,8 @@ class UserTile2 extends StatelessWidget {
                 children: [
                   InkWell(
                       onTap: () {
-                        Get.find<ChatController>().setSelectedUser(userModel);
-                        Get.find<ChatController>().getAllMessages();
+                        Get.find<ChatController>()
+                            .setSelectedUser(userModel, isNew: true);
 
                         Get.toNamed(Routes.chatingScreen);
                       },

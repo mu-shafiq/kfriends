@@ -66,7 +66,7 @@ class _ChatingScreenState extends State<ChatingScreen> {
                           .image),
               3.horizontalSpace,
               Text(
-                controller.selectedUser!.username,
+                controller.selectedUser!.nickname,
                 style: TextStyle(
                   color: textBlackColor,
                   fontSize: 10.sp,
@@ -189,65 +189,72 @@ class _ChatingScreenState extends State<ChatingScreen> {
             ],
           ),
         ),
-        body: Container(
-          height: 1.sh,
-          width: 1.sw,
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                Color(0xffFFFFFF),
-                Color(0xffFFF6E2),
-                Color(0xffFFE6AF),
-                Color(0xffFFE6AF)
-              ])),
-          child: CupertinoScrollbar(
-            controller: _scrollController,
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                children: [
-                  10.verticalSpace,
-                  Text(
-                    '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
-                    style: TextStyle(
-                      color: textBlackColor,
-                      fontSize: 10.sp,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w700,
-                      height: 0,
+        body: controller.loading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                height: 1.sh,
+                width: 1.sw,
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                      Color(0xffFFFFFF),
+                      Color(0xffFFF6E2),
+                      Color(0xffFFE6AF),
+                      Color(0xffFFE6AF)
+                    ])),
+                child: CupertinoScrollbar(
+                  controller: _scrollController,
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    child: Column(
+                      children: [
+                        10.verticalSpace,
+                        Text(
+                          '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
+                          style: TextStyle(
+                            color: textBlackColor,
+                            fontSize: 10.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ),
+                        ),
+                        20.verticalSpace,
+                        SizedBox(
+                          width: .94.sw,
+                          child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: controller.selectedUserChat.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                Message message =
+                                    controller.selectedUserChat[index];
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8.0, horizontal: 8),
+                                  child: messageTile(
+                                      message.msg,
+                                      message.senderId !=
+                                          Get.find<AuthController>()
+                                              .userModel!
+                                              .id,
+                                      '15:43',
+                                      '15:43',
+                                      message.type,
+                                      message.attachmentUrl.toString()),
+                                );
+                              }),
+                        ),
+                        60.verticalSpace
+                      ],
                     ),
                   ),
-                  20.verticalSpace,
-                  SizedBox(
-                    width: .94.sw,
-                    child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: controller.selectedUserChat.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          Message message = controller.selectedUserChat[index];
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8.0, horizontal: 8),
-                            child: messageTile(
-                                message.msg,
-                                message.senderId !=
-                                    Get.find<AuthController>().userModel!.id,
-                                '15:43',
-                                '15:43',
-                                message.type,
-                                message.attachmentUrl.toString()),
-                          );
-                        }),
-                  ),
-                  60.verticalSpace
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
       );
     });
   }

@@ -45,27 +45,32 @@ class _FriendsState extends State<Friends> {
               ),
               centerTitle: true,
               actions: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 15.0),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        Assets.appLogo2,
-                        scale: 15.sp,
-                      ),
-                      2.horizontalSpace,
-                      Text(
-                        'K-FRIENDS',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: textGreyColor,
-                          fontSize: 7.sp,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(Routes.chatMainScreen);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          Assets.appLogo2,
+                          scale: 15.sp,
                         ),
-                      ),
-                    ],
+                        2.horizontalSpace,
+                        Text(
+                          'K-FRIENDS',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: textGreyColor,
+                            fontSize: 7.sp,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 )
               ],

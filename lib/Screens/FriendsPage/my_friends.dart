@@ -16,44 +16,36 @@ class MyFriends extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UsersController>(
-        init: UsersController(),
-        builder: (controller) {
-          return Column(
-            children: [
-              5.verticalSpace,
-              CustomTextfield(
-                height: 40.h,
-                width: .9.sw,
-                hint: 'Search by name'.tr,
-                hintSize: 12.sp,
-                trailing: Image.asset(Assets.search),
-                controller: controller.myFriendController,
-                onChanged: (String val) {
-                  controller.onSearchChanged(val);
-                },
-              ),
-              30.verticalSpace,
-              SizedBox(
-                width: .9.sw,
-                child: FutureBuilder<List<UserModel>>(
-                    future: controller.getMyFriends(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      List<UserModel> users = snapshot.data ?? [];
-                      if (users.isEmpty) {
-                        return Center(child: Text('No friends'.tr));
-                      }
-                      return ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: users.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            UserModel user = users[index];
+    return GetBuilder<UsersController>(builder: (controller) {
+      return Column(
+        children: [
+          5.verticalSpace,
+          CustomTextfield(
+            height: 40.h,
+            width: .9.sw,
+            hint: 'Search by name'.tr,
+            hintSize: 12.sp,
+            trailing: Image.asset(Assets.search),
+            controller: controller.myFriendController,
+            onChanged: (String val) {
+              controller.onSearchChanged(val);
+            },
+          ),
+          30.verticalSpace,
+          SizedBox(
+              width: .9.sw,
+              child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.myFollowers.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return FutureBuilder<UserModel>(
+                        future:
+                            controller.getUser(controller.myFollowers[index]),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            UserModel user = snapshot.data!;
                             return InkWell(
                               onTap: () {
                                 Get.toNamed(Routes.userInfo, arguments: user);
@@ -61,17 +53,19 @@ class MyFriends extends StatelessWidget {
                               child: UserTile2(
                                 verified: user.userType == korean,
                                 asset: Assets.user1,
-                                username: user.username,
+                                username: user.nickname,
                                 about: user.intro!,
                                 agoraUid: user.agoraUid,
                                 userModel: user,
                               ),
                             );
-                          });
-                    }),
-              )
-            ],
-          );
-        });
+                          } else {
+                            return const SizedBox();
+                          }
+                        });
+                  }))
+        ],
+      );
+    });
   }
 }

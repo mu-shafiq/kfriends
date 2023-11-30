@@ -25,120 +25,118 @@ class NewFriends extends StatefulWidget {
 class _NewFriendsState extends State<NewFriends> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UsersController>(
-        init: UsersController(),
-        builder: (controller) {
-          print(controller.initAge.value);
-          print(controller.isFilterApplied.value);
-          print(controller.country.text);
-          return Column(
-            children: [
-              5.verticalSpace,
-              SizedBox(
-                width: .9.sw,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomTextfield(
-                      height: 40.h,
-                      width: .76.sw,
-                      hint: 'Search by name'.tr,
-                      hintSize: 12.sp,
-                      trailing: Image.asset(Assets.search),
-                      controller: controller.newFriendController,
-                      onChanged: (String val) {
-                        controller.onSearchChanged(val);
-                      },
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        await bottomSheet(controller);
-                        controller.update();
-                      },
-                      child: Image.asset(
-                        Assets.filter,
-                        scale: .8.sp,
-                      ),
-                    )
-                  ],
+    return GetBuilder<UsersController>(builder: (controller) {
+      print(controller.initAge.value);
+      print(controller.isFilterApplied.value);
+      print(controller.country.text);
+      return Column(
+        children: [
+          5.verticalSpace,
+          SizedBox(
+            width: .9.sw,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomTextfield(
+                  height: 40.h,
+                  width: .76.sw,
+                  hint: 'Search by name'.tr,
+                  hintSize: 12.sp,
+                  trailing: Image.asset(Assets.search),
+                  controller: controller.newFriendController,
+                  onChanged: (String val) {
+                    controller.onSearchChanged(val);
+                  },
                 ),
-              ),
-              20.verticalSpace,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RoundedSmallButton(
-                    selected: controller.tab == 0,
-                    onTap: () {
-                      setState(() {
-                        controller.tab = 0;
-                      });
-                    },
-                    textColor: textBlackColor,
-                    width: 163.w,
-                    selectedColor: buttonYellowColor,
-                    height: 32.h,
-                    text: 'Korean',
+                InkWell(
+                  onTap: () async {
+                    await bottomSheet(controller);
+                    controller.update();
+                  },
+                  child: Image.asset(
+                    Assets.filter,
+                    scale: .8.sp,
                   ),
-                  10.horizontalSpace,
-                  RoundedSmallButton(
-                    selected: controller.tab == 1,
-                    onTap: () {
-                      setState(() {
-                        controller.tab = 1;
-                      });
-                    },
-                    textColor: textBlackColor,
-                    width: 163.w,
-                    selectedColor: buttonYellowColor,
-                    height: 32.h,
-                    text: 'Global',
-                  ),
-                ],
+                )
+              ],
+            ),
+          ),
+          20.verticalSpace,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              RoundedSmallButton(
+                selected: controller.tab == 0,
+                onTap: () {
+                  setState(() {
+                    controller.tab = 0;
+                  });
+                },
+                textColor: textBlackColor,
+                width: 163.w,
+                selectedColor: buttonYellowColor,
+                height: 32.h,
+                text: 'Korean',
               ),
-              30.verticalSpace,
-              SizedBox(
-                width: .9.sw,
-                child: FutureBuilder<List<UserModel>>(
-                    future: controller.getNewFriends(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      List<UserModel> users = snapshot.data ?? [];
-                      if (users.isEmpty) {
-                        return Center(
-                            child: Text(
-                                'No ${controller.tab == 0 ? "korean" : "global"} user found'));
-                      }
-                      return ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: users.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            UserModel user = users[index];
-                            return InkWell(
-                              onTap: () async {
-                                await Get.toNamed(Routes.userInfo,
-                                    arguments: user);
-                                controller.update();
-                              },
-                              child: UserTile2(
-                                verified: user.userType == korean,
-                                asset: Assets.user1,
-                                username: user.username,
-                                about: user.intro!,
-                                userModel: user,
-                              ),
-                            );
-                          });
-                    }),
-              )
+              10.horizontalSpace,
+              RoundedSmallButton(
+                selected: controller.tab == 1,
+                onTap: () {
+                  setState(() {
+                    controller.tab = 1;
+                  });
+                },
+                textColor: textBlackColor,
+                width: 163.w,
+                selectedColor: buttonYellowColor,
+                height: 32.h,
+                text: 'Global',
+              ),
             ],
-          );
-        });
+          ),
+          30.verticalSpace,
+          SizedBox(
+            width: .9.sw,
+            child: FutureBuilder<List<UserModel>>(
+                future: controller.getNewFriends(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  List<UserModel> users = snapshot.data ?? [];
+                  if (users.isEmpty) {
+                    return Center(
+                        child: Text(
+                            'No ${controller.tab == 0 ? "korean" : "global"} user found'));
+                  }
+                  return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: users.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        UserModel user = users[index];
+
+                        return InkWell(
+                          onTap: () async {
+                            await Get.toNamed(Routes.userInfo, arguments: user);
+                            controller.update();
+                          },
+                          child: UserTile2(
+                            verified: user.userType == korean,
+                            asset: Assets.user1,
+                            username: user.nickname,
+                            about: user.intro!,
+                            userModel: user,
+                          ),
+                        );
+                      });
+                }),
+          )
+        ],
+      );
+    });
   }
 
   Future bottomSheet(UsersController controller) async {
@@ -226,7 +224,7 @@ class _NewFriendsState extends State<NewFriends> {
                           children: [
                             const SizedBox(),
                             InkWell(
-                              onTap: () { 
+                              onTap: () {
                                 showModalBottomSheet(
                                     context: context,
                                     builder: (context) {
@@ -272,7 +270,7 @@ class _NewFriendsState extends State<NewFriends> {
                             ),
                             Image.asset(Assets.equal),
                             InkWell(
-                              onTap: () { 
+                              onTap: () {
                                 showModalBottomSheet(
                                     context: context,
                                     builder: (context) {
@@ -470,7 +468,7 @@ class _NewFriendsState extends State<NewFriends> {
                           const SizedBox(),
                           const SizedBox(),
                           InkWell(
-                            onTap: () async { 
+                            onTap: () async {
                               await showModalBottomSheet(
                                   context: context,
                                   builder: (context) {
@@ -514,7 +512,7 @@ class _NewFriendsState extends State<NewFriends> {
                           ),
                           Image.asset(Assets.equal),
                           InkWell(
-                            onTap: () { 
+                            onTap: () {
                               showModalBottomSheet(
                                   context: context,
                                   builder: (context) {

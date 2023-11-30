@@ -84,7 +84,7 @@ class Followings extends StatelessWidget {
                                       child: FollowTile(
                                         verified: user.userType == korean,
                                         asset: user.profileImage,
-                                        username: user.username,
+                                        username: user.nickname,
                                         about: user.intro!,
                                         userModel: user,
                                       ),

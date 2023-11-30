@@ -6,6 +6,7 @@ class Message {
   String timeSent;
   String type;
   String? attachmentUrl;
+  String chatRoomId;
 
   Message(
       {required this.senderId,
@@ -14,6 +15,7 @@ class Message {
       required this.sort,
       required this.timeSent,
       this.attachmentUrl,
+      required this.chatRoomId,
       required this.type});
 
   Map<String, dynamic> toJson() {
@@ -25,6 +27,7 @@ class Message {
       'time_sent': timeSent,
       'type': type,
       'attachment_url': attachmentUrl,
+      'chatRoomId': chatRoomId
     };
   }
 
@@ -36,6 +39,7 @@ class Message {
         sort: json['sort'],
         attachmentUrl: json['attachment_url'],
         type: json['type'],
+        chatRoomId: json['chatRoomId'],
         timeSent: json['time_sent']);
   }
 }

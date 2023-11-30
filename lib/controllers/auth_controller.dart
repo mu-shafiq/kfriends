@@ -50,7 +50,7 @@ class AuthController extends GetxController {
   UserModel? userModel;
 
   void setValues() {
-    usernameController.text = userModel!.username;
+    usernameController.text = userModel!.nickname;
     regionController.text = userModel!.region ?? '';
     jobController.text = userModel!.job ?? "";
     countryController.text = userModel!.country ?? "";
@@ -164,13 +164,14 @@ class AuthController extends GetxController {
   }
 
   Future<void> signUp() async {
+    log('sign up');
     try {
       UserModel userModel = UserModel(
         profileImage: (await Helper()
             .uploadImage(profileImage!.value, Keys.profileImage))!,
         featuredImage: (await Helper()
             .uploadImage(featuredImage!.value, Keys.featuredImage))!,
-        username: usernameController.text.trim(),
+        nickname: usernameController.text.trim(),
         email: emailController.text.trim(),
         password: passwordController.text,
         gender: male.value ? "male" : "female",
@@ -193,6 +194,7 @@ class AuthController extends GetxController {
         contacts: [],
         fcmToken: (await FirebaseMessaging.instance.getToken())!,
       );
+      log('message');
       Response res = await Dio().post(
         '${Keys.serverIP}:3000/api/v1/auth/register',
         data: userModel.toJson(),
@@ -202,12 +204,14 @@ class AuthController extends GetxController {
           },
         ),
       );
+      log(res.data.toString());
       if (res.data[Keys.status] == Keys.success) {
         await _storage.write(
             key: Keys.bearerToken, value: res.data[Keys.data][Keys.token]);
         await _storage.write(
             key: Keys.userId, value: res.data[Keys.data][Keys.user][Keys.id]);
         currentUser = UserModel.fromJson(res.data[Keys.data][Keys.user]);
+        userModel = currentUser!;
         Helper().showToast("User Registered Successfully");
         SocketNew.connectSocket();
 
@@ -236,6 +240,7 @@ class AuthController extends GetxController {
         ),
       );
       EasyLoading.dismiss();
+      log(res.data.toString());
       if (res.data[Keys.status] == Keys.success) {
         if (res.data[Keys.data] != null) {
           await _storage.write(
@@ -283,7 +288,7 @@ class AuthController extends GetxController {
           ? (await Helper()
               .uploadImage(profileImage!.value, Keys.profileImage))!
           : userModel!.featuredImage;
-      userModel!.username = usernameController.text.trim();
+      userModel!.nickname = usernameController.text.trim();
       userModel!.gender = male.value ? "male" : "female";
       userModel!.dateOfBirth = dateOfBirth!;
       userModel!.age =

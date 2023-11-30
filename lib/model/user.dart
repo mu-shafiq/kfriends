@@ -4,7 +4,7 @@ class UserModel {
   String? id;
   String profileImage;
   String featuredImage;
-  String username;
+  String nickname;
   String email;
   String password;
   String gender;
@@ -30,7 +30,7 @@ class UserModel {
     this.id,
     required this.profileImage,
     required this.featuredImage,
-    required this.username,
+    required this.nickname,
     required this.email,
     required this.password,
     required this.gender,
@@ -57,7 +57,7 @@ class UserModel {
     return {
       'profileImage': profileImage,
       'featuredImage': featuredImage,
-      'username': username,
+      'nickname': nickname,
       'email': email,
       'password': password,
       'gender': gender,
@@ -86,7 +86,7 @@ class UserModel {
       id: json['id'],
       profileImage: json['profileImage'],
       featuredImage: json['featuredImage'],
-      username: json['username'],
+      nickname: json['nickname'],
       email: json['email'],
       password: json['password'],
       gender: json['gender'],

@@ -125,7 +125,7 @@ class ProfileSettings extends StatelessWidget {
                                   .image,
                         ),
                         title: Text(
-                          controller.userModel!.username,
+                          controller.userModel!.nickname,
                           style: TextStyle(
                             color: textBlackColor,
                             fontSize: 12.sp,

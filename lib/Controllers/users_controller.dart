@@ -33,12 +33,23 @@ class UsersController extends GetxController {
   RxBool isFilterApplied = false.obs;
 
   RxList<String> interests = <String>[].obs;
+  RxList myFollowing = [].obs;
+  RxList myFollowers = [].obs;
 
   @override
   void onClose() {
     super.onClose();
     myFriendController.dispose();
     _debounce?.cancel();
+  }
+
+  @override
+  void onInit() {
+    3.seconds.delay().then((value) {
+      getMyFollowing();
+      getMyFollowers();
+    });
+    super.onInit();
   }
 
   void onSearchChanged(String value) {
@@ -84,24 +95,27 @@ class UsersController extends GetxController {
     update();
   }
 
-  Future<List<UserModel>> getMyFriends() async {
-    if (myFriendController.text.trim().isNotEmpty) {
-      return await getFriends(queries: [
-        'followers[in]=${currentUser!.id}',
-        'username[regex]=${myFriendController.text.trim().toLowerCase()}',
-        'username[options]=i'
-      ]);
-    } else {
-      return await getFriends(queries: ['followers[in]=${currentUser!.id}']);
-    }
-  }
+  // Future<List<UserModel>> getMyFriends() async {
+  //   if (myFriendController.text.trim().isNotEmpty) {
+  //     return await getFriends(queries: [
+  //       // 'followers[in]=${[currentUser!.id]}',
+  //       'username[regex]=${myFriendController.text.trim().toLowerCase()}',
+  //       'username[options]=i'
+  //     ]);
+  //   } else {
+  //     log('else');
+  //     return await getFriends(queries: [
+  //       // 'followers[in]=${[currentUser!.id]}'
+  //     ]);
+  //   }
+  // }
 
   Future<List<UserModel>> getNewFriends() async {
     if (isFilterApplied.value) {
       newFriendController.clear();
       return await getFriends(queries: [
         tab == 0 ? 'userType=$korean' : 'userType=$global',
-        'followers[nin]=${currentUser!.id}',
+        // 'followers[nin]=${[currentUser!.id]}',
         '_id[ne]=${currentUser!.id}',
         'age[gte]=${initAge.value}',
         'age[lte]=${finalAge.value}',
@@ -115,7 +129,7 @@ class UsersController extends GetxController {
     if (newFriendController.text.trim().isNotEmpty) {
       return await getFriends(queries: [
         tab == 0 ? 'userType=$korean' : 'userType=$global',
-        'followers[nin]=${currentUser!.id}',
+        // 'followers[nin]=${[currentUser!.id]}',
         'id[ne]=${currentUser!.id}',
         'username[regex]=${newFriendController.text.trim().toLowerCase()}',
         'username[options]=i'
@@ -123,7 +137,7 @@ class UsersController extends GetxController {
     }
     return await getFriends(queries: [
       tab == 0 ? 'userType=$korean' : 'userType=$global',
-      'followers[nin]=${currentUser!.id}',
+      // 'followers[nin]=${[currentUser!.id]}',
       '_id[ne]=${currentUser!.id}',
     ]);
   }
@@ -132,12 +146,11 @@ class UsersController extends GetxController {
     try {
       Map<String, dynamic>? res = await mongodbController.getCollection(
         'users',
-        queries: [
-          ...?queries,
-        ],
+        queries: queries ?? [],
       );
+      log(res.toString());
       if (res![Keys.status] == Keys.success) {
-        return List.from(res[Keys.data][Keys.users])
+        return List.from(res[Keys.data]['users'])
             .map((e) => UserModel.fromJson(e))
             .toList();
       } else {
@@ -156,18 +169,40 @@ class UsersController extends GetxController {
         Keys.users, userId))!)['data']['user']);
   }
 
+  getMyFollowers() async {
+    List res = (await mongodbController.getConnectionFunction(
+            Keys.followers, currentUser!.id!))!['data']
+        .map((e) => e['follower'])
+        .toList();
+
+    myFollowers(res);
+    update();
+  }
+
+  getMyFollowing() async {
+    List res = (await mongodbController.getConnectionFunction(
+            Keys.following, currentUser!.id!))!['data']
+        .map((e) => e['follow'])
+        .toList();
+
+    myFollowing(res);
+    update();
+  }
+
   Future<bool> followUser(String followId) async {
     print("followId: $followId");
     print('myid ${currentUser!.id}');
     try {
-      Map<String, dynamic>? res = await mongodbController.callFunction(
+      Map<String, dynamic>? res = await mongodbController.putConnectionFunction(
         Keys.followUser,
         data: {
-          'userId': currentUser!.id,
-          'followId': followId,
+          'follower': currentUser!.id,
+          'follow': followId,
         },
       );
+      log(res.toString());
       if (res![Keys.status] == Keys.success) {
+        myFollowing.add(followId);
         Helper().showToast("User followed successfully");
         return true;
       } else {
@@ -183,14 +218,16 @@ class UsersController extends GetxController {
 
   Future<bool> unFollowUser(String followId) async {
     try {
-      Map<String, dynamic>? res = await mongodbController.callFunction(
+      Map<String, dynamic>? res = await mongodbController.putConnectionFunction(
         Keys.unFollowUser,
         data: {
-          'userId': currentUser!.id,
-          'followId': followId,
+          'follower': currentUser!.id,
+          'follow': followId,
         },
       );
       if (res![Keys.status] == Keys.success) {
+        myFollowing.remove(followId);
+
         Helper().showToast("User unfollowed successfully");
         return true;
       } else {
