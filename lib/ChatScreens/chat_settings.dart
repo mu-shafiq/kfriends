@@ -18,7 +18,7 @@ class _ChatSettingsState extends State<ChatSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomBar(index: 1),
+      bottomNavigationBar: const BottomBar(index: 2),
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 0,

@@ -33,6 +33,8 @@ class UsersController extends GetxController {
   RxBool isFilterApplied = false.obs;
 
   RxList<String> interests = <String>[].obs;
+  RxList<String> suggestedInterests = <String>[].obs;
+
   RxList myFollowing = [].obs;
   RxList myFollowers = [].obs;
 
@@ -46,8 +48,10 @@ class UsersController extends GetxController {
   @override
   void onInit() {
     3.seconds.delay().then((value) {
-      getMyFollowing();
-      getMyFollowers();
+      if (currentUser != null) {
+        getMyFollowing();
+        getMyFollowers();
+      }
     });
     super.onInit();
   }
@@ -79,6 +83,15 @@ class UsersController extends GetxController {
       interests.remove(newInterest);
     } else {
       interests.add(newInterest);
+    }
+    update();
+  }
+
+  void updateSuggestedInterests(String newInterest) {
+    if (suggestedInterests.contains(newInterest)) {
+      suggestedInterests.remove(newInterest);
+    } else {
+      suggestedInterests.add(newInterest);
     }
     update();
   }

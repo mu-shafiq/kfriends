@@ -83,7 +83,7 @@ class MongoDBController extends GetxController {
   Future<Map<String, dynamic>?> postDocument(
       String collectionName, Map<String, dynamic> data) async {
     try {
-      log(baseUrl + collectionName);
+      print(baseUrl + collectionName);
       Response res = await dio.post(
         baseUrl + collectionName,
         data: data,
@@ -344,3 +344,7 @@ class MongoDBController extends GetxController {
     }
   }
 }
+
+
+
+

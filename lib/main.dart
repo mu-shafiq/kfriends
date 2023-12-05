@@ -11,6 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kfriends/Controllers/auth_controller.dart';
 import 'package:kfriends/Controllers/calls_controller.dart';
+import 'package:kfriends/Controllers/timeline_controller.dart';
 import 'package:kfriends/Controllers/users_controller.dart';
 import 'package:kfriends/Languages/languages.dart';
 import 'package:kfriends/Routes/get_routes.dart';
@@ -204,7 +205,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           Get.put(CallsController(), permanent: true);
           Get.put(AuthController(), permanent: true);
           Get.put(ChatController(), permanent: true);
-          Get.put(UsersController(), permanent: true);
+          Get.put(
+            UsersController(),
+          );
+          Get.put(TimelineController(), permanent: true);
         }),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

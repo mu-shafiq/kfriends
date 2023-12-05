@@ -46,9 +46,6 @@ class _FriendsState extends State<Friends> {
               centerTitle: true,
               actions: [
                 GestureDetector(
-                  onTap: () {
-                    Get.toNamed(Routes.chatMainScreen);
-                  },
                   child: Padding(
                     padding: const EdgeInsets.only(right: 15.0),
                     child: Row(

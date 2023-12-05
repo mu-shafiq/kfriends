@@ -6,6 +6,7 @@ class Assets {
   //Logo
   static const String appLogo = '${pathLogos}logo.png';
   static const String appLogo2 = '${pathLogos}logo2.png';
+  static const String chatLogo = '${pathLogos}chatLogo.png';
 
   //Icon
   static const String backArrow = '${pathIcons}backArrow.png';
@@ -20,6 +21,8 @@ class Assets {
   static const String call = '${pathIcons}call.png';
   static const String profile = '${pathIcons}profile.png';
   static const String circleBlack = '${pathIcons}circleBlack.png';
+  static const String circleWhite = '${pathIcons}circleWhite.png';
+
   static const String notification = '${pathIcons}notification.png';
   static const String verified = '${pathIcons}verified.png';
   static const String search = '${pathIcons}search.png';

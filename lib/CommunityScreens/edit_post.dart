@@ -13,8 +13,8 @@ import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Widgets/tag_selector.dart';
 import 'package:kfriends/Widgets/textfield.dart';
 
-class AddPost extends StatelessWidget {
-  AddPost({super.key});
+class EditPost extends StatelessWidget {
+  EditPost({super.key});
   final bool isEnglish = Get.locale == const Locale('en', 'US');
 
   @override
@@ -486,7 +486,7 @@ class AddPost extends StatelessWidget {
                               },
                             );
                           } else {
-                            timelineController.addAPost();
+                            timelineController.updateAPosts();
                           }
                         },
                         textColor: textWhiteColor,

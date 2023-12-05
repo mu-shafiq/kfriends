@@ -12,7 +12,7 @@ class AiChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomBar(index: 1),
+      bottomNavigationBar: const BottomBar(index: 2),
       appBar: AppBar(
         leading: const SizedBox(),
         elevation: 0,

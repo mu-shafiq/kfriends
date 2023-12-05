@@ -36,29 +36,32 @@ class MyFriends extends StatelessWidget {
               width: .9.sw,
               child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.myFollowers.length,
+                  itemCount: controller.myFollowing.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return FutureBuilder<UserModel>(
                         future:
-                            controller.getUser(controller.myFollowers[index]),
+                            controller.getUser(controller.myFollowing[index]),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.done) {
-                            UserModel user = snapshot.data!;
-                            return InkWell(
-                              onTap: () {
-                                Get.toNamed(Routes.userInfo, arguments: user);
-                              },
-                              child: UserTile2(
-                                verified: user.userType == korean,
-                                asset: Assets.user1,
-                                username: user.nickname,
-                                about: user.intro!,
-                                agoraUid: user.agoraUid,
-                                userModel: user,
-                              ),
-                            );
+                            UserModel? user = snapshot.data;
+                            return user != null
+                                ? InkWell(
+                                    onTap: () {
+                                      Get.toNamed(Routes.userInfo,
+                                          arguments: user);
+                                    },
+                                    child: UserTile2(
+                                      verified: user.userType == korean,
+                                      asset: Assets.user1,
+                                      username: user.nickname,
+                                      about: user.intro!,
+                                      agoraUid: user.agoraUid,
+                                      userModel: user,
+                                    ),
+                                  )
+                                : const SizedBox();
                           } else {
                             return const SizedBox();
                           }

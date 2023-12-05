@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Screens/CallScreen/call_history.dart';
 import 'package:kfriends/Screens/CallScreen/call_screen.dart';
 import 'package:kfriends/Screens/FriendsPage/friends.dart';
@@ -111,9 +112,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
           Positioned(
             bottom: 16.h,
-            child: Image.asset(
-              Assets.appLogo2,
-              scale: 6,
+            child: GestureDetector(
+              onTap: () {
+                Get.toNamed(Routes.chatMainScreen);
+              },
+              child: Image.asset(
+                Assets.appLogo2,
+                scale: 6,
+              ),
             ),
           ),
         ],

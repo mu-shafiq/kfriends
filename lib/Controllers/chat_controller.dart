@@ -31,7 +31,8 @@ class ChatController extends GetxController {
     log(isNew.toString());
     selectedUser = userModel;
     SocketNew.socket.on('new_message', (data) {
-      selectedUserChat.add(Message.fromJson(data));
+      Message message = Message.fromJson(data);
+      selectedUserChat.addIf(message.senderId == selectedUser!.id, message);
       update();
     });
     isNew ? await initiateChatRoom() : setSelectedChatRoom(chatRoom!);
@@ -114,20 +115,23 @@ class ChatController extends GetxController {
         chatRooms = List.from(res[Keys.data]['chatRooms']).map((e) {
           return ChatRoom.fromJson(e);
         }).toList();
-        log(chatRooms[0].toJson().toString());
       } else {
         mongodbController.throwExpection(res);
       }
     } catch (e) {
       log(e.toString());
-      Helper().showToast("Error in initiating chat room");
+      Helper().showToast("Error in getting chat room");
     }
     update();
   }
 
   @override
   void onInit() {
-    3.seconds.delay().then((value) => getMyChatRooms());
+    3.seconds.delay().then((value) {
+      if (currentUser != null) {
+        getMyChatRooms();
+      }
+    });
     super.onInit();
   }
 }

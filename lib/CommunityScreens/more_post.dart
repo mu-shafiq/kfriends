@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:kfriends/Controllers/timeline_controller.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
@@ -9,6 +11,7 @@ import 'package:kfriends/Widgets/bottom_bar.dart';
 import 'package:kfriends/Widgets/post_tile.dart';
 import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Widgets/textfield.dart';
+import 'package:kfriends/model/post.dart';
 
 class MorePosts extends StatefulWidget {
   const MorePosts({super.key});
@@ -289,69 +292,73 @@ class _MorePostsState extends State<MorePosts> {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              isEnglish ? 20.verticalSpace : 0.verticalSpace,
-              CustomTextfield(
-                  hint: 'Enter your keyword 👀'.tr,
-                  trailing: Image.asset(Assets.search),
-                  hintSize: 11.sp,
-                  height: 40.h,
-                  width: .91.sw,
-                  controller: TextEditingController()),
-              20.verticalSpace,
-              SizedBox(
-                height: 36.h,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 3, vertical: 5),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: index == 0 ? 15 : 0),
-                          child: RoundedSmallButton2(
-                            onTap: () {},
-                            textColor: textBlackColor,
-                            shadow1: buttonBlackShadow1,
-                            shadow2: buttonBlackShadow2,
-                            bgColor: buttonWhiteColor,
-                            width: 85.w,
-                            height: 22.h,
-                            text: interests[index],
-                            selected: index == 0,
+        body: GetBuilder<TimelineController>(builder: (timelineController) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                isEnglish ? 20.verticalSpace : 0.verticalSpace,
+                CustomTextfield(
+                    hint: 'Enter your keyword 👀'.tr,
+                    trailing: Image.asset(Assets.search),
+                    hintSize: 11.sp,
+                    height: 40.h,
+                    width: .91.sw,
+                    controller: TextEditingController()),
+                20.verticalSpace,
+                SizedBox(
+                  height: 36.h,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 6,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 3, vertical: 5),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: index == 0 ? 15 : 0),
+                            child: RoundedSmallButton2(
+                              onTap: () {},
+                              textColor: textBlackColor,
+                              shadow1: buttonBlackShadow1,
+                              shadow2: buttonBlackShadow2,
+                              bgColor: buttonWhiteColor,
+                              width: 85.w,
+                              height: 22.h,
+                              text: interests[index],
+                              selected: index == 0,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
-              ),
-              15.verticalSpace,
-              SizedBox(
-                width: .9.sw,
-                child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 7,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0),
-                        child: PostTile(
-                            postCount: 33,
-                            postTitle: 'My First visit to Gyeongbokgung! ',
-                            postAssets: Image.asset(Assets.postImage),
-                            username: '김민준',
-                            userAsset: Image.asset(Assets.user1),
-                            showBorder: true,
-                            more: true,
-                            date: '2023.06.16'),
-                      );
-                    }),
-              )
-            ],
-          ),
-        ),
+                        );
+                      }),
+                ),
+                15.verticalSpace,
+                SizedBox(
+                  width: .9.sw,
+                  child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: timelineController.posts.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        Post post = timelineController.posts[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
+                          child: PostTile(
+                              postCount: 33,
+                              postTitle: post.title,
+                              postAssets: Image.network(post.files[0]),
+                              username: post.userName,
+                              userAsset: Image.network(post.userImage),
+                              showBorder: true,
+                              more: true,
+                              date: DateFormat('yyyy.MM.dd').format(
+                                  DateTime.parse(post.updatedAt!).toUtc())),
+                        );
+                      }),
+                )
+              ],
+            ),
+          );
+        }),
       ),
     );
   }

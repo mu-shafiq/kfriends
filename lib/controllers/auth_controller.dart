@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:image_picker/image_picker.dart';
+import 'package:kfriends/Controllers/users_controller.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/constants.dart';
@@ -19,7 +20,6 @@ import 'package:kfriends/Utils/socket.dart';
 import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Controllers/mongodb_controller.dart';
 import 'package:kfriends/model/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
   TextEditingController usernameController = TextEditingController();
@@ -213,8 +213,10 @@ class AuthController extends GetxController {
         currentUser = UserModel.fromJson(res.data[Keys.data][Keys.user]);
         userModel = currentUser!;
         Helper().showToast("User Registered Successfully");
-        SocketNew.connectSocket();
 
+        Get.delete<UsersController>();
+        Get.put(UsersController(), permanent: true);
+        SocketNew.connectSocket();
         Get.back();
         Get.offAllNamed(Routes.bottomNavBar);
       }
@@ -260,8 +262,9 @@ class AuthController extends GetxController {
           }
           // });
           Helper().showToast("User Logged In Successfully");
+          Get.delete<UsersController>();
+          Get.put(UsersController(), permanent: true);
           SocketNew.connectSocket();
-
           Get.back();
           Get.offAllNamed(Routes.bottomNavBar);
         } else {
@@ -339,6 +342,7 @@ class AuthController extends GetxController {
         currentUser = UserModel.fromJson(res[Keys.data][Keys.user]);
         userModel = currentUser;
         setValues();
+        SocketNew.connectSocket();
         log(currentUser!.toJson().toString());
       } else {
         throw Exception(res[Keys.message]);
@@ -352,7 +356,7 @@ class AuthController extends GetxController {
   @override
   void onInit() async {
     await getCurrentUser();
-    SocketNew.connectSocket();
+
     super.onInit();
   }
 }

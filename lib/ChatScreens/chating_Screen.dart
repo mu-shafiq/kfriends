@@ -33,10 +33,8 @@ class _ChatingScreenState extends State<ChatingScreen> {
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
-        _scrollController.animateTo(
+        _scrollController.jumpTo(
           _scrollController.position.maxScrollExtent,
-          curve: Curves.easeOut,
-          duration: const Duration(milliseconds: 200),
         );
       }
     });
@@ -245,7 +243,8 @@ class _ChatingScreenState extends State<ChatingScreen> {
                                       '15:43',
                                       '15:43',
                                       message.type,
-                                      message.attachmentUrl.toString()),
+                                      message.attachmentUrl.toString(),
+                                      controller.selectedUser!.profileImage),
                                 );
                               }),
                         ),
@@ -260,7 +259,7 @@ class _ChatingScreenState extends State<ChatingScreen> {
   }
 
   Widget messageTile(String text, bool isme, String time1, String time2,
-      String type, String url) {
+      String type, String url, String photo) {
     return SizedBox(
       width: 1.sw,
       child: Row(
@@ -271,7 +270,7 @@ class _ChatingScreenState extends State<ChatingScreen> {
           isme
               ? CircleAvatar(
                   radius: 12.r,
-                  child: Image.asset(Assets.user1),
+                  backgroundImage: Image.network(photo).image,
                 )
               : const SizedBox(),
           5.horizontalSpace,

@@ -39,4 +39,5 @@ class Keys {
   //folders
   static String profileImage = 'profileimages';
   static String featuredImage = 'featuredImage';
+  static String postImages = 'postImages';
 }

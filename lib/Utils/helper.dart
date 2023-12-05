@@ -55,13 +55,14 @@ class Helper {
 
   Future<String?> uploadImage(File? image, String folder) async {
     Uint8List? bytes = await image!.readAsBytes();
-    log(image.path);
+    print(image.path);
     Map<String, dynamic>? response =
         await Get.find<MongoDBController>().uploadPNG(bytes, folder);
     if (response![Keys.status] == Keys.success) {
-      log(response['data'].toString());
+      print(response['data'].toString());
       return response[Keys.data][Keys.url];
     } else {
+      print(response['message']);
       showToast(response['message'].toString());
       Get.find<MongoDBController>().throwExpection(response);
       return null;
