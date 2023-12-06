@@ -69,12 +69,12 @@ class BottomBar extends StatelessWidget {
             scale: index == 2 ? .6 : .8,
           ),
         ),
-        GestureDetector(
-          onTap: () {
-            Get.toNamed(Routes.chatMainScreen);
-          },
-          child: Positioned(
-            bottom: 16.h,
+        Positioned(
+          bottom: 16.h,
+          child: GestureDetector(
+            onTap: () {
+              Get.toNamed(Routes.chatMainScreen);
+            },
             child: Image.asset(
               Assets.appLogo2,
               scale: 6,

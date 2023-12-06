@@ -135,7 +135,9 @@ class PostTile extends StatelessWidget {
               decoration: const BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.all(Radius.circular(15))),
-              child: postAssets,
+              child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  child: postAssets),
             ),
           ],
         ),

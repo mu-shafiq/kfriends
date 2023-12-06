@@ -32,9 +32,10 @@ class _TagSelectorState extends State<TagSelector> {
     '#K-CULTURE',
     '#K-POP',
     '#K-DRAMA',
+    '#K-BEAUTY',
+    '#K-TRAVEL',
     '#K-FOOD',
-    '#K-DRAMA',
-    '#K-FOOD'
+    '#K-PET',
   ];
   @override
   Widget build(BuildContext context) {

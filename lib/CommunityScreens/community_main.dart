@@ -9,6 +9,7 @@ import 'package:kfriends/Controllers/timeline_controller.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
+import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Widgets/post_tile.dart';
 import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Widgets/textfield.dart';
@@ -24,14 +25,6 @@ class CommunityMain extends StatefulWidget {
 class _CommunityMainState extends State<CommunityMain> {
   int crouselindex = 0;
 
-  List interests = [
-    '#K-CULTURE',
-    '#K-POP',
-    '#K-DRAMA',
-    '#K-FOOD',
-    '#K-DRAMA',
-    '#K-FOOD'
-  ];
   @override
   Widget build(BuildContext context) {
     return GetBuilder<TimelineController>(builder: (timelineController) {
@@ -80,7 +73,9 @@ class _CommunityMainState extends State<CommunityMain> {
                       child: Padding(
                         padding: EdgeInsets.only(left: index == 0 ? 15 : 0),
                         child: RoundedSmallButton2(
-                          onTap: () {},
+                          onTap: () {
+                            timelineController.updateInterest(interests[index]);
+                          },
                           textColor: textBlackColor,
                           shadow1: buttonBlackShadow1,
                           shadow2: buttonBlackShadow2,
@@ -88,14 +83,18 @@ class _CommunityMainState extends State<CommunityMain> {
                           width: 85.w,
                           height: 22.h,
                           text: interests[index],
-                          selected: index == 0,
+                          selected: timelineController.selectedInterest ==
+                              interests[index],
                         ),
                       ),
                     );
                   }),
             ),
             15.verticalSpace,
-            timelineController.posts.isNotEmpty
+            timelineController.posts
+                    .where((element) =>
+                        element.interest == timelineController.selectedInterest)
+                    .isNotEmpty
                 ? Container(
                     width: .92.sw,
                     decoration: ShapeDecoration(
@@ -125,21 +124,26 @@ class _CommunityMainState extends State<CommunityMain> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               Post post = timelineController.posts[index];
-                              return GestureDetector(
-                                onTap: () {
-                                  timelineController.updateIndex(index);
-                                  Get.toNamed(Routes.postView);
-                                },
-                                child: PostTile(
-                                    postTitle: post.title,
-                                    postAssets: Image.network(post.files[0]),
-                                    username: post.userName,
-                                    userAsset: Image.network(post.userImage),
-                                    showBorder: false,
-                                    date: DateFormat('yyyy.MM.dd').format(
-                                        DateTime.parse(post.updatedAt!)
-                                            .toUtc())),
-                              );
+                              return post.interest ==
+                                      timelineController.selectedInterest
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        timelineController.updateIndex(index);
+                                        Get.toNamed(Routes.postView);
+                                      },
+                                      child: PostTile(
+                                          postTitle: post.title,
+                                          postAssets:
+                                              Image.network(post.files[0]),
+                                          username: post.userName,
+                                          userAsset:
+                                              Image.network(post.userImage),
+                                          showBorder: false,
+                                          date: DateFormat('yyyy.MM.dd').format(
+                                              DateTime.parse(post.updatedAt!)
+                                                  .toUtc())),
+                                    )
+                                  : const SizedBox();
                             }),
                         15.verticalSpace,
                         GestureDetector(
@@ -179,6 +183,16 @@ class _CommunityMainState extends State<CommunityMain> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+                          Text(
+                            'No posts related this tag',
+                            style: TextStyle(
+                              color: textGreyColor,
+                              fontSize: 11.sp,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          50.horizontalSpace,
                           Icon(
                             Icons.add,
                             size: 11.sp,
@@ -241,209 +255,225 @@ class _CommunityMainState extends State<CommunityMain> {
               ),
             ),
             20.verticalSpace,
-            SizedBox(
-              width: 1.sw,
-              height: .49.sh,
-              child: CarouselSlider.builder(
-                  itemCount: timelineController.posts.length,
-                  options: CarouselOptions(
-                    height: .63.sh,
-                    aspectRatio: .5,
-                    initialPage: 0,
-                    enableInfiniteScroll: true,
-                    viewportFraction: 1,
-                    reverse: false,
-                    autoPlay: true,
-                    disableCenter: true,
-                    autoPlayInterval: const Duration(seconds: 5),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enlargeFactor: 0,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        crouselindex = index;
-                      });
-                    },
-                    scrollDirection: Axis.horizontal,
-                  ),
-                  itemBuilder:
-                      (BuildContext context, int itemIndex, int pageViewIndex) {
-                    print(crouselindex);
-                    Post post = timelineController.posts[itemIndex];
-                    return GestureDetector(
-                      onTap: () {
-                        Get.toNamed(Routes.postView);
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 0.w),
-                        child: Container(
-                          height: .485.sh,
-                          width: .9.sw,
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x19000000),
-                                blurRadius: 8,
-                                offset: Offset(0, 0),
-                                spreadRadius: 0,
-                              ),
-                              BoxShadow(
-                                color: Color(0x19000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 2),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 18.w, vertical: 10.h),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 20.r,
-                                          backgroundImage: Image.network(
-                                            post.userImage,
-                                            fit: BoxFit.fill,
-                                          ).image,
-                                        ),
-                                        10.horizontalSpace,
-                                        Text(
-                                          post.userName,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: textBlackColor,
-                                            fontSize: 11.sp,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w700,
-                                            height: 0,
-                                          ),
-                                        ),
-                                        5.horizontalSpace,
-                                        Image.asset(
-                                          Assets.verified,
-                                          scale: .6.sp,
-                                        )
-                                      ],
+            timelineController.posts.isNotEmpty
+                ? SizedBox(
+                    width: 1.sw,
+                    height: .49.sh,
+                    child: CarouselSlider.builder(
+                        itemCount: timelineController.posts.length,
+                        options: CarouselOptions(
+                          height: .63.sh,
+                          aspectRatio: .5,
+                          initialPage: 0,
+                          enableInfiniteScroll: true,
+                          viewportFraction: 1,
+                          reverse: false,
+                          autoPlay: true,
+                          disableCenter: true,
+                          autoPlayInterval: const Duration(seconds: 5),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enlargeFactor: 0,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              crouselindex = index;
+                            });
+                          },
+                          scrollDirection: Axis.horizontal,
+                        ),
+                        itemBuilder: (BuildContext context, int itemIndex,
+                            int pageViewIndex) {
+                          print(crouselindex);
+                          Post post = timelineController.posts[itemIndex];
+                          return GestureDetector(
+                            onTap: () {
+                              Get.toNamed(Routes.postView);
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 0.w),
+                              child: Container(
+                                height: .485.sh,
+                                width: .9.sw,
+                                decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  shadows: const [
+                                    BoxShadow(
+                                      color: Color(0x19000000),
+                                      blurRadius: 8,
+                                      offset: Offset(0, 0),
+                                      spreadRadius: 0,
                                     ),
-                                    Icon(
-                                      Icons.more_horiz,
-                                      size: 30.sp,
-                                      color: textGreyColor,
+                                    BoxShadow(
+                                      color: Color(0x19000000),
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                      spreadRadius: 0,
                                     )
                                   ],
                                 ),
-                              ),
-                              Container(
-                                height: .335.sh,
-                                width: .9.sw,
-                                child: Image.network(
-                                  post.files[0],
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              10.verticalSpace,
-                              Padding(
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: 19.0.w),
-                                child: Text(
-                                  post.content,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: textBlackColor,
-                                    fontSize: 10.sp,
-                                    fontFamily: 'Pretendard',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                              20.verticalSpace,
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const SizedBox(),
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        Assets.like,
-                                        scale: .6.sp,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 18.w, vertical: 10.h),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              CircleAvatar(
+                                                radius: 20.r,
+                                                backgroundImage: Image.network(
+                                                  post.userImage,
+                                                  fit: BoxFit.fill,
+                                                ).image,
+                                              ),
+                                              10.horizontalSpace,
+                                              Text(
+                                                post.userName,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: textBlackColor,
+                                                  fontSize: 11.sp,
+                                                  fontFamily: 'Pretendard',
+                                                  fontWeight: FontWeight.w700,
+                                                  height: 0,
+                                                ),
+                                              ),
+                                              5.horizontalSpace,
+                                              Image.asset(
+                                                Assets.verified,
+                                                scale: .6.sp,
+                                              )
+                                            ],
+                                          ),
+                                          Icon(
+                                            Icons.more_horiz,
+                                            size: 30.sp,
+                                            color: textGreyColor,
+                                          )
+                                        ],
                                       ),
-                                      5.horizontalSpace,
-                                      Text(
-                                        'Like'.tr,
-                                        textAlign: TextAlign.center,
+                                    ),
+                                    Container(
+                                      height: .335.sh,
+                                      width: .9.sw,
+                                      child: Image.network(
+                                        post.files[0],
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    10.verticalSpace,
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 19.0.w),
+                                      child: Text(
+                                        post.content,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           color: textBlackColor,
-                                          fontSize: 11.sp,
+                                          fontSize: 10.sp,
                                           fontFamily: 'Pretendard',
-                                          fontWeight: FontWeight.w700,
-                                          height: 0,
+                                          fontWeight: FontWeight.w400,
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        Assets.comment,
-                                        scale: .7.sp,
                                       ),
-                                      5.horizontalSpace,
-                                      Text(
-                                        'Comment'.tr,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: textBlackColor,
-                                          fontSize: 11.sp,
-                                          fontFamily: 'Pretendard',
-                                          fontWeight: FontWeight.w700,
-                                          height: 0,
+                                    ),
+                                    20.verticalSpace,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const SizedBox(),
+                                        Row(
+                                          children: [
+                                            Image.asset(
+                                              Assets.like,
+                                              scale: .6.sp,
+                                            ),
+                                            5.horizontalSpace,
+                                            Text(
+                                              'Like'.tr,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: textBlackColor,
+                                                fontSize: 11.sp,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w700,
+                                                height: 0,
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(),
-                                ],
+                                        Row(
+                                          children: [
+                                            Image.asset(
+                                              Assets.comment,
+                                              scale: .7.sp,
+                                            ),
+                                            5.horizontalSpace,
+                                            Text(
+                                              'Comment'.tr,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: textBlackColor,
+                                                fontSize: 11.sp,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w700,
+                                                height: 0,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        const SizedBox(),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        }),
+                  )
+                : Center(
+                    child: Text(
+                      'Timeline is empty',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: textBlackColor,
+                        fontSize: 10.sp,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700,
+                        height: 0,
                       ),
-                    );
-                  }),
-            ),
+                    ),
+                  ),
             10.verticalSpace,
-            SizedBox(
-              height: 30,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: 3,
-                  itemBuilder: (context, i) {
-                    return Container(
-                      width: 8.0,
-                      height: 8.0,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 5.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: crouselindex == i
-                            ? buttonBlueColor2
-                            : const Color.fromRGBO(0, 0, 0, 0.4),
-                      ),
-                    );
-                  }),
-            ),
+            timelineController.posts.isNotEmpty
+                ? SizedBox(
+                    height: 30,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: 3,
+                        itemBuilder: (context, i) {
+                          return Container(
+                            width: 8.0,
+                            height: 8.0,
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 5.0),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: crouselindex == i
+                                  ? buttonBlueColor2
+                                  : const Color.fromRGBO(0, 0, 0, 0.4),
+                            ),
+                          );
+                        }),
+                  )
+                : const SizedBox(),
             30.verticalSpace
           ],
         ),
