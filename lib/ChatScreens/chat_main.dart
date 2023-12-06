@@ -89,7 +89,6 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
                             itemBuilder: (context, index) {
                               ChatRoom chatRoom = controller.chatRooms[index];
                               chatRoom.userIds.remove(currentUser!.id);
-                              log(controller.chatRooms.isNotEmpty.toString());
                               return FutureBuilder<UserModel>(
                                   future: Get.find<UsersController>()
                                       .getUser(chatRoom.userIds[0]),

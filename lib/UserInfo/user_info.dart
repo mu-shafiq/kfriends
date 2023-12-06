@@ -50,8 +50,6 @@ class UserInfo extends StatelessWidget {
         ),
       ),
       body: GetBuilder<UsersController>(builder: (controller) {
-        log(controller.myFollowing.toString());
-        log(user.id!);
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

@@ -9,7 +9,7 @@ import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 
 class CallHistory extends StatefulWidget {
-  CallHistory({super.key});
+  const CallHistory({super.key});
 
   @override
   State<CallHistory> createState() => _CallHistoryState();
@@ -209,7 +209,7 @@ class _CallHistoryState extends State<CallHistory> {
                         ))
         ],
       ),
-      body: Container(
+      body: SizedBox(
         height: 1.sh,
         width: 1.sw,
         child: Padding(
@@ -220,7 +220,7 @@ class _CallHistoryState extends State<CallHistory> {
               children: [
                 10.verticalSpace,
                 selected == 0
-                    ? CallScreen()
+                    ? const CallScreen()
                     : selected == 1
                         ? const ContactScreen()
                         : const ContactSettings()
@@ -230,6 +230,5 @@ class _CallHistoryState extends State<CallHistory> {
         ),
       ),
     );
-    ;
   }
 }

@@ -1,6 +1,7 @@
 class Keys {
   static String serverIP = 'http://usdvault.com';
   static String localHostIP = 'http://192.168.18.90';
+  static String localHostIPMacMini = 'http://192.168.18.146';
 
   static String status = 'status';
   static String message = 'message';
@@ -24,6 +25,7 @@ class Keys {
   static String locale = 'locale';
   static String english = 'english';
   static String korean = 'korean';
+  static String callLogs = 'callLogs';
 
   //functions
   static String generateId = 'generateId';

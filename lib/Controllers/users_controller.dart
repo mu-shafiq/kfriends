@@ -116,7 +116,6 @@ class UsersController extends GetxController {
   //       'username[options]=i'
   //     ]);
   //   } else {
-  //     log('else');
   //     return await getFriends(queries: [
   //       // 'followers[in]=${[currentUser!.id]}'
   //     ]);
@@ -161,7 +160,6 @@ class UsersController extends GetxController {
         'users',
         queries: queries ?? [],
       );
-      log(res.toString());
       if (res![Keys.status] == Keys.success) {
         return List.from(res[Keys.data]['users'])
             .map((e) => UserModel.fromJson(e))
@@ -213,7 +211,6 @@ class UsersController extends GetxController {
           'follow': followId,
         },
       );
-      log(res.toString());
       if (res![Keys.status] == Keys.success) {
         myFollowing.add(followId);
         Helper().showToast("User followed successfully");
@@ -223,7 +220,6 @@ class UsersController extends GetxController {
         return false;
       }
     } catch (e) {
-      log(e.toString());
       Helper().showToast("Error in following user");
       return false;
     }

@@ -87,7 +87,6 @@ class ProfileSettings extends StatelessWidget {
               10.verticalSpace,
               InkWell(
                 onTap: () {
-                  log('message');
                   Get.toNamed(Routes.editProfile);
                 },
                 child: Container(

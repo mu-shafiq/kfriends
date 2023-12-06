@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,8 +5,6 @@ import 'package:kfriends/Controllers/calls_controller.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
-import 'package:kfriends/Utils/helper.dart';
-import 'package:kfriends/Utils/socket.dart';
 import 'package:kfriends/Controllers/chat_controller.dart';
 import 'package:kfriends/model/user.dart';
 
@@ -124,10 +120,6 @@ class UserTile2 extends StatelessWidget {
                       builder: (controller) {
                         return InkWell(
                           onTap: () async {
-                            if (agoraUid == null) {
-                              Helper().showToast("User Needs to login first");
-                              return;
-                            }
                             await controller.makeACall(
                               userModel.id!,
                             );

@@ -1,19 +1,43 @@
 import 'dart:developer';
 
-import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import 'package:agora_uikit/agora_uikit.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:kfriends/Controllers/auth_controller.dart';
 import 'package:kfriends/Controllers/mongodb_controller.dart';
 import 'package:kfriends/Routes/get_routes.dart';
-import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Utils/helper.dart';
 import 'package:kfriends/Utils/keys.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:kfriends/model/call_logs.dart';
 
 class CallsController extends GetxController {
   final mongodbController = Get.find<MongoDBController>();
+
+  Future<List<CallLogModel>> getCallLogs() async {
+    try {
+      EasyLoading.show();
+      Map<String, dynamic>? res =
+          await mongodbController.getCollection('callLogs', queries: [
+        'userId=${Get.find<AuthController>().userModel!.id}',
+        'sort=createdAt:-1',
+        'populate=contactId, callId'
+      ]);
+      EasyLoading.dismiss();
+      log("res: ${res![Keys.data][Keys.callLogs][0]['callId']['duration'].runtimeType}");
+      if (res[Keys.status] == Keys.success) {
+        return (res[Keys.data][Keys.callLogs] as List)
+            .map((e) => CallLogModel.fromMap(e as Map<String, dynamic>))
+            .toList();
+      } else {
+        mongodbController.throwExpection(res);
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      printError(info: e.toString());
+      Helper().showToast(e.toString());
+    }
+    return [];
+  }
+
   Future<void> makeACall(String receiverUserId) async {
     try {
       EasyLoading.show();

@@ -1,6 +1,6 @@
 class Message {
   String senderId;
-  String recieverId;
+  String receiverId;
   String msg;
   int sort;
   String timeSent;
@@ -10,7 +10,7 @@ class Message {
 
   Message(
       {required this.senderId,
-      required this.recieverId,
+      required this.receiverId,
       required this.msg,
       required this.sort,
       required this.timeSent,
@@ -21,7 +21,7 @@ class Message {
   Map<String, dynamic> toJson() {
     return {
       'sender_id': senderId,
-      'reciever_id': recieverId,
+      'receiver_id': receiverId,
       'msg': msg,
       'sort': sort,
       'time_sent': timeSent,
@@ -34,7 +34,7 @@ class Message {
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
         senderId: json['sender_id'],
-        recieverId: json['reciever_id'],
+        receiverId: json['receiver_id'],
         msg: json['msg'],
         sort: json['sort'],
         attachmentUrl: json['attachment_url'],

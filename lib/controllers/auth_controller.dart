@@ -164,7 +164,6 @@ class AuthController extends GetxController {
   }
 
   Future<void> signUp() async {
-    log('sign up');
     try {
       UserModel userModel = UserModel(
         profileImage: (await Helper()
@@ -194,7 +193,6 @@ class AuthController extends GetxController {
         contacts: [],
         fcmToken: (await FirebaseMessaging.instance.getToken())!,
       );
-      log('message');
       Response res = await Dio().post(
         '${Keys.serverIP}:3000/api/v1/auth/register',
         data: userModel.toJson(),
@@ -204,7 +202,6 @@ class AuthController extends GetxController {
           },
         ),
       );
-      log(res.data.toString());
       if (res.data[Keys.status] == Keys.success) {
         await _storage.write(
             key: Keys.bearerToken, value: res.data[Keys.data][Keys.token]);
@@ -242,7 +239,6 @@ class AuthController extends GetxController {
         ),
       );
       EasyLoading.dismiss();
-      log(res.data.toString());
       if (res.data[Keys.status] == Keys.success) {
         if (res.data[Keys.data] != null) {
           await _storage.write(
@@ -327,7 +323,6 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       getCurrentUser();
-      log(e.toString());
       EasyLoading.dismiss();
       Helper().showToast("Error in Updating User");
     }
@@ -343,7 +338,6 @@ class AuthController extends GetxController {
         userModel = currentUser;
         setValues();
         SocketNew.connectSocket();
-        log(currentUser!.toJson().toString());
       } else {
         throw Exception(res[Keys.message]);
       }

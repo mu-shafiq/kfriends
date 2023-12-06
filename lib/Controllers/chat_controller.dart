@@ -10,7 +10,6 @@ import 'package:kfriends/Utils/socket.dart';
 import 'package:kfriends/Controllers/auth_controller.dart';
 import 'package:kfriends/model/chat_room.dart';
 import 'package:kfriends/model/user.dart';
-
 import '../model/message.dart';
 
 class ChatController extends GetxController {
@@ -28,7 +27,6 @@ class ChatController extends GetxController {
     loading == true;
     selectedUserChat.clear();
     update();
-    log(isNew.toString());
     selectedUser = userModel;
     SocketNew.socket.on('new_message', (data) {
       Message message = Message.fromJson(data);
@@ -52,7 +50,7 @@ class ChatController extends GetxController {
     Message message = Message(
         type: type,
         chatRoomId: selectedChatRoom!.id!,
-        recieverId: selectedUser!.id!,
+        receiverId: selectedUser!.id!,
         msg: controller.text,
         attachmentUrl: url,
         timeSent: DateTime.now().toString(),
@@ -92,14 +90,12 @@ class ChatController extends GetxController {
       Map<String, dynamic>? res =
           await mongodbController.postDocument('chatRoom', chatRoom.toJson());
       if (res![Keys.status] == Keys.success) {
-        log(res[Keys.data].toString());
         selectedChatRoom = ChatRoom.fromJson(res[Keys.data]['chatRoom']);
         update();
       } else {
         mongodbController.throwExpection(res);
       }
     } catch (e) {
-      log(e.toString());
       Helper().showToast("Error in initiating chat room");
     }
     getMyChatRooms();
@@ -108,7 +104,6 @@ class ChatController extends GetxController {
 
   getMyChatRooms() async {
     try {
-      log(currentUser!.id!);
       Map<String, dynamic>? res =
           await mongodbController.getDocument('chatRoom', currentUser!.id!);
       if (res![Keys.status] == Keys.success) {
@@ -119,7 +114,6 @@ class ChatController extends GetxController {
         mongodbController.throwExpection(res);
       }
     } catch (e) {
-      log(e.toString());
       Helper().showToast("Error in getting chat room");
     }
     update();

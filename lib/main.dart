@@ -1,8 +1,6 @@
-import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_callkit_incoming/entities/call_event.dart';
 import 'package:flutter_callkit_incoming/entities/entities.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +13,6 @@ import 'package:kfriends/Controllers/timeline_controller.dart';
 import 'package:kfriends/Controllers/users_controller.dart';
 import 'package:kfriends/Languages/languages.dart';
 import 'package:kfriends/Routes/get_routes.dart';
-import 'package:kfriends/Screens/BottomNavBar/bottom_nav_bar.dart';
 import 'package:kfriends/Screens/SplashScreen/splash_screen.dart';
 import 'package:kfriends/Controllers/mongodb_controller.dart';
 import 'package:kfriends/Utils/helper.dart';

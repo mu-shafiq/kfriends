@@ -28,7 +28,7 @@ class SocketNew {
     socket.onDisconnect((data) => log('soket io server disconcted'));
 
     socket.on('new_message', (data) {
-      log('new message recieved........');
+      log('new message received........');
     });
   }
 

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -7,9 +6,7 @@ import 'package:http_parser/http_parser.dart' as parser;
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide Response;
-import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Utils/keys.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // Create a custom interceptor
 class AuthInterceptor extends Interceptor {
@@ -45,7 +42,7 @@ class MongoDBController extends GetxController {
       for (var query in queries) {
         queryString += "&$query";
       }
-      // printInfo(info: baseUrl + collectionName + queryString);
+      printInfo(info: baseUrl + collectionName + queryString);
       Response res = await dio.get(
         baseUrl + collectionName + queryString,
         options: Options(
@@ -185,7 +182,7 @@ class MongoDBController extends GetxController {
     try {
       printInfo(info: "${baseUrl}functions/$functionName");
       Response res = await dio.post(
-        "${baseUrl}$functionName",
+        "$baseUrl$functionName",
         data: data ?? {},
         options: Options(
           validateStatus: (status) {
@@ -344,7 +341,3 @@ class MongoDBController extends GetxController {
     }
   }
 }
-
-
-
-

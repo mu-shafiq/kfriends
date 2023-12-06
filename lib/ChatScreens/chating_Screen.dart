@@ -134,10 +134,8 @@ class _ChatingScreenState extends State<ChatingScreen> {
                                     File? file = await Helper()
                                         .imagePicker(ImageSource.camera);
                                     if (file != null) {
-                                      log(file.path);
                                       String url = (await Helper().uploadImage(
                                           file, Keys.profileImage))!;
-                                      log('url $url');
                                       controller.sendMessage(
                                           type: 'url', url: url);
                                     }

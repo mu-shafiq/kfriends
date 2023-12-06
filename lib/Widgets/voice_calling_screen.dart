@@ -57,27 +57,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
     checkIfUserDeclineTheCall().then((value) => join());
   }
 
-  // void initSocket() {
-  //   log("socket init");
 
-  //   socket = IO.io('${Keys.serverIP}:3000', <String, dynamic>{
-  //     'transports': ['websocket'],
-  //     'autoConnect': true,
-  //   });
-  //   socket!.connect();
-  //   socket!.onConnect((_) {
-  //     log('socket connected............');
-  //     socket!.emit("join", {"room": room, "user": user});
-  //   });
-
-  //   socket!.on("new user joined", (data) {
-  //     print("socket ${data['user']} ${data['message']}");
-  //   });
-
-  //   socket!.on("callEnded", (data) {
-  //     print("socket ${data['user']} ${data['message']}");
-  //   });
-  // }
 
   Future<void> setupVoiceSDKEngine() async {
     await [Permission.microphone].request();

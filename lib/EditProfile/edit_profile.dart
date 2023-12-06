@@ -27,7 +27,6 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
-    log('in edit profile');
     super.initState();
   }
 
@@ -329,7 +328,6 @@ class _EditProfileState extends State<EditProfile> {
                               context: context,
                               showSearch: true,
                               onSelect: (Country count) {
-                                log(count.name);
                                 controller.countryController.text = count.name;
                               },
                             );

@@ -7,7 +7,7 @@ import 'package:kfriends/Utils/colors.dart';
 import '../Routes/get_routes.dart';
 
 class CallUserTile extends StatelessWidget {
-  final String asset;
+  final String profileUrl;
   final String username;
   final String about;
   final bool verified;
@@ -17,7 +17,7 @@ class CallUserTile extends StatelessWidget {
 
   const CallUserTile(
       {super.key,
-      required this.asset,
+      required this.profileUrl,
       required this.username,
       required this.about,
       required this.verified,
@@ -55,9 +55,13 @@ class CallUserTile extends StatelessWidget {
             contentPadding: EdgeInsets.only(left: 5.w, top: 10.h, bottom: 10.h),
             leading: CircleAvatar(
               radius: 35.r,
-              backgroundImage: Image.asset(
-                asset,
-              ).image,
+              backgroundImage: profileUrl.isURL
+                  ? Image.network(
+                      profileUrl,
+                    ).image
+                  : Image.asset(
+                      profileUrl,
+                    ).image,
             ),
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +109,7 @@ class CallUserTile extends StatelessWidget {
                           height: 0,
                         ),
                       )
-                    : status == 'recieved'
+                    : status == 'incoming'
                         ? Row(
                             children: [
                               Image.asset(Assets.incoming),
@@ -121,7 +125,7 @@ class CallUserTile extends StatelessWidget {
                               ),
                             ],
                           )
-                        : status == 'dialed'
+                        : status == 'ongoing'
                             ? Row(
                                 children: [
                                   Image.asset(Assets.outgoing),
