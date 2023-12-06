@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +9,7 @@ import 'package:kfriends/Controllers/timeline_controller.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
+import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Widgets/bottom_bar.dart';
 import 'package:kfriends/Widgets/post_tile.dart';
 import 'package:kfriends/Widgets/small_button.dart';
@@ -99,6 +101,8 @@ class PostView extends StatelessWidget {
         body: GetBuilder<TimelineController>(builder: (timelineController) {
           Post post =
               timelineController.posts[timelineController.selectedPostIndex];
+          print(post.likes);
+          print(currentUser!.id);
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.0.sp),
             child: Column(
@@ -370,22 +374,25 @@ class PostView extends StatelessWidget {
                                   )
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                      onTap: () {
-                                        timelineController.deleteAPosts();
-                                      },
-                                      child: Image.asset(Assets.delete)),
-                                  20.horizontalSpace,
-                                  GestureDetector(
-                                      onTap: () async {
-                                        await timelineController.enableEdit();
-                                        Get.to(EditPost());
-                                      },
-                                      child: Image.asset(Assets.edit)),
-                                ],
-                              )
+                              post.userId == currentUser!.id
+                                  ? Row(
+                                      children: [
+                                        GestureDetector(
+                                            onTap: () {
+                                              timelineController.deleteAPosts();
+                                            },
+                                            child: Image.asset(Assets.delete)),
+                                        20.horizontalSpace,
+                                        GestureDetector(
+                                            onTap: () async {
+                                              await timelineController
+                                                  .enableEdit();
+                                              Get.to(EditPost());
+                                            },
+                                            child: Image.asset(Assets.edit)),
+                                      ],
+                                    )
+                                  : const SizedBox()
                             ],
                           ),
                         ),
@@ -393,8 +400,8 @@ class PostView extends StatelessWidget {
                         Container(
                           height: .4.sh,
                           width: .9.sw,
-                          child: Image.asset(
-                            Assets.postimage2,
+                          child: Image.network(
+                            post.files[0],
                             scale: .5,
                             fit: BoxFit.cover,
                           ),
@@ -448,13 +455,29 @@ class PostView extends StatelessWidget {
                                   const SizedBox(),
                                   Row(
                                     children: [
-                                      Image.asset(
-                                        Assets.like,
-                                        scale: .8.sp,
+                                      GestureDetector(
+                                        onTap: () {
+                                          if (!post.likes!
+                                              .contains(currentUser!.id)) {
+                                            timelineController.addALike();
+                                          } else {
+                                            timelineController.removeALike();
+                                          }
+                                        },
+                                        child: post.likes!
+                                                .contains(currentUser!.id)
+                                            ? Icon(
+                                                CupertinoIcons.heart_fill,
+                                                size: 15.sp,
+                                              )
+                                            : Image.asset(
+                                                Assets.like,
+                                                scale: .8.sp,
+                                              ),
                                       ),
                                       5.horizontalSpace,
                                       Text(
-                                        '0',
+                                        post.likes!.length.toString(),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: textBlackColor,

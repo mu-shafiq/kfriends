@@ -313,10 +313,12 @@ class EditPost extends StatelessWidget {
                         child: ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
-                                timelineController.filesToBeUploaded.length,
+                                timelineController.filesToBeUploaded.length +
+                                    timelineController.files.length,
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
+                              int linkIndex = timelineController.files.length;
                               return Padding(
                                 padding: EdgeInsets.only(right: 5.w),
                                 child: Stack(
@@ -328,21 +330,34 @@ class EditPost extends StatelessWidget {
                                       child: ClipRRect(
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(7)),
-                                          child: Image.file(
-                                            timelineController
-                                                .filesToBeUploaded[index],
-                                            scale: .5.sp,
-                                            fit: BoxFit.cover,
-                                          )),
+                                          child: index < linkIndex
+                                              ? Image.network(
+                                                  timelineController
+                                                      .files[index],
+                                                  scale: .5.sp,
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : Image.file(
+                                                  timelineController
+                                                      .filesToBeUploaded[index],
+                                                  scale: .5.sp,
+                                                  fit: BoxFit.cover,
+                                                )),
                                     ),
                                     Positioned(
                                       top: 22.h,
                                       right: 5.w,
                                       child: GestureDetector(
                                         onTap: () {
-                                          timelineController.updateFile(
-                                              timelineController
-                                                  .filesToBeUploaded[index]);
+                                          if (index >= linkIndex) {
+                                            timelineController.updateFile(
+                                                timelineController
+                                                    .filesToBeUploaded[index]);
+                                          } else {
+                                            timelineController.updateLinkFile(
+                                                timelineController
+                                                    .files[index]);
+                                          }
                                         },
                                         child: Icon(
                                           Icons.close,
@@ -486,7 +501,7 @@ class EditPost extends StatelessWidget {
                               },
                             );
                           } else {
-                            timelineController.updateAPosts();
+                            timelineController.updateAPost();
                           }
                         },
                         textColor: textWhiteColor,

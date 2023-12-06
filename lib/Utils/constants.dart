@@ -10,3 +10,13 @@ const String advanced = 'advanced';
 
 const String korean = 'korean';
 const String global = 'global';
+
+const List interests = [
+    '#K-CULTURE',
+    '#K-POP',
+    '#K-DRAMA',
+    '#K-BEAUTY',
+    '#K-TRAVEL',
+    '#K-FOOD',
+    '#K-PET',
+  ];

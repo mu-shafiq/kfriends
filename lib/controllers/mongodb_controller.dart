@@ -122,7 +122,7 @@ class MongoDBController extends GetxController {
   Future<Map<String, dynamic>?> deleteDocument(
       String collectionName, String documentId) async {
     try {
-      printInfo(info: '$baseUrl$collectionName/$documentId');
+      print('$baseUrl$collectionName/$documentId');
       Response res = await dio.delete(
         '$baseUrl$collectionName/$documentId',
         options: Options(
@@ -133,7 +133,7 @@ class MongoDBController extends GetxController {
       );
       return res.data;
     } catch (e) {
-      printError(info: "$e");
+      print("$e");
 
       return null;
     }
@@ -233,13 +233,15 @@ class MongoDBController extends GetxController {
         'POST',
         Uri.parse("${baseUrl}functions/${Keys.uploadFileToServer}"),
       );
-
+      const storage = FlutterSecureStorage();
+      String? token = await storage.read(key: Keys.bearerToken);
       request.files.add(mpFile);
       request.fields['folder'] = folderName;
+      print(request.headers);
       request.headers.addAll({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        // 'Authorization': 'Bearer ${currentUser!.fcmToken}',
+        'Authorization': 'Bearer ${token}',
       });
 
       var streamRes = await request.send();
@@ -344,7 +346,3 @@ class MongoDBController extends GetxController {
     }
   }
 }
-
-
-
-

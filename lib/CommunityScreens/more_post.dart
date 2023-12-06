@@ -7,6 +7,7 @@ import 'package:kfriends/Controllers/timeline_controller.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
+import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Widgets/bottom_bar.dart';
 import 'package:kfriends/Widgets/post_tile.dart';
 import 'package:kfriends/Widgets/small_button.dart';
@@ -21,14 +22,6 @@ class MorePosts extends StatefulWidget {
 }
 
 class _MorePostsState extends State<MorePosts> {
-  List interests = [
-    '#K-CULTURE',
-    '#K-POP',
-    '#K-DRAMA',
-    '#K-FOOD',
-    '#K-DRAMA',
-    '#K-FOOD'
-  ];
   final bool isEnglish = Get.locale == const Locale('en', 'US');
 
   @override
@@ -317,7 +310,10 @@ class _MorePostsState extends State<MorePosts> {
                           child: Padding(
                             padding: EdgeInsets.only(left: index == 0 ? 15 : 0),
                             child: RoundedSmallButton2(
-                              onTap: () {},
+                              onTap: () {
+                                timelineController
+                                    .updateInterest(interests[index]);
+                              },
                               textColor: textBlackColor,
                               shadow1: buttonBlackShadow1,
                               shadow2: buttonBlackShadow2,
@@ -325,7 +321,8 @@ class _MorePostsState extends State<MorePosts> {
                               width: 85.w,
                               height: 22.h,
                               text: interests[index],
-                              selected: index == 0,
+                              selected: timelineController.selectedInterest ==
+                                  interests[index],
                             ),
                           ),
                         );
@@ -340,18 +337,29 @@ class _MorePostsState extends State<MorePosts> {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         Post post = timelineController.posts[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: PostTile(
-                              postCount: 33,
-                              postTitle: post.title,
-                              postAssets: Image.network(post.files[0]),
-                              username: post.userName,
-                              userAsset: Image.network(post.userImage),
-                              showBorder: true,
-                              more: true,
-                              date: DateFormat('yyyy.MM.dd').format(
-                                  DateTime.parse(post.updatedAt!).toUtc())),
+                        return GestureDetector(
+                          onTap: () {
+                            timelineController.updateIndex(index);
+                            Get.toNamed(Routes.postView);
+                          },
+                          child: post.interest ==
+                                  timelineController.selectedInterest
+                              ? Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5.0),
+                                  child: PostTile(
+                                      postCount: post.likes!.length,
+                                      postTitle: post.title,
+                                      postAssets: Image.network(post.files[0]),
+                                      username: post.userName,
+                                      userAsset: Image.network(post.userImage),
+                                      showBorder: true,
+                                      more: true,
+                                      date: DateFormat('yyyy.MM.dd').format(
+                                          DateTime.parse(post.updatedAt!)
+                                              .toUtc())),
+                                )
+                              : const SizedBox(),
                         );
                       }),
                 )

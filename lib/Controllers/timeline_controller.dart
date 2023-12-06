@@ -27,6 +27,7 @@ class TimelineController extends GetxController {
   List<File> filesToBeUploaded = <File>[];
   bool loading = false;
   int selectedPostIndex = 0;
+  String selectedInterest = '#K-CULTURE';
 
   updateFile(File file) {
     filesToBeUploaded.contains(file)
@@ -35,8 +36,14 @@ class TimelineController extends GetxController {
     update();
   }
 
+  updateLinkFile(String file) {
+    files.contains(file) ? files.remove(file) : files.add(file);
+    update();
+  }
+
   updateInterest(String interest) {
     interestController.text = interest;
+    selectedInterest = interest;
     update();
   }
 
@@ -46,15 +53,16 @@ class TimelineController extends GetxController {
   }
 
   enableEdit() {
-    print(files);
+    print(posts[selectedPostIndex].files);
     interestController.text = posts[selectedPostIndex].interest;
     titleController.text = posts[selectedPostIndex].title;
     contentController.text = posts[selectedPostIndex].content;
     files = posts[selectedPostIndex].files;
     filesToBeUploaded.clear();
-    filesToBeUploaded = posts[selectedPostIndex].files.map((e) {
-      return File.fromUri(Uri(path: e));
-    }).toList();
+    // posts[selectedPostIndex].files.map((e) async {
+    //   File file = await urlToFile(e);
+    //   filesToBeUploaded.add(file);
+    // });
     update();
   }
 
@@ -115,7 +123,7 @@ class TimelineController extends GetxController {
         posts = List.from(res[Keys.data]['response'])
             .map((e) => Post.fromJson(e))
             .toList();
-        print(posts[0].toJson());
+
         loading = false;
         update();
       } else {
@@ -129,27 +137,24 @@ class TimelineController extends GetxController {
     }
   }
 
-  updateAPosts() async {
+  updateAPost() async {
     try {
+      print(filesToBeUploaded);
       EasyLoading.show();
       files.clear();
       for (var file in filesToBeUploaded) {
         files.add((await Helper().uploadImage(file, Keys.profileImage))!);
       }
-      Post post = Post(
-          id: posts[selectedPostIndex].id,
-          userId: currentUser!.id!,
-          userName: currentUser!.nickname,
-          userImage: currentUser!.profileImage,
-          title: titleController.text,
-          interest: interestController.text,
-          content: contentController.text,
-          files: files);
+      print(files);
+      Post post = posts[selectedPostIndex];
+      post.title = titleController.text;
+      post.interest = interestController.text;
+      post.content = contentController.text;
+      post.files = files;
       Map<String, dynamic>? res = await mongodbController.patchDocument(
           'timeline', posts[selectedPostIndex].id!, post.toJson());
       if (res![Keys.status] == Keys.success) {
-        print('here is the res : ${res[Keys.data]['response']}');
-        posts[selectedPostIndex] = Post.fromJson(res[Keys.data]['response']);
+        posts[selectedPostIndex] = post;
         Helper().showToast("Post updated successfully");
         clear();
         EasyLoading.dismiss();
@@ -165,12 +170,53 @@ class TimelineController extends GetxController {
     }
   }
 
+  addALike() async {
+    try {
+      Post post = posts[selectedPostIndex];
+      post.likes!.add(currentUser!.id);
+      Map<String, dynamic>? res = await mongodbController.patchDocument(
+          'timeline', posts[selectedPostIndex].id!, post.toJson());
+      if (res![Keys.status] == Keys.success) {
+        posts[selectedPostIndex] = post;
+        update();
+
+        Helper().showToast("You liked this post");
+      } else {
+        mongodbController.throwExpection(res);
+      }
+    } catch (e) {
+      Helper().showToast(e.toString());
+    }
+  }
+
+  removeALike() async {
+    try {
+      Post post = posts[selectedPostIndex];
+      post.likes!.remove(currentUser!.id);
+      Map<String, dynamic>? res = await mongodbController.patchDocument(
+          'timeline', posts[selectedPostIndex].id!, post.toJson());
+      if (res![Keys.status] == Keys.success) {
+        posts[selectedPostIndex] = post;
+        update();
+        // Helper().showToast("You liked this post");
+      } else {
+        mongodbController.throwExpection(res);
+      }
+    } catch (e) {
+      Helper().showToast(e.toString());
+    }
+  }
+
   deleteAPosts() async {
     try {
       loading = true;
       update();
+      print(posts);
+      print(selectedPostIndex);
+      print(posts[selectedPostIndex]);
       Map<String, dynamic>? res = await mongodbController.deleteDocument(
           'timeline', posts[selectedPostIndex].id!);
+      print(res);
       if (res![Keys.status] == Keys.success) {
         Helper().showToast('Post deleted successfully');
         posts.removeAt(selectedPostIndex);
@@ -237,7 +283,6 @@ class TimelineController extends GetxController {
     interestController.clear();
     titleController.clear();
     contentController.clear();
-    files.clear();
     filesToBeUploaded.clear();
     update();
   }
