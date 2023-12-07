@@ -7,7 +7,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
 class SocketNew {
-  static Socket socket = IO.io('${Keys.serverIP}:3000', <String, dynamic>{
+  static Socket socket = IO.io(Keys.serverIP, <String, dynamic>{
     'transports': ['websocket'],
     'autoConnect': false,
   });
@@ -34,5 +34,9 @@ class SocketNew {
 
   static sendMessageSocket(Message message) async {
     socket.emit('private_message', message.toJson());
+  }
+
+  static endCall(String id) async {
+    socket.emit('end_call', id);
   }
 }

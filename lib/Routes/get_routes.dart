@@ -213,13 +213,15 @@ final pages = [
         final String callId = Get.arguments['callId'] as String;
         final String receiverName = Get.arguments['receiverName'] as String;
         final String receiverImage = Get.arguments['receiverImage'] as String;
+        final String receiverUid = Get.arguments['receiverUid'] as String;
         return VoiceCallScreen(
           channelName: channelName,
           token: token,
-          uid: uid,
+          agoraUid: uid,
           callId: callId,
           receiverName: receiverName,
           receiverImage: receiverImage,
+          receiverUid: receiverUid,
         );
       }),
   GetPage(
@@ -296,11 +298,11 @@ final pages = [
   ),
   GetPage(
     name: Routes.callHistory,
-    page: () => CallHistory(),
+    page: () => const CallHistory(),
   ),
   GetPage(
     name: Routes.callScreen,
-    page: () => CallScreen(),
+    page: () => const CallScreen(),
   ),
   GetPage(
     name: Routes.contactScreen,

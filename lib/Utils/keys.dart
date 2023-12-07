@@ -1,7 +1,7 @@
 class Keys {
-  static String serverIP = 'http://usdvault.com';
-  static String localHostIP = 'http://192.168.18.90';
-  static String localHostIPMacMini = 'http://192.168.18.146';
+  static String serverIP = 'http://192.168.18.146:3000';
+  static String localHostIP = 'http://192.168.18.90:3000';
+  static String localHostIPMacMini = 'http://192.168.18.146:3000';
 
   static String status = 'status';
   static String message = 'message';
@@ -22,6 +22,7 @@ class Keys {
   static String callId = 'callId';
   static String receiverName = 'receiverName';
   static String receiverImage = 'receiverImage';
+  static String receiverUid = 'receiverUid';
   static String locale = 'locale';
   static String english = 'english';
   static String korean = 'korean';

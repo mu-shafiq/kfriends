@@ -154,6 +154,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       String callId = currentCall['extra'][Keys.callId];
       String receiverName = currentCall['extra'][Keys.receiverName];
       String receiverImage = currentCall['extra'][Keys.receiverImage];
+      String receiverUid = currentCall['extra'][Keys.receiverUid];
 
       NavigationService.instance.pushNamed(Routes.voiceCallScreen, args: {
         'channelName': channelName,
@@ -162,6 +163,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         'callId': callId,
         'receiverName': receiverName,
         'receiverImage': receiverImage,
+        'receiverUid': receiverUid,
       });
     }
   }

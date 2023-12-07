@@ -194,7 +194,7 @@ class AuthController extends GetxController {
         fcmToken: (await FirebaseMessaging.instance.getToken())!,
       );
       Response res = await Dio().post(
-        '${Keys.serverIP}:3000/api/v1/auth/register',
+        '${Keys.serverIP}/api/v1/auth/register',
         data: userModel.toJson(),
         options: Options(
           validateStatus: (status) {
@@ -227,7 +227,7 @@ class AuthController extends GetxController {
     try {
       EasyLoading.show();
       Response res = await Dio().post(
-        '${Keys.serverIP}:3000/api/v1/auth/login',
+        '${Keys.serverIP}/api/v1/auth/login',
         data: {
           "email": emailController.text.trim(),
           "password": passwordController.text,
@@ -303,7 +303,7 @@ class AuthController extends GetxController {
       userModel!.intro = introController.text.trim();
 
       Response res = await Dio().patch(
-        '${Keys.serverIP}:3000/api/v1/users/${userModel!.id}',
+        '${Keys.serverIP}/api/v1/users/${userModel!.id}',
         data: userModel!.toJson(),
         options: Options(
           validateStatus: (status) {

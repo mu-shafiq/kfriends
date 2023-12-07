@@ -23,7 +23,7 @@ class AuthInterceptor extends Interceptor {
 }
 
 class MongoDBController extends GetxController {
-  String baseUrl = '${Keys.serverIP}:3000/api/v1/';
+  String baseUrl = '${Keys.serverIP}/api/v1/';
   Dio dio = Dio();
 
   @override
@@ -62,6 +62,7 @@ class MongoDBController extends GetxController {
   Future<Map<String, dynamic>?> getDocument(
       String collectionName, String documentId) async {
     try {
+      printInfo(info: '$baseUrl$collectionName/$documentId');
       Response res = await dio.get(
         '$baseUrl$collectionName/$documentId',
         options: Options(
@@ -80,7 +81,7 @@ class MongoDBController extends GetxController {
   Future<Map<String, dynamic>?> postDocument(
       String collectionName, Map<String, dynamic> data) async {
     try {
-      print(baseUrl + collectionName);
+      printInfo(info: baseUrl + collectionName);
       Response res = await dio.post(
         baseUrl + collectionName,
         data: data,

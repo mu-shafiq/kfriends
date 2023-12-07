@@ -61,8 +61,8 @@ class CallModel {
       'receiver': receiver,
       'callerUid': callerUid,
       'receiverUid': receiverUid,
-      'startAt': startAt?.millisecondsSinceEpoch,
-      'endAt': endAt?.millisecondsSinceEpoch,
+      'startAt': startAt?.toIso8601String(),
+      'endAt': endAt?.toIso8601String(),
       'channelName': channelName,
       'status': status,
       'type': type,
@@ -78,13 +78,8 @@ class CallModel {
         callerUid: map['callerUid'] != null ? map['callerUid'] as int : null,
         receiverUid:
             map['receiverUid'] != null ? map['receiverUid'] as int : null,
-        startAt: map['startAt'] != null
-            ? DateTime.fromMillisecondsSinceEpoch(
-                int.tryParse(map['startAt']) ?? 0)
-            : null,
-        endAt: map['endAt'] != null
-            ? DateTime.fromMillisecondsSinceEpoch(map['endAt'] as int)
-            : null,
+        startAt: map['startAt'] != null ? DateTime.parse(map['startAt']) : null,
+        endAt: map['endAt'] != null ? DateTime.parse(map['endAt']) : null,
         channelName:
             map['channelName'] != null ? map['channelName'] as String : null,
         status: map['status'] != null ? map['status'] as String : null,
