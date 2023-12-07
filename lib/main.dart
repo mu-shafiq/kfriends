@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:kfriends/Controllers/auth_controller.dart';
+import 'package:kfriends/controllers/auth_controller.dart';
 import 'package:kfriends/Controllers/calls_controller.dart';
 import 'package:kfriends/Controllers/timeline_controller.dart';
 import 'package:kfriends/Controllers/users_controller.dart';

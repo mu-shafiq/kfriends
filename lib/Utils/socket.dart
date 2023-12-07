@@ -6,6 +6,7 @@ import 'package:kfriends/model/message.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
+
 class SocketNew {
   static Socket socket = IO.io(Keys.serverIP, <String, dynamic>{
     'transports': ['websocket'],
