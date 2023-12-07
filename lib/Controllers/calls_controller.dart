@@ -95,4 +95,13 @@ class CallsController extends GetxController {
       Helper().showToast(e.toString());
     }
   }
+
+  Future<void> buyMoreTime() async {
+    try {
+      int timeInMinutes = 5;
+    } catch (e) {
+      printError(info: e.toString());
+      Helper().showToast(e.toString());
+    }
+  }
 }

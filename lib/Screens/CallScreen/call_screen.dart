@@ -279,7 +279,8 @@ class _CallScreenState extends State<CallScreen> {
                                       callLog.contactId!.userType == korean,
                                   profileUrl: callLog.contactId!.profileImage,
                                   username: callLog.contactId!.nickname,
-                                  about: '20 / FEMALE /  South Korea',
+                                  about:
+                                      '${callLog.contactId!.age} / ${GetUtils.capitalize(callLog.contactId!.gender)} /  ${callLog.contactId!.country}',
                                   time:
                                       formatDuration(callLog.callId!.duration!),
                                 ),

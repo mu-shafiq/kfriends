@@ -182,7 +182,7 @@ class MongoDBController extends GetxController {
     try {
       printInfo(info: "${baseUrl}functions/$functionName");
       Response res = await dio.post(
-        "$baseUrl$functionName",
+        "${baseUrl}functions/$functionName",
         data: data ?? {},
         options: Options(
           validateStatus: (status) {
@@ -238,7 +238,7 @@ class MongoDBController extends GetxController {
       request.headers.addAll({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ${token}',
+        'Authorization': 'Bearer $token',
       });
 
       var streamRes = await request.send();
