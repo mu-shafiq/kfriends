@@ -33,7 +33,7 @@ class UsersController extends GetxController {
   RxBool isFilterApplied = false.obs;
 
   RxList<String> interests = <String>[].obs;
-  RxList<String> suggestedInterests = <String>[].obs;
+  RxList<String> suggestedInterests = <String>['K-CULTURE'].obs;
 
   RxList myFollowing = [].obs;
   RxList myFollowers = [].obs;
@@ -88,11 +88,8 @@ class UsersController extends GetxController {
   }
 
   void updateSuggestedInterests(String newInterest) {
-    if (suggestedInterests.contains(newInterest)) {
-      suggestedInterests.remove(newInterest);
-    } else {
-      suggestedInterests.add(newInterest);
-    }
+    suggestedInterests.clear();
+    suggestedInterests.add(newInterest);
     update();
   }
 
@@ -155,6 +152,7 @@ class UsersController extends GetxController {
   }
 
   Future<List<UserModel>> getFriends({List<String>? queries}) async {
+    print(queries);
     try {
       Map<String, dynamic>? res = await mongodbController.getCollection(
         'users',

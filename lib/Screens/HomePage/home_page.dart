@@ -119,45 +119,51 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selected = 1;
-                            });
-                          },
-                          child: Container(
-                            width: 100.w,
-                            height: 26.h,
-                            decoration: selected == 1
-                                ? ShapeDecoration(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    gradient: const LinearGradient(
-                                        end: Alignment.center,
-                                        begin: Alignment.topCenter,
-                                        colors: [
-                                          Color.fromARGB(255, 235, 226, 226),
-                                          Color.fromARGB(255, 231, 227, 227),
-                                          Color.fromARGB(255, 231, 227, 227),
-                                          Color.fromARGB(255, 243, 240, 240)
-                                        ]),
-                                  )
-                                : null,
-                            child: Center(
-                              child: Text(
-                                'COMMUNITY 🌏',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: selected == 1
-                                      ? textBlueColor
-                                      : const Color(0xFFC9C9C9),
-                                  fontSize: 10.sp,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w800,
-                                  height: 0,
+                        Container(
+                          width: 100.w,
+                          height: 26.h,
+                          decoration: selected == 1
+                              ? ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  gradient: const LinearGradient(
+                                      end: Alignment.center,
+                                      begin: Alignment.topCenter,
+                                      colors: [
+                                        Color.fromARGB(255, 235, 226, 226),
+                                        Color.fromARGB(255, 231, 227, 227),
+                                        Color.fromARGB(255, 231, 227, 227),
+                                        Color.fromARGB(255, 243, 240, 240)
+                                      ]),
+                                )
+                              : null,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selected = 1;
+                              });
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'COMMUNITY 🌏',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: selected == 1
+                                        ? textBlueColor
+                                        : const Color(0xFFC9C9C9),
+                                    fontSize: 10.sp,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w800,
+                                  ),
                                 ),
-                              ),
+                                3.horizontalSpace,
+                                SizedBox()
+                              ],
                             ),
                           ),
                         ),

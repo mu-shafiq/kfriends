@@ -69,6 +69,25 @@ class AuthController extends GetxController {
     update();
   }
 
+  void clearValues() {
+    usernameController.clear();
+    regionController.clear();
+    jobController.clear();
+    countryController.clear();
+    universityController.clear();
+    introController.clear();
+    englishProficiency = ''.obs;
+    koreanProficiency = ''.obs;
+    interests.clear();
+    male.value = true;
+
+    dateOfBirth = DateTime.now();
+    profileImage = null;
+    featuredImage = null;
+
+    update();
+  }
+
   void updateJob(String newJob) {
     selectedJob.value = newJob;
     jobController.text = newJob;
@@ -166,10 +185,10 @@ class AuthController extends GetxController {
   Future<void> signUp() async {
     try {
       UserModel userModel = UserModel(
-        profileImage: (await Helper()
-            .uploadImage(profileImage!.value, Keys.profileImage))!,
-        featuredImage: (await Helper()
-            .uploadImage(featuredImage!.value, Keys.featuredImage))!,
+        profileImage:
+            'https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png',
+        featuredImage:
+            'https://marketplace.canva.com/EAEmBit3KfU/1/0/1600w/canva-black-flatlay-photo-motivational-finance-quote-facebook-cover-myVl9DXwcjQ.jpg',
         nickname: usernameController.text.trim(),
         email: emailController.text.trim(),
         password: passwordController.text,
@@ -193,6 +212,7 @@ class AuthController extends GetxController {
         contacts: [],
         fcmToken: (await FirebaseMessaging.instance.getToken())!,
       );
+
       Response res = await Dio().post(
         '${Keys.serverIP}:3000/api/v1/auth/register',
         data: userModel.toJson(),
@@ -202,6 +222,7 @@ class AuthController extends GetxController {
           },
         ),
       );
+
       if (res.data[Keys.status] == Keys.success) {
         await _storage.write(
             key: Keys.bearerToken, value: res.data[Keys.data][Keys.token]);
@@ -209,11 +230,21 @@ class AuthController extends GetxController {
             key: Keys.userId, value: res.data[Keys.data][Keys.user][Keys.id]);
         currentUser = UserModel.fromJson(res.data[Keys.data][Keys.user]);
         userModel = currentUser!;
+        update();
         Helper().showToast("User Registered Successfully");
+
+        Map<String, dynamic>? resp = await Get.find<MongoDBController>()
+            .patchDocument('users', userModel.id!, {
+          'profileImage': (await Helper()
+              .uploadImage(profileImage!.value, Keys.profileImage))!,
+          'featuredImage': (await Helper()
+              .uploadImage(profileImage!.value, Keys.profileImage))!
+        });
 
         Get.delete<UsersController>();
         Get.put(UsersController(), permanent: true);
         SocketNew.connectSocket();
+
         Get.back();
         Get.offAllNamed(Routes.bottomNavBar);
       }
@@ -278,6 +309,8 @@ class AuthController extends GetxController {
 
   Future<void> updateUser() async {
     try {
+      print('3');
+
       EasyLoading.show();
       userModel!.profileImage = profileImage != null
           ? (await Helper()
@@ -301,25 +334,19 @@ class AuthController extends GetxController {
       userModel!.interests = interests;
       userModel!.universityName = universityController.text.trim();
       userModel!.intro = introController.text.trim();
+      Map<String, dynamic>? res = await Get.find<MongoDBController>()
+          .patchDocument('users', userModel!.id!, userModel!.toJson());
 
-      Response res = await Dio().patch(
-        '${Keys.serverIP}:3000/api/v1/users/${userModel!.id}',
-        data: userModel!.toJson(),
-        options: Options(
-          validateStatus: (status) {
-            return status! <= 500;
-          },
-        ),
-      );
       EasyLoading.dismiss();
-      if (res.data[Keys.status] == Keys.success) {
+      if (res!['data'][Keys.status] == Keys.success) {
         getCurrentUser();
+        clearValues();
         Helper().showToast("User Updated Successfully");
 
         Get.back();
       } else {
         getCurrentUser();
-        throw Exception(res.data[Keys.message]);
+        throw Exception(res['data'][Keys.message]);
       }
     } catch (e) {
       getCurrentUser();

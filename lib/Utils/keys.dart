@@ -1,5 +1,5 @@
 class Keys {
-  static String serverIP = 'http://usdvault.com';
+  static String serverIP = 'http://192.168.18.90';
   static String localHostIP = 'http://192.168.18.90';
   static String localHostIPMacMini = 'http://192.168.18.146';
 

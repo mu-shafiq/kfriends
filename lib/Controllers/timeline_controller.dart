@@ -27,7 +27,7 @@ class TimelineController extends GetxController {
   List<File> filesToBeUploaded = <File>[];
   bool loading = false;
   int selectedPostIndex = 0;
-  String selectedInterest = '#K-CULTURE';
+  String selectedInterest = 'K-CULTURE';
 
   updateFile(File file) {
     filesToBeUploaded.contains(file)

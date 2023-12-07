@@ -421,7 +421,7 @@ class AddPost extends StatelessWidget {
                         onTap: () {
                           String alertString = '';
                           timelineController.interestController.text.isEmpty
-                              ? timelineController.updateInterest('#K-CULTURE')
+                              ? timelineController.updateInterest('K-CULTURE')
                               : null;
                           timelineController.titleController.text.isEmpty
                               ? alertString += '\nPlease add title'

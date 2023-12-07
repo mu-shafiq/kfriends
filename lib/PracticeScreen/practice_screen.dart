@@ -84,7 +84,7 @@ class PracticeScreen extends StatelessWidget {
                       RoundedSmallButton2(
                         onTap: () {
                           print('object');
-                          userController.updateSuggestedInterests('#K-CULTURE');
+                          userController.updateSuggestedInterests('K-CULTURE');
                         },
                         textColor: textBlackColor,
                         shadow1: buttonBlackShadow1,
@@ -94,11 +94,11 @@ class PracticeScreen extends StatelessWidget {
                         height: 25.h,
                         text: '#K-CULTURE',
                         selected: userController.suggestedInterests
-                            .contains('#K-CULTURE'),
+                            .contains('K-CULTURE'),
                       ),
                       RoundedSmallButton2(
                         onTap: () {
-                          userController.updateSuggestedInterests('#K-POP');
+                          userController.updateSuggestedInterests('K-POP');
                         },
                         textColor: textBlackColor,
                         shadow1: buttonBlackShadow1,
@@ -107,12 +107,12 @@ class PracticeScreen extends StatelessWidget {
                         width: 81.w,
                         height: 25.h,
                         text: '#K-POP',
-                        selected: userController.suggestedInterests
-                            .contains('#K-POP'),
+                        selected:
+                            userController.suggestedInterests.contains('K-POP'),
                       ),
                       RoundedSmallButton2(
                         onTap: () {
-                          userController.updateSuggestedInterests('#K-DRAMA');
+                          userController.updateSuggestedInterests('K-DRAMA');
                         },
                         textColor: textBlackColor,
                         shadow1: buttonBlackShadow1,
@@ -121,12 +121,12 @@ class PracticeScreen extends StatelessWidget {
                         width: 81.w,
                         height: 25.h,
                         selected: userController.suggestedInterests
-                            .contains('#K-DRAMA'),
+                            .contains('K-DRAMA'),
                         text: '#K-DRAMA',
                       ),
                       RoundedSmallButton2(
                         onTap: () {
-                          userController.updateSuggestedInterests('#K-FOOD');
+                          userController.updateSuggestedInterests('K-FOOD');
                         },
                         textColor: textBlackColor,
                         shadow1: buttonBlackShadow1,
@@ -136,7 +136,7 @@ class PracticeScreen extends StatelessWidget {
                         height: 25.h,
                         text: '#K-FOOD',
                         selected: userController.suggestedInterests
-                            .contains('#K-FOOD'),
+                            .contains('K-FOOD'),
                       ),
                     ],
                   ),
@@ -149,7 +149,7 @@ class PracticeScreen extends StatelessWidget {
                     children: [
                       RoundedSmallButton2(
                         onTap: () {
-                          userController.updateSuggestedInterests('#K-TRAVEL');
+                          userController.updateSuggestedInterests('K-TRAVEL');
                         },
                         textColor: textBlackColor,
                         shadow1: buttonBlackShadow1,
@@ -158,12 +158,12 @@ class PracticeScreen extends StatelessWidget {
                         width: 81.w,
                         height: 25.h,
                         selected: userController.suggestedInterests
-                            .contains('#K-TRAVEL'),
+                            .contains('K-TRAVEL'),
                         text: '#K-TRAVEL',
                       ),
                       RoundedSmallButton2(
                         onTap: () {
-                          userController.updateSuggestedInterests('#K-BEAUTY');
+                          userController.updateSuggestedInterests('K-BEAUTY');
                         },
                         textColor: textBlackColor,
                         shadow1: buttonBlackShadow1,
@@ -173,11 +173,11 @@ class PracticeScreen extends StatelessWidget {
                         height: 25.h,
                         text: '#K-BEAUTY',
                         selected: userController.suggestedInterests
-                            .contains('#K-BEAUTY'),
+                            .contains('K-BEAUTY'),
                       ),
                       RoundedSmallButton2(
                         onTap: () {
-                          userController.updateSuggestedInterests('#PET');
+                          userController.updateSuggestedInterests('PET');
                         },
                         textColor: textBlackColor,
                         shadow1: buttonBlackShadow1,
@@ -187,12 +187,12 @@ class PracticeScreen extends StatelessWidget {
                         height: 25.h,
                         text: '#PET',
                         selected:
-                            userController.suggestedInterests.contains('#PET'),
+                            userController.suggestedInterests.contains('PET'),
                       ),
                       RoundedSmallButton2(
                         onTap: () {
                           print('message');
-                          userController.updateSuggestedInterests('#GAME');
+                          userController.updateSuggestedInterests('GAME');
                         },
                         textColor: textBlackColor,
                         shadow1: buttonBlackShadow1,
@@ -202,7 +202,7 @@ class PracticeScreen extends StatelessWidget {
                         height: 25.h,
                         text: '#GAME',
                         selected:
-                            userController.suggestedInterests.contains('#GAME'),
+                            userController.suggestedInterests.contains('GAME'),
                       ),
                     ],
                   ),
@@ -228,17 +228,18 @@ class PracticeScreen extends StatelessWidget {
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
+                              UserModel user = users[index];
                               return GestureDetector(
                                 onTap: () {
                                   Get.toNamed(Routes.userInfo,
                                       arguments: currentUser);
                                 },
-                                child: const UserTile(
+                                child: UserTile(
                                   verified: true,
-                                  asset: Assets.user1,
-                                  username: '김민준',
-                                  about: '안녕하세요! 반가워요!대화 걸어주세요~',
-                                  followers: 999,
+                                  asset: user.profileImage,
+                                  username: user.nickname,
+                                  about: user.intro ?? '',
+                                  followers: user.followers.length ?? 0,
                                 ),
                               );
                             })

@@ -258,7 +258,7 @@ class JoinFormScreen extends StatelessWidget {
                                   ),
                                   context: context,
                                   showSearch: true,
-                                  onSelect: (Country count) { 
+                                  onSelect: (Country count) {
                                     controller.countryController.text =
                                         count.name;
                                   },
@@ -430,9 +430,9 @@ class JoinFormScreen extends StatelessWidget {
                               children: [
                                 RoundedSmallButton(
                                   selected: controller.interests
-                                      .contains('#K-TRAVEL'),
+                                      .contains('K-TRAVEL'),
                                   onTap: () {
-                                    controller.updateInterests('#K-TRAVEL');
+                                    controller.updateInterests('K-TRAVEL');
                                   },
                                   textColor: textBlackColor,
                                   width: 114.w,
@@ -441,9 +441,9 @@ class JoinFormScreen extends StatelessWidget {
                                 ),
                                 RoundedSmallButton(
                                   selected: controller.interests
-                                      .contains('#K-TRAVELS'),
+                                      .contains('K-TRAVELS'),
                                   onTap: () {
-                                    controller.updateInterests('#K-TRAVELS');
+                                    controller.updateInterests('K-TRAVELS');
                                   },
                                   textColor: textBlackColor,
                                   width: 114.w,
@@ -452,9 +452,9 @@ class JoinFormScreen extends StatelessWidget {
                                 ),
                                 RoundedSmallButton(
                                   selected:
-                                      controller.interests.contains('#K-DRAMA'),
+                                      controller.interests.contains('K-DRAMA'),
                                   onTap: () {
-                                    controller.updateInterests('#K-DRAMA');
+                                    controller.updateInterests('K-DRAMA');
                                   },
                                   textColor: textBlackColor,
                                   width: 114.w,
@@ -469,9 +469,9 @@ class JoinFormScreen extends StatelessWidget {
                               children: [
                                 RoundedSmallButton(
                                   selected:
-                                      controller.interests.contains('#K-POP'),
+                                      controller.interests.contains('K-POP'),
                                   onTap: () {
-                                    controller.updateInterests('#K-POP');
+                                    controller.updateInterests('K-POP');
                                   },
                                   textColor: textBlackColor,
                                   width: 114.w,
@@ -480,9 +480,9 @@ class JoinFormScreen extends StatelessWidget {
                                 ),
                                 RoundedSmallButton(
                                   selected:
-                                      controller.interests.contains('#K-FOOD'),
+                                      controller.interests.contains('K-FOOD'),
                                   onTap: () {
-                                    controller.updateInterests('#K-FOOD');
+                                    controller.updateInterests('K-FOOD');
                                   },
                                   textColor: textBlackColor,
                                   width: 114.w,
@@ -491,9 +491,9 @@ class JoinFormScreen extends StatelessWidget {
                                 ),
                                 RoundedSmallButton(
                                   selected: controller.interests
-                                      .contains('#K-BEAUTY'),
+                                      .contains('K-BEAUTY'),
                                   onTap: () {
-                                    controller.updateInterests('#K-BEAUTY');
+                                    controller.updateInterests('K-BEAUTY');
                                   },
                                   textColor: textBlackColor,
                                   width: 114.w,
@@ -598,7 +598,7 @@ class JoinFormScreen extends StatelessWidget {
                                         ),
                                         context: context,
                                         showSearch: true,
-                                        onSelect: (Country count) { 
+                                        onSelect: (Country count) {
                                           controller.countryController.text =
                                               count.name;
                                         },

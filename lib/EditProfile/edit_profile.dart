@@ -483,9 +483,9 @@ class _EditProfileState extends State<EditProfile> {
                           children: [
                             RoundedSmallButton(
                               selected:
-                                  controller.interests.contains('#K-TRAVEL'),
+                                  controller.interests.contains('K-TRAVEL'),
                               onTap: () {
-                                controller.updateInterests('#K-TRAVEL');
+                                controller.updateInterests('K-TRAVEL');
                               },
                               textColor: textBlackColor,
                               width: 114.w,
@@ -494,9 +494,9 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                             RoundedSmallButton(
                               selected:
-                                  controller.interests.contains('#K-TRAVELS'),
+                                  controller.interests.contains('K-TRAVELS'),
                               onTap: () {
-                                controller.updateInterests('#K-TRAVELS');
+                                controller.updateInterests('K-TRAVELS');
                               },
                               textColor: textBlackColor,
                               width: 114.w,
@@ -505,9 +505,9 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                             RoundedSmallButton(
                               selected:
-                                  controller.interests.contains('#K-DRAMA'),
+                                  controller.interests.contains('K-DRAMA'),
                               onTap: () {
-                                controller.updateInterests('#K-DRAMA');
+                                controller.updateInterests('K-DRAMA');
                               },
                               textColor: textBlackColor,
                               width: 114.w,
@@ -521,9 +521,9 @@ class _EditProfileState extends State<EditProfile> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             RoundedSmallButton(
-                              selected: controller.interests.contains('#K-POP'),
+                              selected: controller.interests.contains('K-POP'),
                               onTap: () {
-                                controller.updateInterests('#K-POP');
+                                controller.updateInterests('K-POP');
                               },
                               textColor: textBlackColor,
                               width: 114.w,
@@ -532,9 +532,9 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                             RoundedSmallButton(
                               selected:
-                                  controller.interests.contains('#K-FOOD'),
+                                  controller.interests.contains('K-FOOD'),
                               onTap: () {
-                                controller.updateInterests('#K-FOOD');
+                                controller.updateInterests('K-FOOD');
                               },
                               textColor: textBlackColor,
                               width: 114.w,
@@ -543,9 +543,9 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                             RoundedSmallButton(
                               selected:
-                                  controller.interests.contains('#K-BEAUTY'),
+                                  controller.interests.contains('K-BEAUTY'),
                               onTap: () {
-                                controller.updateInterests('#K-BEAUTY');
+                                controller.updateInterests('K-BEAUTY');
                               },
                               textColor: textBlackColor,
                               width: 114.w,
@@ -559,24 +559,25 @@ class _EditProfileState extends State<EditProfile> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             RoundedSmallButton(
-                              selected: controller.interests.contains('PET'),
+                              selected: controller.interests.contains('K-PET'),
                               onTap: () {
-                                controller.updateInterests('PET');
+                                controller.updateInterests('K-PET');
                               },
                               textColor: textBlackColor,
                               width: 114.w,
                               height: 30.h,
-                              text: 'PET',
+                              text: '#K-PET',
                             ),
                             RoundedSmallButton(
-                              selected: controller.interests.contains('GAME'),
+                              selected:
+                                  controller.interests.contains('K-GAME'),
                               onTap: () {
-                                controller.updateInterests('GAME');
+                                controller.updateInterests('K-GAME');
                               },
                               textColor: textBlackColor,
                               width: 114.w,
                               height: 30.h,
-                              text: 'GAME',
+                              text: '#K-GAME',
                             ),
                             const SizedBox(),
                             const SizedBox(),
