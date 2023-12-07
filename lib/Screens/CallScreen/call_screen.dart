@@ -267,22 +267,23 @@ class _CallScreenState extends State<CallScreen> {
                             itemBuilder: (context, index) {
                               CallLogModel callLog = callLogs[index];
                               return GestureDetector(
-                                onTap: () async {
-                                  await controller
-                                      .makeACall(callLog.contactId!.id!);
-                                },
+                                onTap: () async {},
                                 child: CallUserTile(
+                                  onCall: () async {
+                                    await controller
+                                        .makeACall(callLog.contactId!.id!);
+                                  },
                                   date: DateFormat('yyyy-MM-dd')
                                       .format(callLog.callId!.startAt!),
-                                  status: callLog.callId!.status!,
+                                  status: callLog.type!,
                                   verified:
                                       callLog.contactId!.userType == korean,
                                   profileUrl: callLog.contactId!.profileImage,
                                   username: callLog.contactId!.nickname,
                                   about:
                                       '${callLog.contactId!.age} / ${GetUtils.capitalize(callLog.contactId!.gender)} /  ${callLog.contactId!.country}',
-                                  time:
-                                      formatDuration(callLog.callId!.duration!),
+                                  time: DateFormat('hh:mm')
+                                      .format(callLog.callId!.startAt!),
                                 ),
                               );
                             });

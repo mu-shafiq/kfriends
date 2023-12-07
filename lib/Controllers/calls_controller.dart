@@ -18,12 +18,12 @@ class CallsController extends GetxController {
       Map<String, dynamic>? res =
           await mongodbController.getCollection('callLogs', queries: [
         'userId=${Get.find<AuthController>().userModel!.id}',
-        'sort=createdAt:-1',
         'populate=contactId, callId'
       ]);
       EasyLoading.dismiss();
-      log("res: ${res![Keys.data][Keys.callLogs][0]['callId']['duration'].runtimeType}");
-      if (res[Keys.status] == Keys.success) {
+      // log("res: ${res![Keys.data][Keys.callLogs][0]['callId']['startAt']}");
+
+      if (res![Keys.status] == Keys.success) {
         return (res[Keys.data][Keys.callLogs] as List)
             .map((e) => CallLogModel.fromMap(e as Map<String, dynamic>))
             .toList();
@@ -55,6 +55,7 @@ class CallsController extends GetxController {
         String callId = res[Keys.data][Keys.callId];
         String receiverName = res[Keys.data][Keys.receiverName];
         String receiverImage = res[Keys.data][Keys.receiverImage];
+        String receiverUid = res[Keys.data][Keys.receiverUid];
         Get.toNamed(
           Routes.voiceCallScreen,
           arguments: {
@@ -64,6 +65,7 @@ class CallsController extends GetxController {
             'callId': callId,
             'receiverName': receiverName,
             'receiverImage': receiverImage,
+            'receiverUid': receiverUid,
           },
         );
       } else {

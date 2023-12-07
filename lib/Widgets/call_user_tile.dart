@@ -14,6 +14,7 @@ class CallUserTile extends StatelessWidget {
   final String status;
   final String date;
   final String time;
+  final Function() onCall;
 
   const CallUserTile(
       {super.key,
@@ -23,7 +24,8 @@ class CallUserTile extends StatelessWidget {
       required this.verified,
       required this.status,
       required this.date,
-      required this.time});
+      required this.time,
+      required this.onCall});
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +127,7 @@ class CallUserTile extends StatelessWidget {
                               ),
                             ],
                           )
-                        : status == 'ongoing'
+                        : status == 'outgoing'
                             ? Row(
                                 children: [
                                   Image.asset(Assets.outgoing),
@@ -145,9 +147,7 @@ class CallUserTile extends StatelessWidget {
               ],
             ),
             trailing: GestureDetector(
-              onTap: () {
-                Get.toNamed(Routes.userInfo);
-              },
+              onTap: onCall,
               child: SizedBox(
                 width: 70.w,
                 child: Padding(

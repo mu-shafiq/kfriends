@@ -12,7 +12,7 @@ import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/constants.dart';
 import 'dart:async';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import 'package:kfriends/Utils/keys.dart';
+import 'package:kfriends/Utils/socket.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
@@ -20,18 +20,20 @@ import 'package:socket_io_client/socket_io_client.dart';
 class VoiceCallScreen extends StatefulWidget {
   final String channelName;
   final String token;
-  final int uid;
+  final int agoraUid;
   final String callId;
   final String receiverName;
   final String receiverImage;
+  final String receiverUid;
   const VoiceCallScreen(
       {super.key,
       required this.channelName,
       required this.token,
-      required this.uid,
+      required this.agoraUid,
       required this.callId,
       required this.receiverName,
-      required this.receiverImage});
+      required this.receiverImage,
+      required this.receiverUid});
 
   @override
   State<VoiceCallScreen> createState() => _VoiceCallScreenState();
@@ -50,14 +52,25 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
 
   final bool _isNear = false;
 
+  Timer timer = Timer.periodic(const Duration(seconds: 10), (timer) {});
+
   @override
   void initState() {
     super.initState();
-    setupVoiceSDKEngine();
-    checkIfUserDeclineTheCall().then((value) => join());
+    callSocket();
+    setupVoiceSDKEngine().then((value) => join());
+
+    checkIfUserDeclineTheCall();
   }
 
-
+  callSocket() {
+    SocketNew.socket.on('call_ended', (data) {
+      log('call ended');
+      callController.endsACall(
+          widget.callId, _remoteUid != null ? "incoming" : "missed");
+      callSessionEnded();
+    });
+  }
 
   Future<void> setupVoiceSDKEngine() async {
     await [Permission.microphone].request();
@@ -81,12 +94,8 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
         onUserOffline: (RtcConnection connection, int remoteUid,
             UserOfflineReasonType reason) {
           callSessionEnded();
-
-          // callController.endsACall(
-          //     widget.callId, _remoteUid != null ? "incoming" : "missed");
-          // setState(() {
-          //   _remoteUid = null;
-          // });
+          callController.endsACall(
+              widget.callId, _remoteUid != null ? "incoming" : "missed");
         },
       ),
     );
@@ -120,7 +129,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
       token: widget.token,
       channelId: widget.channelName,
       options: options,
-      uid: widget.uid,
+      uid: widget.agoraUid,
     );
   }
 
@@ -133,14 +142,15 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
   }
 
   Future<void> checkIfUserDeclineTheCall() async {
-    await Future.delayed((const Duration(seconds: 10)));
-    String callStatus = await mongodbController
-        .getDocument("calls", widget.callId)
-        .then(
-            (Map<String, dynamic>? value) => value!["data"]['call']['status']);
-    if (callStatus == "ended") {
-      callSessionEnded();
-    }
+    timer = Timer.periodic(const Duration(seconds: 10), (timer) async {
+      String callStatus = await mongodbController
+          .getDocument("calls", widget.callId)
+          .then((Map<String, dynamic>? value) =>
+              value!["data"]['call']['status']);
+      if (callStatus == "ended") {
+        callSessionEnded();
+      }
+    });
   }
 
   @override
@@ -148,9 +158,12 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
     agoraEngine.leaveChannel();
     agoraEngine.release();
     FlutterCallkitIncoming.endAllCalls();
-    callController.endsACall(
-        widget.callId, _remoteUid != null ? "incoming" : "missed");
-    callSessionEnded();
+    if (timer.isActive) {
+      timer.cancel();
+    }
+    // // callController.endsACall(
+    // //     widget.callId, _remoteUid != null ? "incoming" : "missed");
+    // callSessionEnded();
 
     // _proximitySubscription.cancel();
     super.dispose();
@@ -227,8 +240,8 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
                       children: [
                         CircleAvatar(
                           radius: 65.r,
-                          child: Image.asset(
-                            Assets.user1,
+                          child: Image.network(
+                            widget.receiverImage,
                             scale: .5,
                           ),
                         ),
@@ -439,7 +452,6 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
                   InkWell(
                       onTap: () {
                         callSessionEnded();
-
                         callController.endsACall(widget.callId,
                             _remoteUid != null ? "incoming" : "missed");
                       },
