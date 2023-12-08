@@ -16,6 +16,8 @@ import 'package:kfriends/CommunityScreens/write_timeline.dart';
 import 'package:kfriends/CustomerCenter/customer_center.dart';
 import 'package:kfriends/CustomerCenter/inquiry_sent.dart';
 import 'package:kfriends/EditProfile/edit_profile.dart';
+import 'package:kfriends/Followers/followers.dart';
+import 'package:kfriends/Followings/followings.dart';
 import 'package:kfriends/KoreanGames/korean_main_screen.dart';
 import 'package:kfriends/KoreanGames/korean_game_Sheet.dart';
 import 'package:kfriends/KoreanGames/korean_game_result.dart';
@@ -98,6 +100,8 @@ class Routes {
   static String callScreen = "/callScreen";
   static String profileSetting = "/profileSetting";
   static String terms = "/terms";
+  static String followers = "/followers";
+  static String followings = "/followings";
 }
 
 final pages = [
@@ -115,7 +119,7 @@ final pages = [
   ),
   GetPage(
     name: Routes.joinFormScreen,
-    page: () => const JoinFormScreen(),
+    page: () => JoinFormScreen(),
   ),
   GetPage(
     name: Routes.bottomNavBar,
@@ -206,15 +210,23 @@ final pages = [
         final String channelName = Get.arguments['channelName'] as String;
         final String token = Get.arguments['token'] as String;
         final int uid = Get.arguments['remoteUid'] as int;
+        final String callId = Get.arguments['callId'] as String;
+        final String receiverName = Get.arguments['receiverName'] as String;
+        final String receiverImage = Get.arguments['receiverImage'] as String;
+        final String receiverUid = Get.arguments['receiverUid'] as String;
         return VoiceCallScreen(
           channelName: channelName,
           token: token,
-          uid: uid,
+          agoraUid: uid,
+          callId: callId,
+          receiverName: receiverName,
+          receiverImage: receiverImage,
+          receiverUid: receiverUid,
         );
       }),
   GetPage(
     name: Routes.addPost,
-    page: () => const AddPost(),
+    page: () => AddPost(),
   ),
   GetPage(
     name: Routes.communityMain,
@@ -226,7 +238,7 @@ final pages = [
   ),
   GetPage(
     name: Routes.postView,
-    page: () => const PostView(),
+    page: () => PostView(),
   ),
   GetPage(
     name: Routes.searchTimeline,
@@ -234,11 +246,11 @@ final pages = [
   ),
   GetPage(
     name: Routes.timlineView,
-    page: () => const TimelineView(),
+    page: () => TimelineView(),
   ),
   GetPage(
     name: Routes.writetimeline,
-    page: () => const WriteTimeLine(),
+    page: () => WriteTimeLine(),
   ),
   GetPage(
     name: Routes.customerCenter,
@@ -286,11 +298,11 @@ final pages = [
   ),
   GetPage(
     name: Routes.callHistory,
-    page: () => CallHistory(),
+    page: () => const CallHistory(),
   ),
   GetPage(
     name: Routes.callScreen,
-    page: () => CallScreen(),
+    page: () => const CallScreen(),
   ),
   GetPage(
     name: Routes.contactScreen,
@@ -303,5 +315,17 @@ final pages = [
   GetPage(
     name: Routes.terms,
     page: () => const Terms(),
+  ),
+  GetPage(
+    name: Routes.followers,
+    page: () => Followers(
+      followers: Get.arguments,
+    ),
+  ),
+  GetPage(
+    name: Routes.followings,
+    page: () => Followings(
+      followings: Get.arguments,
+    ),
   ),
 ];

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kfriends/Utils/assets.dart';
+import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Widgets/contact_tile.dart';
 import 'package:kfriends/Widgets/textfield.dart';
+import 'package:kfriends/model/user.dart';
 
 import '../../Routes/get_routes.dart';
 
@@ -20,11 +22,10 @@ class ContactScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              10.verticalSpace,
               CustomTextfield(
                   height: 40.h,
                   width: .92.sw,
-                  hint: 'Search by name',
+                  hint: 'Search by name'.tr,
                   hintSize: 10.sp,
                   trailing: Image.asset(Assets.search),
                   controller: TextEditingController()),
@@ -38,7 +39,7 @@ class ContactScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          Get.toNamed(Routes.userInfo);
+                          Get.toNamed(Routes.userInfo, arguments: currentUser);
                         },
                         child: const ContactTile(
                           verified: true,

@@ -25,7 +25,7 @@ class NoticeViews extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         title: Text(
-          'NOTICE',
+          'NOTICE'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,
@@ -68,7 +68,7 @@ class NoticeViews extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Hello, Everyone! It’s notice from KFriends',
+              'Hello, Everyone! It’s notice from KFriends'.tr,
               style: TextStyle(
                 color: textBlackColor,
                 fontSize: 12.sp,
@@ -139,7 +139,7 @@ class NoticeViews extends StatelessWidget {
                 ),
                 10.horizontalSpace,
                 Text(
-                  'Back to List',
+                  'Back to List'.tr,
                   style: TextStyle(
                     color: textBlackColor,
                     fontSize: 10.sp,

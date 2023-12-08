@@ -74,20 +74,18 @@ class _BirthdaySelectorState extends State<BirthdaySelector> {
                       }
                     });
                   },
-                  hintText: ''),
+                  hintText: 'please select your birthday'),
             ),
           ),
           Positioned(
             left: 10.w,
             child: Text(
-              widget.controller.text.isEmpty
-                  ? 'YYYY-MM-DD'
-                  : widget.controller.text,
+              widget.controller.text,
               style: TextStyle(
                 color: widget.controller.text.isEmpty
                     ? textGreyColor
                     : textBlackColor,
-                fontSize: widget.controller.text.isEmpty ? 10.sp : 12.sp,
+                fontSize: 10,
                 fontFamily: 'Pretendard',
                 fontWeight: FontWeight.w500,
                 height: 0.15,

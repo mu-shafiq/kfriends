@@ -1,67 +1,116 @@
-import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import 'package:agora_uikit/agora_uikit.dart';
-import 'package:flutter/material.dart';
+import 'dart:developer';
+
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:kfriends/Utils/constants.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:kfriends/Controllers/auth_controller.dart';
+import 'package:kfriends/Controllers/mongodb_controller.dart';
+import 'package:kfriends/Routes/get_routes.dart';
+import 'package:kfriends/Utils/helper.dart';
+import 'package:kfriends/Utils/keys.dart';
+import 'package:kfriends/model/call_logs.dart';
 
 class CallsController extends GetxController {
-  RtcEngine? _engine;
+  final mongodbController = Get.find<MongoDBController>();
 
-  @override
-  Future<void> onInit() async {
-    super.onInit();
-    _engine = createAgoraRtcEngine();
+  Future<List<CallLogModel>> getCallLogs() async {
+    try {
+      EasyLoading.show();
+      Map<String, dynamic>? res =
+          await mongodbController.getCollection('callLogs', queries: [
+        'userId=${Get.find<AuthController>().userModel!.id}',
+        'populate=contactId, callId'
+      ]);
+      EasyLoading.dismiss();
+      // log("res: ${res![Keys.data][Keys.callLogs][0]['callId']['startAt']}");
+
+      if (res![Keys.status] == Keys.success) {
+        return (res[Keys.data][Keys.callLogs] as List)
+            .map((e) => CallLogModel.fromMap(e as Map<String, dynamic>))
+            .toList();
+      } else {
+        mongodbController.throwExpection(res);
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      printError(info: e.toString());
+      Helper().showToast(e.toString());
+    }
+    return [];
   }
 
-  Future<void> initAgora() async {
-    // retrieve permissions
-    await [Permission.microphone, Permission.camera].request();
-
-    //create the engine
-    _engine = createAgoraRtcEngine();
-    await _engine!.initialize(const RtcEngineContext(
-      appId: agoraAppID,
-      channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
-    ));
-
-    _engine!.registerEventHandler(
-      RtcEngineEventHandler(
-        onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
-          debugPrint("local user ${connection.localUid} joined");
-          // setState(() {
-          //   _localUserJoined = true;
-          // });
+  Future<void> makeACall(String receiverUserId) async {
+    try {
+      EasyLoading.show();
+      print('1');
+      Map<String, dynamic>? res = await mongodbController.callFunction(
+        Keys.makeCall,
+        data: {
+          'receiverUserId': receiverUserId,
         },
-        onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
-          debugPrint("remote user $remoteUid joined");
-          // setState(() {
-          //   _remoteUid = remoteUid;
-          // });
-        },
-        onUserOffline: (RtcConnection connection, int remoteUid,
-            UserOfflineReasonType reason) {
-          debugPrint("remote user $remoteUid left channel");
-          // setState(() {
-          //   _remoteUid = null;
-          // });
-        },
-        onTokenPrivilegeWillExpire: (RtcConnection connection, String token) {
-          debugPrint(
-              '[onTokenPrivilegeWillExpire] connection: ${connection.toJson()}, token: $token');
-        },
-      ),
-    );
+      );
+      print('2');
+      print(res);
+      print('reciver user id' + receiverUserId);
+      EasyLoading.dismiss();
+      if (res![Keys.status] == Keys.success) {
+        print('3');
+        int agoraUid = res[Keys.data][Keys.uid];
+        String token = res[Keys.data][Keys.token];
+        String channelName = res[Keys.data][Keys.channelName];
+        String callId = res[Keys.data][Keys.callId];
+        String receiverName = res[Keys.data][Keys.receiverName];
+        String receiverImage = res[Keys.data][Keys.receiverImage];
+        String receiverUid = res[Keys.data][Keys.receiverUid];
+        print('4');
 
-    await _engine!.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-    await _engine!.enableVideo();
-    await _engine!.startPreview();
+        Get.toNamed(
+          Routes.voiceCallScreen,
+          arguments: {
+            'channelName': channelName,
+            'remoteUid': agoraUid,
+            'token': token,
+            'callId': callId,
+            'receiverName': receiverName,
+            'receiverImage': receiverImage,
+            'receiverUid': receiverUid,
+          },
+        );
+      } else {
+        mongodbController.throwExpection(res);
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      printError(info: e.toString());
+      Helper().showToast(e.toString());
+    }
+  }
 
-    await _engine!.joinChannel(
-      token: "token",
-      channelId: "channel",
-      uid: 0,
-      options: const ChannelMediaOptions(),
-    );
+  Future<void> endsACall(String callId, String callLogType) async {
+    try {
+      Map<String, dynamic>? res = await mongodbController.callFunction(
+        Keys.endCall,
+        data: {
+          'callId': callId,
+          'callLogType': callLogType,
+        },
+      );
+      if (res![Keys.status] == Keys.success) {
+        // Get.back();
+      } else {
+        mongodbController.throwExpection(res);
+      }
+    } catch (e) {
+      printError(info: e.toString());
+      Helper().showToast(e.toString());
+    }
+  }
+
+  Future<void> buyMoreTime() async {
+    try {
+      int timeInMinutes = 5;
+    } catch (e) {
+      printError(info: e.toString());
+      Helper().showToast(e.toString());
+    }
   }
 }

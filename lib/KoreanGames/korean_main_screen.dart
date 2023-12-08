@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:kfriends/Screens/BottomNavBar/bottom_nav_bar.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Widgets/bottom_bar.dart';
@@ -99,6 +100,12 @@ class KoreanMainScreen extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
+                    onTap: () {
+                      Get.offAll(const BottomNavBar(
+                        initialIndex: 0,
+                        homeIndex: 1,
+                      ));
+                    },
                     child: Container(
                       width: 100.w,
                       height: 26.h,

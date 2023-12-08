@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -21,7 +20,6 @@ class Helper {
       );
       return await cropImage(res!.path);
     } on PlatformException catch (e) {
-      log("error in pick image ${e.message!}");
       showToast(e.message!);
       return null;
     }
@@ -49,19 +47,26 @@ class Helper {
       ))!
           .path);
     } on PlatformException catch (e) {
-      log("error in crop image ${e.message!}");
       showToast(e.message!);
       return null;
     }
   }
 
   Future<String?> uploadImage(File? image, String folder) async {
+    print('4');
+
     Uint8List? bytes = await image!.readAsBytes();
+    print(image.path);
     Map<String, dynamic>? response =
         await Get.find<MongoDBController>().uploadPNG(bytes, folder);
+    print(response);
+
     if (response![Keys.status] == Keys.success) {
+      print(response['data'].toString());
       return response[Keys.data][Keys.url];
     } else {
+      print(response['message']);
+      showToast(response['message'].toString());
       Get.find<MongoDBController>().throwExpection(response);
       return null;
     }

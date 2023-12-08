@@ -36,7 +36,7 @@ class BottomBar extends StatelessWidget {
             unselectedItemColor: textBlackColor,
             selectedLabelStyle: TextStyle(
               color: textBlackColor,
-              fontSize: 12.sp,
+              fontSize: 11.sp,
               fontFamily: 'Pretendard',
               fontWeight: FontWeight.w400,
               height: 2,
@@ -51,29 +51,34 @@ class BottomBar extends StatelessWidget {
             showUnselectedLabels: true,
             items: [
               BottomNavigationBarItem(
-                  icon: bottombaritem(Assets.home), label: "HOME"),
+                  icon: bottombaritem(Assets.home), label: "HOME".tr),
               BottomNavigationBarItem(
-                  icon: bottombaritem(Assets.friends), label: "FRIENDS"),
+                  icon: bottombaritem(Assets.friends), label: "FRIENDS".tr),
               BottomNavigationBarItem(icon: bottombaritem('logo'), label: ""),
               BottomNavigationBarItem(
-                  icon: bottombaritem(Assets.call), label: "CALL"),
+                  icon: bottombaritem(Assets.call), label: "CALL".tr),
               BottomNavigationBarItem(
-                  icon: bottombaritem(Assets.profile), label: "MY INFO"),
+                  icon: bottombaritem(Assets.profile), label: "MY INFO".tr),
             ],
           ),
         ),
         Positioned(
           bottom: 6.h,
           child: Image.asset(
-            Assets.circleBlack,
-            scale: .8,
+            index != 2 ? Assets.circleBlack : Assets.circleWhite,
+            scale: index == 2 ? .6 : .8,
           ),
         ),
         Positioned(
           bottom: 16.h,
-          child: Image.asset(
-            Assets.appLogo2,
-            scale: 6,
+          child: GestureDetector(
+            onTap: () {
+              Get.toNamed(Routes.chatMainScreen);
+            },
+            child: Image.asset(
+              Assets.appLogo2,
+              scale: 6,
+            ),
           ),
         ),
       ],

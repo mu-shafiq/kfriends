@@ -25,7 +25,7 @@ class ReportScreen extends StatelessWidget {
             },
             child: Image.asset(Assets.backArrow)),
         title: Text(
-          'USER REPORT',
+          'USER REPORT'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,
@@ -46,7 +46,7 @@ class ReportScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "User Name",
+                    "User Name".tr,
                     style: TextStyle(
                       fontFamily: "Pretendard",
                       fontSize: 14.sp,
@@ -72,7 +72,7 @@ class ReportScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "Report Type",
+                    "Report Type".tr,
                     style: TextStyle(
                       fontFamily: "Pretendard",
                       fontSize: 14.sp,
@@ -90,7 +90,7 @@ class ReportScreen extends StatelessWidget {
               width: .93.sw,
               height: 40.h,
               hintSize: 10.sp,
-              hint: 'Select Report Type',
+              hint: 'Select Report Type'.tr,
               trailing: Image.asset(Assets.drop),
             ),
             10.verticalSpace,
@@ -99,7 +99,7 @@ class ReportScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "Report Content",
+                    "Report Content".tr,
                     style: TextStyle(
                       fontFamily: "Pretendard",
                       fontSize: 14.sp,
@@ -117,7 +117,7 @@ class ReportScreen extends StatelessWidget {
               width: .93.sw,
               height: 340.h,
               hintSize: 10.sp,
-              hint: 'Please describe what you want to report about this use..',
+              hint: 'Please describe what you want to report about this use..'.tr,
             ),
             20.verticalSpace,
             SizedBox(
@@ -136,7 +136,7 @@ class ReportScreen extends StatelessWidget {
                     selectedColor: buttonBlueColor2,
                     width: 170.w,
                     height: 35.h,
-                    text: 'Send Report',
+                    text: 'Send Report'.tr,
                   ),
                   RoundedSmallButton(
                     onTap: () {
@@ -145,7 +145,7 @@ class ReportScreen extends StatelessWidget {
                     textColor: textBlackColor,
                     width: 170.w,
                     height: 35.h,
-                    text: 'Cancel',
+                    text: 'Cancel'.tr,
                   ),
                 ],
               ),

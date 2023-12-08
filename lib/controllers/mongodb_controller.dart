@@ -1,39 +1,36 @@
 import 'dart:convert';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as parser;
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide Response;
-import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Utils/keys.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // Create a custom interceptor
 class AuthInterceptor extends Interceptor {
-  final String bearerToken;
-  AuthInterceptor(this.bearerToken);
+  AuthInterceptor();
 
   @override
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    // String token = await SharedPreferences.getInstance()
-    //     .then((value) => value.getString(Keys.bearerToken) ?? "");
-    // Add the bearer token to the headers
-    options.headers["Authorization"] = "Bearer ${token ?? ''}";
+    const storage = FlutterSecureStorage();
+    String? token = await storage.read(key: Keys.bearerToken);
+    options.headers["Authorization"] = "Bearer ${token ?? ""}";
     super.onRequest(options, handler);
   }
 }
 
 class MongoDBController extends GetxController {
-  String baseUrl = '${Keys.serverIP}:3000/api/v1/';
+  String baseUrl = '${Keys.serverIP}/api/v1/';
   Dio dio = Dio();
 
   @override
   onInit() {
     super.onInit();
     Future.delayed(const Duration(seconds: 1), () async {
-      dio.interceptors.add(AuthInterceptor(token ?? ''));
+      dio.interceptors.add(AuthInterceptor());
     });
   }
 
@@ -54,6 +51,7 @@ class MongoDBController extends GetxController {
           },
         ),
       );
+
       return res.data;
     } catch (e) {
       printInfo(info: e.toString());
@@ -64,6 +62,7 @@ class MongoDBController extends GetxController {
   Future<Map<String, dynamic>?> getDocument(
       String collectionName, String documentId) async {
     try {
+      printInfo(info: '$baseUrl$collectionName/$documentId');
       Response res = await dio.get(
         '$baseUrl$collectionName/$documentId',
         options: Options(
@@ -72,9 +71,9 @@ class MongoDBController extends GetxController {
           },
         ),
       );
+
       return res.data;
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -82,6 +81,7 @@ class MongoDBController extends GetxController {
   Future<Map<String, dynamic>?> postDocument(
       String collectionName, Map<String, dynamic> data) async {
     try {
+      printInfo(info: baseUrl + collectionName);
       Response res = await dio.post(
         baseUrl + collectionName,
         data: data,
@@ -120,7 +120,7 @@ class MongoDBController extends GetxController {
   Future<Map<String, dynamic>?> deleteDocument(
       String collectionName, String documentId) async {
     try {
-      printInfo(info: '$baseUrl$collectionName/$documentId');
+      print('$baseUrl$collectionName/$documentId');
       Response res = await dio.delete(
         '$baseUrl$collectionName/$documentId',
         options: Options(
@@ -131,8 +131,49 @@ class MongoDBController extends GetxController {
       );
       return res.data;
     } catch (e) {
-      printError(info: "$e");
+      print("$e");
 
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> putConnectionFunction(String functionName,
+      {Map<String, dynamic>? data}) async {
+    try {
+      printInfo(info: "${baseUrl}connection/$functionName");
+      Response res = await dio.put(
+        "${baseUrl}connection/$functionName",
+        data: data ?? {},
+        options: Options(
+          validateStatus: (status) {
+            return status! <= 500;
+          },
+        ),
+      );
+      return res.data;
+    } catch (e) {
+      printError(info: e.toString());
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> getConnectionFunction(
+      String functionName, String id,
+      {Map<String, dynamic>? data}) async {
+    try {
+      printInfo(info: "${baseUrl}connection/$functionName/$id");
+      Response res = await dio.get(
+        "${baseUrl}connection/$functionName/$id",
+        data: data ?? {},
+        options: Options(
+          validateStatus: (status) {
+            return status! <= 500;
+          },
+        ),
+      );
+      return res.data;
+    } catch (e) {
+      printError(info: e.toString());
       return null;
     }
   }
@@ -185,12 +226,21 @@ class MongoDBController extends GetxController {
       var mpFile = http.MultipartFile.fromBytes('file', bytes,
           filename: DateTime.now().millisecondsSinceEpoch.toString(),
           contentType: parser.MediaType("image", "png"));
+
       var request = http.MultipartRequest(
         'POST',
         Uri.parse("${baseUrl}functions/${Keys.uploadFileToServer}"),
       );
+      const storage = FlutterSecureStorage();
+      String? token = await storage.read(key: Keys.bearerToken);
       request.files.add(mpFile);
       request.fields['folder'] = folderName;
+      print(request.headers);
+      request.headers.addAll({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      });
 
       var streamRes = await request.send();
       var res = await http.Response.fromStream(streamRes);

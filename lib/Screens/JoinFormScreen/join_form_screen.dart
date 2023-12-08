@@ -17,8 +17,8 @@ import 'package:kfriends/Widgets/textfield.dart';
 import 'package:kfriends/Controllers/auth_controller.dart';
 
 class JoinFormScreen extends StatelessWidget {
-  const JoinFormScreen({super.key});
-
+  JoinFormScreen({super.key});
+  final bool isEnglish = Get.locale == const Locale('en', 'US');
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AuthController>(
@@ -100,7 +100,7 @@ class JoinFormScreen extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Nickname",
+                                "Nickname".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -120,7 +120,7 @@ class JoinFormScreen extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Gender",
+                                "Gender".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -142,7 +142,7 @@ class JoinFormScreen extends StatelessWidget {
                                   textColor: textBlackColor,
                                   width: 160.w,
                                   height: 30.h,
-                                  text: 'Male',
+                                  text: 'Male'.tr,
                                 ),
                                 RoundedSmallButton(
                                   selected: !controller.male.value,
@@ -152,7 +152,7 @@ class JoinFormScreen extends StatelessWidget {
                                   textColor: textBlackColor,
                                   width: 160.w,
                                   height: 30.h,
-                                  text: 'Female',
+                                  text: 'Female'.tr,
                                 ),
                               ],
                             ),
@@ -160,7 +160,7 @@ class JoinFormScreen extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Birthday",
+                                "Birthday".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -173,9 +173,11 @@ class JoinFormScreen extends StatelessWidget {
                             ),
                             BirthdaySelector(
                               controller: TextEditingController(
-                                  text: controller.dateOfBirth
-                                      .toString()
-                                      .split(' ')[0]),
+                                  text: controller.dateOfBirth == null
+                                      ? 'YYYY-MM-DD'
+                                      : controller.dateOfBirth
+                                          .toString()
+                                          .split(' ')[0]),
                               width: .9.sw,
                               height: 40.h,
                               hintSize: 10.sp,
@@ -186,7 +188,7 @@ class JoinFormScreen extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Job",
+                                "Job".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -201,7 +203,7 @@ class JoinFormScreen extends StatelessWidget {
                               controller: controller.jobController,
                               width: .9.sw,
                               height: 40.h,
-                              hint: 'Select your Job',
+                              hint: 'Select your Job'.tr,
                               hintSize: 10.sp,
                               trailing: Image.asset(Assets.drop),
                             ),
@@ -209,7 +211,7 @@ class JoinFormScreen extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Country",
+                                "Country".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -224,7 +226,7 @@ class JoinFormScreen extends StatelessWidget {
                               controller: controller.countryController,
                               width: .9.sw,
                               height: 40.h,
-                              hint: 'Select your Country',
+                              hint: 'Select your Country'.tr,
                               hintSize: 10.sp,
                               trailing: Image.asset(Assets.drop),
                               textInputType: TextInputType.none,
@@ -259,7 +261,6 @@ class JoinFormScreen extends StatelessWidget {
                                   context: context,
                                   showSearch: true,
                                   onSelect: (Country count) {
-                                    log(count.name);
                                     controller.countryController.text =
                                         count.name;
                                   },
@@ -270,7 +271,7 @@ class JoinFormScreen extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Region",
+                                "Region".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -292,7 +293,7 @@ class JoinFormScreen extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "English Proficiency",
+                                "English Proficiency".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -348,69 +349,74 @@ class JoinFormScreen extends StatelessWidget {
                               ],
                             ),
                             10.verticalSpace,
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Korean Proficiency",
-                                style: TextStyle(
-                                  fontFamily: "Pretendard",
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: textBlackColor,
-                                  height: 17 / 14,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                RoundedSmallButton(
-                                  selected:
-                                      controller.koreanProficiency.value ==
-                                          beginner,
-                                  onTap: () {
-                                    controller
-                                        .updateKoreanProficiency(beginner);
-                                  },
-                                  textColor: textBlackColor,
-                                  width: 114.w,
-                                  height: 30.h,
-                                  text: 'Beginner',
-                                ),
-                                RoundedSmallButton(
-                                  selected:
-                                      controller.koreanProficiency.value ==
-                                          intermediate,
-                                  onTap: () {
-                                    controller
-                                        .updateKoreanProficiency(intermediate);
-                                  },
-                                  textColor: textBlackColor,
-                                  width: 114.w,
-                                  height: 30.h,
-                                  text: 'Intermediate',
-                                ),
-                                RoundedSmallButton(
-                                  selected:
-                                      controller.koreanProficiency.value ==
-                                          advanced,
-                                  onTap: () {
-                                    controller
-                                        .updateKoreanProficiency(advanced);
-                                  },
-                                  textColor: textBlackColor,
-                                  width: 114.w,
-                                  height: 30.h,
-                                  text: 'Advanced',
-                                ),
-                              ],
-                            ),
+                            isEnglish
+                                ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "Korean Proficiency".tr,
+                                      style: TextStyle(
+                                        fontFamily: "Pretendard",
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: textBlackColor,
+                                        height: 17 / 14,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            isEnglish
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      RoundedSmallButton(
+                                        selected: controller
+                                                .koreanProficiency.value ==
+                                            beginner,
+                                        onTap: () {
+                                          controller.updateKoreanProficiency(
+                                              beginner);
+                                        },
+                                        textColor: textBlackColor,
+                                        width: 114.w,
+                                        height: 30.h,
+                                        text: 'Beginner',
+                                      ),
+                                      RoundedSmallButton(
+                                        selected: controller
+                                                .koreanProficiency.value ==
+                                            intermediate,
+                                        onTap: () {
+                                          controller.updateKoreanProficiency(
+                                              intermediate);
+                                        },
+                                        textColor: textBlackColor,
+                                        width: 114.w,
+                                        height: 30.h,
+                                        text: 'Intermediate',
+                                      ),
+                                      RoundedSmallButton(
+                                        selected: controller
+                                                .koreanProficiency.value ==
+                                            advanced,
+                                        onTap: () {
+                                          controller.updateKoreanProficiency(
+                                              advanced);
+                                        },
+                                        textColor: textBlackColor,
+                                        width: 114.w,
+                                        height: 30.h,
+                                        text: 'Advanced',
+                                      ),
+                                    ],
+                                  )
+                                : const SizedBox(),
                             10.verticalSpace,
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Interests",
+                                "Interests".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -425,10 +431,10 @@ class JoinFormScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 RoundedSmallButton(
-                                  selected: controller.interests
-                                      .contains('#K-TRAVEL'),
+                                  selected:
+                                      controller.interests.contains('K-TRAVEL'),
                                   onTap: () {
-                                    controller.updateInterests('#K-TRAVEL');
+                                    controller.updateInterests('K-TRAVEL');
                                   },
                                   textColor: textBlackColor,
                                   width: 114.w,
@@ -437,9 +443,9 @@ class JoinFormScreen extends StatelessWidget {
                                 ),
                                 RoundedSmallButton(
                                   selected: controller.interests
-                                      .contains('#K-TRAVELS'),
+                                      .contains('K-TRAVELS'),
                                   onTap: () {
-                                    controller.updateInterests('#K-TRAVELS');
+                                    controller.updateInterests('K-TRAVELS');
                                   },
                                   textColor: textBlackColor,
                                   width: 114.w,
@@ -448,9 +454,9 @@ class JoinFormScreen extends StatelessWidget {
                                 ),
                                 RoundedSmallButton(
                                   selected:
-                                      controller.interests.contains('#K-DRAMA'),
+                                      controller.interests.contains('K-DRAMA'),
                                   onTap: () {
-                                    controller.updateInterests('#K-DRAMA');
+                                    controller.updateInterests('K-DRAMA');
                                   },
                                   textColor: textBlackColor,
                                   width: 114.w,
@@ -465,9 +471,9 @@ class JoinFormScreen extends StatelessWidget {
                               children: [
                                 RoundedSmallButton(
                                   selected:
-                                      controller.interests.contains('#K-POP'),
+                                      controller.interests.contains('K-POP'),
                                   onTap: () {
-                                    controller.updateInterests('#K-POP');
+                                    controller.updateInterests('K-POP');
                                   },
                                   textColor: textBlackColor,
                                   width: 114.w,
@@ -476,9 +482,9 @@ class JoinFormScreen extends StatelessWidget {
                                 ),
                                 RoundedSmallButton(
                                   selected:
-                                      controller.interests.contains('#K-FOOD'),
+                                      controller.interests.contains('K-FOOD'),
                                   onTap: () {
-                                    controller.updateInterests('#K-FOOD');
+                                    controller.updateInterests('K-FOOD');
                                   },
                                   textColor: textBlackColor,
                                   width: 114.w,
@@ -486,10 +492,10 @@ class JoinFormScreen extends StatelessWidget {
                                   text: '#K-FOOD',
                                 ),
                                 RoundedSmallButton(
-                                  selected: controller.interests
-                                      .contains('#K-BEAUTY'),
+                                  selected:
+                                      controller.interests.contains('K-BEAUTY'),
                                   onTap: () {
-                                    controller.updateInterests('#K-BEAUTY');
+                                    controller.updateInterests('K-BEAUTY');
                                   },
                                   textColor: textBlackColor,
                                   width: 114.w,
@@ -535,13 +541,80 @@ class JoinFormScreen extends StatelessWidget {
                                 const SizedBox(),
                               ],
                             ),
+                            10.verticalSpace,
+                            !isEnglish
+                                ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "좋아하는 국가".tr,
+                                      style: TextStyle(
+                                        fontFamily: "Pretendard",
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: textBlackColor,
+                                        height: 17 / 14,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            !isEnglish
+                                ? CustomTextfield(
+                                    controller: controller.countryController,
+                                    width: .9.sw,
+                                    height: 40.h,
+                                    hint: '선택하세요'.tr,
+                                    hintSize: 10.sp,
+                                    trailing: Image.asset(Assets.drop),
+                                    textInputType: TextInputType.none,
+                                    ontap: () {
+                                      showCountryPicker(
+                                        useSafeArea: true,
+                                        countryListTheme: CountryListThemeData(
+                                          flagSize: 25,
+                                          backgroundColor: Colors.white,
+                                          textStyle: const TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.blueGrey),
+                                          bottomSheetHeight:
+                                              500, // Optional. Country list modal height
+                                          //Optional. Sets the border radius for the bottomsheet.
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(20.0),
+                                            topRight: Radius.circular(20.0),
+                                          ),
+                                          inputDecoration: InputDecoration(
+                                            contentPadding:
+                                                const EdgeInsets.all(0),
+                                            labelText: 'Search',
+                                            hintText: 'Start typing to search',
+                                            prefixIcon:
+                                                const Icon(Icons.search),
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: const Color(0xFF8C98A8)
+                                                    .withOpacity(0.2),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        context: context,
+                                        showSearch: true,
+                                        onSelect: (Country count) {
+                                          controller.countryController.text =
+                                              count.name;
+                                        },
+                                      );
+                                    },
+                                  )
+                                : const SizedBox(),
                             8.verticalSpace,
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
                                   Text(
-                                    "University",
+                                    "University".tr,
                                     style: TextStyle(
                                       fontFamily: "Pretendard",
                                       fontSize: 14.sp,
@@ -553,7 +626,7 @@ class JoinFormScreen extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Text(
-                                      " (Optional)",
+                                      " (Optional)".tr,
                                       style: TextStyle(
                                         fontFamily: "Pretendard",
                                         fontSize: 10.sp,
@@ -576,7 +649,7 @@ class JoinFormScreen extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Introduce yourself",
+                                "Introduce yourself".tr,
                                 style: TextStyle(
                                   fontFamily: "Pretendard",
                                   fontSize: 14.sp,
@@ -600,18 +673,26 @@ class JoinFormScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      "I agree with the",
+                                      !isEnglish
+                                          ? "User&Terms".tr
+                                          : "I agree with the".tr,
                                       style: TextStyle(
-                                        fontFamily: "Pretendard",
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: textBlackColor,
-                                        height: 18 / 12,
-                                      ),
+                                          fontFamily: "Pretendard",
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: textBlackColor,
+                                          height: 18 / 12,
+                                          decoration: Get.locale !=
+                                                  const Locale('en', 'US')
+                                              ? TextDecoration.underline
+                                              : null),
                                       textAlign: TextAlign.left,
                                     ),
+                                    4.horizontalSpace,
                                     Text(
-                                      " User&Terms",
+                                      isEnglish
+                                          ? "User&Terms".tr
+                                          : "I agree with the".tr,
                                       style: TextStyle(
                                           fontFamily: "Pretendard",
                                           fontSize: 12.sp,
@@ -619,7 +700,9 @@ class JoinFormScreen extends StatelessWidget {
                                           color: textBlackColor,
                                           height: 18 / 12,
                                           decorationThickness: 2,
-                                          decoration: TextDecoration.underline),
+                                          decoration: isEnglish
+                                              ? TextDecoration.underline
+                                              : null),
                                       textAlign: TextAlign.left,
                                     ),
                                   ],
@@ -645,18 +728,26 @@ class JoinFormScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      "I agree with the",
+                                      !isEnglish
+                                          ? "Privacy Terms".tr
+                                          : "I agree with the".tr,
                                       style: TextStyle(
-                                        fontFamily: "Pretendard",
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: textBlackColor,
-                                        height: 18 / 12,
-                                      ),
+                                          fontFamily: "Pretendard",
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: textBlackColor,
+                                          height: 18 / 12,
+                                          decoration: Get.locale !=
+                                                  const Locale('en', 'US')
+                                              ? TextDecoration.underline
+                                              : null),
                                       textAlign: TextAlign.left,
                                     ),
+                                    4.horizontalSpace,
                                     Text(
-                                      " Privacy Terms",
+                                      isEnglish
+                                          ? "Privacy Terms".tr
+                                          : "I agree with the".tr,
                                       style: TextStyle(
                                           fontFamily: "Pretendard",
                                           fontSize: 12.sp,
@@ -664,7 +755,10 @@ class JoinFormScreen extends StatelessWidget {
                                           color: textBlackColor,
                                           height: 18 / 12,
                                           decorationThickness: 2,
-                                          decoration: TextDecoration.underline),
+                                          decoration: Get.locale ==
+                                                  const Locale('en', 'US')
+                                              ? TextDecoration.underline
+                                              : null),
                                       textAlign: TextAlign.left,
                                     ),
                                   ],
@@ -750,18 +844,18 @@ class JoinFormScreen extends StatelessWidget {
                                   shadow1: buttonBlackShadow1,
                                   shadow2: buttonBlackShadow2,
                                   selectedColor: buttonBlueColor2,
-                                  width: 160.w,
-                                  height: 30.h,
-                                  text: 'Ok',
+                                  width: 170.w,
+                                  height: 35.h,
+                                  text: 'Ok'.tr,
                                 ),
                                 RoundedSmallButton(
                                   onTap: () {
                                     Get.back();
                                   },
                                   textColor: textBlackColor,
-                                  width: 160.w,
-                                  height: 30.h,
-                                  text: 'Cancel',
+                                  width: 170.w,
+                                  height: 35.h,
+                                  text: 'Cancel'.tr,
                                 ),
                               ],
                             ),

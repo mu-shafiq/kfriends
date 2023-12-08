@@ -95,7 +95,8 @@ class PostTile extends StatelessWidget {
                 7.verticalSpace,
                 Row(
                   children: [
-                    CircleAvatar(radius: 15.r, child: userAsset),
+                    ClipOval(
+                        child: CircleAvatar(radius: 15.r, child: userAsset)),
                     5.horizontalSpace,
                     Text(
                       username,
@@ -129,16 +130,15 @@ class PostTile extends StatelessWidget {
               ],
             ),
             Container(
-                height: more == null ? 75.h : 65.h,
-                width: more == null ? 75.w : 60.w,
-                decoration: const BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.all(Radius.circular(15))),
-                child: Image.asset(
-                  Assets.postImage,
-                  scale: .5,
-                  fit: BoxFit.cover,
-                )),
+              height: more == null ? 75.h : 65.h,
+              width: more == null ? 75.w : 60.w,
+              decoration: const BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
+              child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  child: postAssets),
+            ),
           ],
         ),
       ),

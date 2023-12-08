@@ -12,7 +12,7 @@ class AiChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomBar(index: 1),
+      bottomNavigationBar: const BottomBar(index: 2),
       appBar: AppBar(
         leading: const SizedBox(),
         elevation: 0,
@@ -65,7 +65,7 @@ class AiChat extends StatelessWidget {
                 height: 40.h,
                 width: .82.sw,
                 hintSize: 10.sp,
-                hint: 'Enter your message here💬',
+                hint: 'Enter your message here💬'.tr,
                 controller: TextEditingController())
           ],
         ),

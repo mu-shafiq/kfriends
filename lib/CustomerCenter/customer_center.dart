@@ -26,7 +26,7 @@ class CustomerCenter extends StatelessWidget {
             },
             child: Image.asset(Assets.backArrow)),
         title: Text(
-          'CUSTOMER CENTER',
+          'CUSTOMER CENTER'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,
@@ -49,7 +49,7 @@ class CustomerCenter extends StatelessWidget {
                 width: .93.sw,
                 height: 40.h,
                 hintSize: 10.sp,
-                hint: 'CATEGORY',
+                hint: 'CATEGORY'.tr,
                 hintColor: textBlackColor,
                 trailing: Image.asset(Assets.drop),
               ),
@@ -59,7 +59,7 @@ class CustomerCenter extends StatelessWidget {
                 width: .93.sw,
                 height: 40.h,
                 hintSize: 10.sp,
-                hint: 'Title',
+                hint: 'Title'.tr,
               ),
               10.verticalSpace,
               CustomTextfield(
@@ -67,7 +67,7 @@ class CustomerCenter extends StatelessWidget {
                 width: .93.sw,
                 height: 340.h,
                 hintSize: 10.sp,
-                hint: 'Enter your Content...',
+                hint: 'Enter your Content...'.tr,
               ),
               20.verticalSpace,
               Row(

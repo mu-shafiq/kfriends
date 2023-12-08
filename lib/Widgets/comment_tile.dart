@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
 
@@ -122,18 +123,22 @@ class CommentTile extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              20.verticalSpace,
+                              6.verticalSpace,
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    'Reply',
-                                    style: TextStyle(
-                                      color: textBlackColor,
-                                      fontSize: 8.sp,
-                                      fontFamily: 'Pretendard',
-                                      fontWeight: FontWeight.w700,
-                                      height: 0,
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 10.0.sp),
+                                    child: Text(
+                                      'Reply'.tr,
+                                      style: TextStyle(
+                                          color: textBlackColor,
+                                          fontSize: 10.sp,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w700,
+                                          height: -.2.h),
                                     ),
                                   ),
                                   Text(
@@ -147,15 +152,18 @@ class CommentTile extends StatelessWidget {
                                       height: 0,
                                     ),
                                   ),
-                                  Text(
-                                    '  Delete',
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                      color: textBlackColor,
-                                      fontSize: 10.sp,
-                                      fontFamily: 'Pretendard',
-                                      fontWeight: FontWeight.w700,
-                                      height: 0,
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 10.0.sp),
+                                    child: Text(
+                                      '  Delete'.tr,
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                        color: textBlackColor,
+                                        fontSize: 10.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                   )
                                 ],
@@ -175,7 +183,7 @@ class CommentTile extends StatelessWidget {
                     width: .7.sw,
                     child: ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: 3,
                         itemBuilder: (context, index) {
                           return Padding(
@@ -195,7 +203,7 @@ class CommentTile extends StatelessWidget {
   Widget reply(bool isme, String username, String comment, String time) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Container(
+        child: SizedBox(
           width: .9.sw,
           height: 77.h,
           child: Stack(
@@ -208,9 +216,9 @@ class CommentTile extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        isme ? Image.asset(Assets.reply) : SizedBox(),
+                        isme ? Image.asset(Assets.reply) : const SizedBox(),
                         Text(
-                          isme ? 'My Reply' : username,
+                          isme ? 'My Reply'.tr : username,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: textBlackColor,
@@ -244,7 +252,7 @@ class CommentTile extends StatelessWidget {
               ),
               Positioned(
                 right: 15.w,
-                top: 15.h,
+                top: 12.h,
                 bottom: 5.h,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -264,18 +272,24 @@ class CommentTile extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          20.verticalSpace,
+                          6.verticalSpace,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(
-                                'Reply',
-                                style: TextStyle(
-                                  color: textBlackColor,
-                                  fontSize: 8.sp,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w700,
-                                  height: 0,
+                              InkWell(
+                                onTap: () {},
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(vertical: 10.0.sp),
+                                  child: Text(
+                                    'Reply'.tr,
+                                    style: TextStyle(
+                                        color: textBlackColor,
+                                        fontSize: 10.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w700,
+                                        height: -.3.h),
+                                  ),
                                 ),
                               ),
                               Text(
@@ -289,15 +303,19 @@ class CommentTile extends StatelessWidget {
                                   height: 0,
                                 ),
                               ),
-                              Text(
-                                '  Delete',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: textBlackColor,
-                                  fontSize: 10.sp,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w700,
-                                  height: 0,
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(vertical: 10.0.sp),
+                                child: Text(
+                                  '  Delete'.tr,
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    color: textBlackColor,
+                                    fontSize: 10.sp,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w700,
+                                    height: 0,
+                                  ),
                                 ),
                               )
                             ],

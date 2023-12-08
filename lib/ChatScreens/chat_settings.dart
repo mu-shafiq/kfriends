@@ -18,7 +18,7 @@ class _ChatSettingsState extends State<ChatSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomBar(index: 1),
+      bottomNavigationBar: const BottomBar(index: 2),
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 0,
@@ -28,7 +28,7 @@ class _ChatSettingsState extends State<ChatSettings> {
             },
             child: Image.asset(Assets.blueTick)),
         title: Text(
-          'MY CHAT',
+          'MY CHAT'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textBlackColor,
@@ -79,7 +79,7 @@ class _ChatSettingsState extends State<ChatSettings> {
                                 Assets.crossblack,
                                 scale: 1.1.sp,
                               ),
-                            )
+                            ),
                           ],
                         );
                       }),

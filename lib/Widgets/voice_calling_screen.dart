@@ -1,184 +1,80 @@
-// import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-// import 'package:flutter/material.dart';
-// import 'package:kfriends/Utils/constants.dart';
-// import 'package:kfriends/Utils/helper.dart';
-// import 'package:permission_handler/permission_handler.dart';
-
-// class VoiceCallScreen extends StatefulWidget {
-//   final String channelName;
-//   final String token;
-//   final int uid;
-
-//   const VoiceCallScreen(
-//       {Key? key,
-//       required this.channelName,
-//       required this.token,
-//       required this.uid})
-//       : super(key: key);
-
-//   @override
-//   _VoiceCallScreenState createState() => _VoiceCallScreenState();
-// }
-
-// class _VoiceCallScreenState extends State<VoiceCallScreen> {
-//   late RtcEngine _engine;
-//   bool _isMuted = false;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     initAgora();
-//   }
-
-//   Future<void> initAgora() async {
-//     await [Permission.microphone].request();
-
-//     // Create Agora Engine
-//     _engine = createAgoraRtcEngine();
-//     await _engine.initialize(const RtcEngineContext(
-//       appId: agoraAppID,
-//     ));
-//     await _engine.enableAudio();
-//     await _engine.joinChannel(
-//       token:
-//           "007eJxTYLhSeXxWc0aH8mTfclfxad7Tvgc/3yD8ZuUih/Ar6YvaXu5WYEgyTkwyNDAzMjVISTUxN0q1NDQ3MrWwSDE2NjQ0SU409DgWktoQyMjgK63EzMgAgSA+F0NIRqpzRmJeXmoOAwMAVGYhdg==",
-//       channelId: "TheChannel",
-//       options: const ChannelMediaOptions(
-//           channelProfile: ChannelProfileType.channelProfileCommunication),
-//       uid: 0,
-//     );
-
-//     _engine.registerEventHandler(
-//       RtcEngineEventHandler(
-//         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
-//           debugPrint("ffff local user ${connection.localUid} joined");
-//           Helper().showToast("local user ${connection.localUid} joined");
-//           // setState(() {
-//           //   _localUserJoined = true;
-//           // });
-//         },
-//         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
-//           debugPrint("ffff remote user $remoteUid joined");
-//           Helper().showToast("remote user $remoteUid joined");
-//           // setState(() {
-//           //   _remoteUid = remoteUid;
-//           // });
-//         },
-//         onUserOffline: (RtcConnection connection, int remoteUid,
-//             UserOfflineReasonType reason) {
-//           debugPrint("ffff remote user $remoteUid left channel");
-//           Helper().showToast("remote user $remoteUid left channel");
-//           // setState(() {
-//           //   _remoteUid = null;
-//           // });
-//         },
-//         onTokenPrivilegeWillExpire: (RtcConnection connection, String token) {
-//           debugPrint(
-//               '[onTokenPrivilegeWillExpire] connection: ${connection.toJson()}, token: $token');
-//         },
-//       ),
-//     );
-//     setState(() {});
-//   }
-
-//   @override
-//   void dispose() {
-//     _engine.leaveChannel();
-//     _engine.release();
-//     super.dispose();
-//   }
-
-//   void _onToggleMute() {
-//     setState(() {
-//       _isMuted = !_isMuted;
-//     });
-//     _engine.muteLocalAudioStream(_isMuted);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Voice Call'),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             Text(
-//               'Channel: ${widget.channelName}',
-//               style: const TextStyle(fontSize: 20),
-//             ),
-//             Text(
-//               'Uid: ${widget.uid}',
-//               style: const TextStyle(fontSize: 20),
-//             ),
-//             IconButton(
-//               icon: Icon(_isMuted ? Icons.mic_off : Icons.mic),
-//               onPressed: _onToggleMute,
-//               tooltip: 'Mute/Unmute',
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:kfriends/Controllers/calls_controller.dart';
+import 'package:kfriends/Controllers/mongodb_controller.dart';
+import 'package:kfriends/Routes/get_routes.dart';
+import 'package:kfriends/Utils/assets.dart';
+import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/constants.dart';
 import 'dart:async';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import 'package:proximity_sensor/proximity_sensor.dart';
+import 'package:kfriends/Utils/socket.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart';
 
 class VoiceCallScreen extends StatefulWidget {
   final String channelName;
   final String token;
-  final int uid;
+  final int agoraUid;
+  final String callId;
+  final String receiverName;
+  final String receiverImage;
+  final String receiverUid;
   const VoiceCallScreen(
       {super.key,
       required this.channelName,
       required this.token,
-      required this.uid});
+      required this.agoraUid,
+      required this.callId,
+      required this.receiverName,
+      required this.receiverImage,
+      required this.receiverUid});
 
   @override
   State<VoiceCallScreen> createState() => _VoiceCallScreenState();
 }
 
 class _VoiceCallScreenState extends State<VoiceCallScreen> {
-  String testToken =
-      "007eJxTYLhSeXxWc0aH8mTfclfxad7Tvgc/3yD8ZuUih/Ar6YvaXu5WYEgyTkwyNDAzMjVISTUxN0q1NDQ3MrWwSDE2NjQ0SU409DgWktoQyMjgK63EzMgAgSA+F0NIRqpzRmJeXmoOAwMAVGYhdg==";
+  final callController = Get.find<CallsController>();
+  final mongodbController = Get.find<MongoDBController>();
+  int? _remoteUid;
+  bool _isJoined = false;
+  late RtcEngine agoraEngine;
 
-  int? _remoteUid; // uid of the remote user
-  bool _isJoined = false; // Indicates if the local user has joined the channel
-  late RtcEngine agoraEngine; // Agora engine instance
+  Socket? socket;
+  String room = "exampleRoom";
+  String user = "exampleUser";
 
-  late StreamSubscription<dynamic> _proximitySubscription;
-  bool _isNear = false;
+  final bool _isNear = false;
 
-  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-      GlobalKey<ScaffoldMessengerState>(); // Global key to access the scaffold
-
-  showMessage(String message) {
-    scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
-      content: Text(message),
-    ));
-  }
+  Timer timer = Timer.periodic(const Duration(seconds: 10), (timer) {});
 
   @override
   void initState() {
     super.initState();
-    // Set up an instance of Agora engine
-    setupVoiceSDKEngine();
-    _initProximitySensor();
+    callSocket();
+    setupVoiceSDKEngine().then((value) => join());
+
+    checkIfUserDeclineTheCall();
+  }
+
+  callSocket() {
+    SocketNew.socket.on('call_ended', (data) {
+      log('call ended');
+      callController.endsACall(
+          widget.callId, _remoteUid != null ? "incoming" : "missed");
+      callSessionEnded();
+    });
   }
 
   Future<void> setupVoiceSDKEngine() async {
-    // retrieve or request microphone permission
     await [Permission.microphone].request();
 
-    //create an instance of the Agora engine
     agoraEngine = createAgoraRtcEngine();
     await agoraEngine.initialize(const RtcEngineContext(appId: agoraAppID));
 
@@ -186,54 +82,54 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
     agoraEngine.registerEventHandler(
       RtcEngineEventHandler(
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
-          showMessage(
-              "Local user uid:${connection.localUid} joined the channel");
           setState(() {
             _isJoined = true;
           });
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
-          showMessage("Remote user uid:$remoteUid joined the channel");
           setState(() {
             _remoteUid = remoteUid;
           });
         },
         onUserOffline: (RtcConnection connection, int remoteUid,
             UserOfflineReasonType reason) {
-          showMessage("Remote user uid:$remoteUid left the channel");
-          setState(() {
-            _remoteUid = null;
-          });
+          callSessionEnded();
+          callController.endsACall(
+              widget.callId, _remoteUid != null ? "incoming" : "missed");
         },
       ),
     );
   }
 
-  void _initProximitySensor() {
-    _proximitySubscription = ProximitySensor.events.listen((int event) {
-      print("Proximity sensor event: $event");
-      if (_isJoined && _remoteUid != null) {
-        setState(() {
-          _isNear = (event > 0) ? true : false;
-          // Switch between earpiece and loudspeaker based on proximity sensor
-          agoraEngine.setEnableSpeakerphone(!_isNear);
-        });
-      }
-    });
-  }
+  // void _initProximitySensor() {
+  //   _proximitySubscription = ProximitySensor.events.listen((int event) {
+  //     print("Proximity sensor event: $event");
+  //     if (_isJoined && _remoteUid != null) {
+  //       _isNear = (event > 0) ? true : false;
+
+  //       // Use KeepScreenOn to control the screen state
+  //       if (_isNear) {
+  //         KeepScreenOn.turnOff(); // This will turn off the screen
+  //       } else {
+  //         KeepScreenOn.turnOn(); // This will turn the screen back on
+  //       }
+  //       log('Proximity sensor event: $_isNear');
+  //       setState(() {});
+  //     }
+  //   });
+  // }
 
   void join() async {
-    // Set channel options including the client role and channel profile
     ChannelMediaOptions options = const ChannelMediaOptions(
       clientRoleType: ClientRoleType.clientRoleBroadcaster,
       channelProfile: ChannelProfileType.channelProfileCommunication,
     );
 
     await agoraEngine.joinChannel(
-      token: testToken,
+      token: widget.token,
       channelId: widget.channelName,
       options: options,
-      uid: widget.uid,
+      uid: widget.agoraUid,
     );
   }
 
@@ -245,63 +141,350 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
     agoraEngine.leaveChannel();
   }
 
+  Future<void> checkIfUserDeclineTheCall() async {
+    timer = Timer.periodic(const Duration(seconds: 10), (timer) async {
+      String callStatus = await mongodbController
+          .getDocument("calls", widget.callId)
+          .then((Map<String, dynamic>? value) =>
+              value!["data"]['call']['status']);
+      if (callStatus == "ended") {
+        callSessionEnded();
+      }
+    });
+  }
+
   @override
   void dispose() {
     agoraEngine.leaveChannel();
     agoraEngine.release();
-    _proximitySubscription.cancel();
+    FlutterCallkitIncoming.endAllCalls();
+    if (timer.isActive) {
+      timer.cancel();
+    }
+    // // callController.endsACall(
+    // //     widget.callId, _remoteUid != null ? "incoming" : "missed");
+    // callSessionEnded();
+
+    // _proximitySubscription.cancel();
     super.dispose();
   }
 
-  // Build UI
+  bool mute = false;
+  bool record = true;
+  bool speaker = false;
+
   @override
   Widget build(BuildContext context) {
+    print('on page 2?');
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Get started with Voice Calling'),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        children: [
-          // Status text
-          SizedBox(
-              height: 40, child: Center(child: Text("UId : ${widget.uid}"))),
-          SizedBox(height: 40, child: Center(child: _status())),
-          // Button Row
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: ElevatedButton(
-                  child: const Text("Join"),
-                  onPressed: () => {join()},
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: ElevatedButton(
-                  child: const Text("Leave"),
-                  onPressed: () => {leave()},
-                ),
-              ),
-            ],
+        appBar: AppBar(
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          leading: const SizedBox(),
+          title: Text(
+            'CALL'.tr,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: textBlackColor,
+              fontSize: 14.sp,
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.w600,
+              height: 0,
+            ),
           ),
-        ],
-      ),
-    );
+          centerTitle: true,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0),
+              child: Row(
+                children: [
+                  Image.asset(
+                    Assets.appLogo2,
+                    scale: 15.sp,
+                  ),
+                  2.horizontalSpace,
+                  Text(
+                    'K-FRIENDS',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: textGreyColor,
+                      fontSize: 7.sp,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      height: 0,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+        body: Column(
+          children: [
+            Container(
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                      Color(0xffFFFFFF),
+                      Color(0xffE2F8FF),
+                      Color(0xffAFCFFF)
+                    ])),
+                width: 1.sw,
+                height: .5.sh,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 65.r,
+                          child: Image.network(
+                            widget.receiverImage,
+                            scale: .5,
+                          ),
+                        ),
+                        Text(
+                          widget.receiverName,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: textBlackColor,
+                            fontSize: 24.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ),
+                        ),
+                        50.verticalSpace,
+                        Image.asset(
+                          Assets.incomingblack,
+                          color: textBlackColor,
+                          scale: 1,
+                        ),
+                        30.verticalSpace,
+                        Text(
+                          _status(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: textGreyColor,
+                            fontSize: 14.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w400,
+                            height: 0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
+            SizedBox(
+              height: .37.sh,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: .8.sw,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                speaker = !speaker;
+                                if (speaker) {
+                                  await agoraEngine.setEnableSpeakerphone(true);
+                                } else {
+                                  await agoraEngine
+                                      .setEnableSpeakerphone(false);
+                                }
+                                setState(() {});
+                              },
+                              child: Container(
+                                width: 70.w,
+                                height: 70.h,
+                                decoration: ShapeDecoration(
+                                  color: speaker ? boxBlueColor : bgWhiteColor,
+                                  shape: const OvalBorder(),
+                                  shadows: const [
+                                    BoxShadow(
+                                      color: buttonBlackShadow1,
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                      spreadRadius: 0,
+                                    ),
+                                    BoxShadow(
+                                      color: buttonBlackShadow2,
+                                      blurRadius: 8,
+                                      offset: Offset(0, 0),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: Image.asset(
+                                  Assets.speaker,
+                                  color: speaker ? Colors.white : null,
+                                ),
+                              ),
+                            ),
+                            5.verticalSpace,
+                            Text(
+                              'Speaker'.tr,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: textGreyColor,
+                                fontSize: 14.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400,
+                                height: 0,
+                              ),
+                            )
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                mute = !mute;
+                                if (mute) {
+                                  await agoraEngine.muteLocalAudioStream(true);
+                                } else {
+                                  await agoraEngine.muteLocalAudioStream(false);
+                                }
+                                setState(() {});
+                              },
+                              child: Container(
+                                width: 70.w,
+                                height: 70.h,
+                                decoration: ShapeDecoration(
+                                  color: mute ? boxBlueColor : bgWhiteColor,
+                                  shape: const OvalBorder(),
+                                  shadows: const [
+                                    BoxShadow(
+                                      color: buttonBlackShadow1,
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                      spreadRadius: 0,
+                                    ),
+                                    BoxShadow(
+                                      color: buttonBlackShadow2,
+                                      blurRadius: 8,
+                                      offset: Offset(0, 0),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: Image.asset(
+                                  Assets.mic,
+                                  color: mute ? Colors.white : null,
+                                ),
+                              ),
+                            ),
+                            5.verticalSpace,
+                            Text(
+                              'Mute'.tr,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: textGreyColor,
+                                fontSize: 14.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400,
+                                height: 0,
+                              ),
+                            )
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  record = !record;
+                                });
+                              },
+                              child: Container(
+                                width: 70.w,
+                                height: 70.h,
+                                decoration: ShapeDecoration(
+                                  color: record ? boxBlueColor : bgWhiteColor,
+                                  shape: const OvalBorder(),
+                                  shadows: const [
+                                    BoxShadow(
+                                      color: buttonBlackShadow1,
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                      spreadRadius: 0,
+                                    ),
+                                    BoxShadow(
+                                      color: buttonBlackShadow2,
+                                      blurRadius: 8,
+                                      offset: Offset(0, 0),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: Image.asset(
+                                  Assets.record,
+                                  color: record ? Colors.white : null,
+                                ),
+                              ),
+                            ),
+                            5.verticalSpace,
+                            Text(
+                              'Record'.tr,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: textGreyColor,
+                                fontSize: 14.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400,
+                                height: 0,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  30.verticalSpace,
+                  InkWell(
+                      onTap: () {
+                        callSessionEnded();
+                        callController.endsACall(widget.callId,
+                            _remoteUid != null ? "incoming" : "missed");
+                      },
+                      child: Image.asset(Assets.reject))
+                ],
+              ),
+            )
+          ],
+        ));
   }
 
-  Widget _status() {
+  String _status() {
     String statusText;
 
     if (!_isJoined) {
-      statusText = 'Join a channel';
-    } else if (_remoteUid == null)
-      statusText = 'Waiting for a remote user to join...';
-    else
-      statusText = 'Connected to remote user, uid:$_remoteUid';
+      statusText = 'Connecting...'.tr;
+    } else if (_remoteUid == null) {
+      statusText = 'Waiting for a user to join...'.tr;
+    } else {
+      statusText = 'Connected to user'.tr;
+    }
 
-    return Text(
-      statusText,
-    );
+    return statusText;
+  }
+
+  callSessionEnded() {
+    if (Get.previousRoute.compareTo('/VoiceCallScreen') == 0 ||
+        Get.previousRoute.compareTo('/') == 0) {
+      1.5.seconds.delay().then((value) {
+        Get.offAllNamed(Routes.bottomNavBar);
+      });
+    } else {
+      Get.back();
+    }
   }
 }

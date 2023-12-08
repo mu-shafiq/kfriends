@@ -1,148 +1,309 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
+import 'package:kfriends/Utils/helper.dart';
+import 'package:kfriends/Utils/keys.dart';
 import 'package:kfriends/Widgets/bottom_bar.dart';
 import 'package:kfriends/Widgets/textfield.dart';
+import 'package:kfriends/Controllers/auth_controller.dart';
+import 'package:kfriends/Controllers/chat_controller.dart';
+import 'package:kfriends/model/message.dart';
 
-class ChatingScreen extends StatelessWidget {
+class ChatingScreen extends StatefulWidget {
   const ChatingScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: const BottomBar(index: 1),
-      appBar: AppBar(
-        leading: GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Image.asset(Assets.backArrow)),
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 12.r,
-              child: Image.asset(Assets.user1),
-            ),
-            3.horizontalSpace,
-            Text(
-              '김민준',
-              style: TextStyle(
-                color: textBlackColor,
-                fontSize: 10.sp,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w700,
-                height: 0,
-              ),
-            ),
-          ],
-        ),
-        centerTitle: true,
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Get.toNamed(Routes.reportScreen);
-            },
-            child: Padding(
-                padding: const EdgeInsets.only(right: 15.0),
-                child: Container(
-                  width: 30.w,
-                  height: 30.h,
-                  decoration: const ShapeDecoration(
-                    color: Colors.white,
-                    shape: OvalBorder(),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x19000000),
-                        blurRadius: 4,
-                        offset: Offset(1, 2),
-                        spreadRadius: 0,
-                      )
-                    ],
-                  ),
-                  child: Image.asset(Assets.more),
-                )),
-          )
-        ],
-      ),
-      floatingActionButton: Container(
-        decoration: const BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        width: .94.sw,
-        child: Row(
-          children: [
-            Image.asset(
-              Assets.add,
-              scale: .8,
-            ),
-            7.horizontalSpace,
-            CustomTextfield(
-                height: 40.h,
-                width: .80.sw,
-                hintSize: 10.sp,
-                hint: 'Enter your message here💬',
-                controller: TextEditingController())
-          ],
-        ),
-      ),
-      body: Container(
-        height: 1.sh,
-        width: 1.sw,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-              Color(0xffFFFFFF),
-              Color(0xffFFF6E2),
-              Color(0xffFFE6AF),
-              Color(0xffFFE6AF)
-            ])),
-        child: Column(
-          children: [
-            10.verticalSpace,
-            Text(
-              '2023-06-19',
-              style: TextStyle(
-                color: textBlackColor,
-                fontSize: 10.sp,
-                fontFamily: 'Pretendard',
-                fontWeight: FontWeight.w700,
-                height: 0,
-              ),
-            ),
-            20.verticalSpace,
-            SizedBox(
-              width: .94.sw,
-              child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 5,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 8),
-                      child: messageTile(
-                          '반가워요! 저와 함께 대화 하면서 한국 문화와 한국어를 많이 알아갈 수 있으면 좋겠네요!',
-                          index.isEven,
-                          '15:43',
-                          '15:43'),
-                    );
-                  }),
-            ),
-          ],
-        ),
-      ),
-    );
+  State<ChatingScreen> createState() => _ChatingScreenState();
+}
+
+class _ChatingScreenState extends State<ChatingScreen>
+    with WidgetsBindingObserver {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    _scrollController.addListener(() {
+      int index = (_scrollController.offset / 50).round();
+      Get.find<ChatController>().chatTimeToBeDisplayed(index);
+    });
+    super.initState();
   }
 
-  Widget messageTile(String text, bool isme, String time1, String time2) {
+  bool isKeyboardOpen = false;
+
+  @override
+  void didChangeMetrics() {
+    final isKeyboardOpenNow =
+        WidgetsBinding.instance.window.viewInsets.bottom > 0;
+    setState(() {
+      isKeyboardOpen = isKeyboardOpenNow;
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<ChatController>(builder: (controller) {
+      1.seconds.delay().then((value) {
+        print('1');
+        controller.loading == false
+            ? _scrollController.animateTo(
+                _scrollController.position.maxScrollExtent,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeOut,
+              )
+            : null;
+        print('2');
+      });
+      return Scaffold(
+        bottomNavigationBar: const BottomBar(index: 1),
+        appBar: AppBar(
+          leading: GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: Image.asset(Assets.backArrow)),
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                  radius: 15.r,
+                  backgroundImage:
+                      Image.network(controller.selectedUser!.profileImage)
+                          .image),
+              3.horizontalSpace,
+              Text(
+                controller.selectedUser!.nickname,
+                style: TextStyle(
+                  color: textBlackColor,
+                  fontSize: 10.sp,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w700,
+                  height: 0,
+                ),
+              ),
+            ],
+          ),
+          centerTitle: true,
+          actions: [
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(Routes.reportScreen);
+              },
+              child: Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: Container(
+                    width: 30.w,
+                    height: 30.h,
+                    decoration: const ShapeDecoration(
+                      color: Colors.white,
+                      shape: OvalBorder(),
+                      shadows: [
+                        BoxShadow(
+                          color: Color(0x19000000),
+                          blurRadius: 4,
+                          offset: Offset(1, 2),
+                          spreadRadius: 0,
+                        )
+                      ],
+                    ),
+                    child: Image.asset(Assets.more),
+                  )),
+            )
+          ],
+        ),
+        body: controller.loading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                height: .81.sh,
+                width: 1.sw,
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                      Color(0xffFFFFFF),
+                      Color(0xffFFF6E2),
+                      Color(0xffFFE6AF),
+                      Color(0xffFFE6AF)
+                    ])),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Obx(
+                        () => Text(
+                          controller.chatTimeToDisplay.toString(),
+                          style: TextStyle(
+                            color: textBlackColor,
+                            fontSize: 10.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ),
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: isKeyboardOpen ? .41.sh : .7.sh,
+                            width: .94.sw,
+                            child: ListView.builder(
+                                controller: _scrollController,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                itemCount: controller
+                                    .messages[controller.selectedChatRoom!.id]!
+                                    .length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  Message message = controller.messages[
+                                      controller.selectedChatRoom!.id]![index];
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0, horizontal: 8),
+                                    child: messageTile(
+                                        message.msg,
+                                        message.senderId !=
+                                            Get.find<AuthController>()
+                                                .userModel!
+                                                .id,
+                                        '15:43',
+                                        '15:43',
+                                        message.type,
+                                        message.attachmentUrl.toString(),
+                                        controller.selectedUser!.profileImage),
+                                  );
+                                }),
+                          ),
+                          20.verticalSpace,
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            decoration: const BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            width: .94.sw,
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return Container(
+                                            color: bgWhiteColor,
+                                            height: 120.h,
+                                            width: 1.sw,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                TextButton(
+                                                    child: Text(
+                                                      'Camera',
+                                                      style: TextStyle(
+                                                          color: textBlackColor,
+                                                          fontSize: 15.sp),
+                                                    ),
+                                                    onPressed: () async {
+                                                      Get.back();
+                                                      File? file =
+                                                          await Helper()
+                                                              .imagePicker(
+                                                                  ImageSource
+                                                                      .camera);
+                                                      if (file != null) {
+                                                        String url = (await Helper()
+                                                            .uploadImage(file,
+                                                                Keys.profileImage))!;
+                                                        controller.sendMessage(
+                                                            type: 'url',
+                                                            url: url);
+                                                      }
+                                                    }),
+                                                TextButton(
+                                                    child: Text(
+                                                      'Gallery',
+                                                      style: TextStyle(
+                                                          color: textBlackColor,
+                                                          fontSize: 15.sp),
+                                                    ),
+                                                    onPressed: () async {
+                                                      Get.back();
+                                                      File? file =
+                                                          await Helper()
+                                                              .imagePicker(
+                                                                  ImageSource
+                                                                      .gallery);
+                                                      if (file != null) {
+                                                        String url = (await Helper()
+                                                            .uploadImage(file,
+                                                                Keys.profileImage))!;
+                                                        controller.sendMessage(
+                                                            type: 'url',
+                                                            url: url);
+                                                      }
+                                                    }),
+                                              ],
+                                            ),
+                                          );
+                                        });
+                                  },
+                                  child: Image.asset(
+                                    Assets.add,
+                                    scale: .8,
+                                  ),
+                                ),
+                                6.horizontalSpace,
+                                CustomTextfield(
+                                    height: 40.h,
+                                    width: .80.sw,
+                                    hintSize: 10.sp,
+                                    trailing: InkWell(
+                                        onTap: () {
+                                          controller.sendMessage();
+                                        },
+                                        child: const Icon(
+                                          Icons.send,
+                                          color: textPinkColor,
+                                        )),
+                                    hint: 'Enter your message here💬'.tr,
+                                    controller: controller.controller)
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+      );
+    });
+  }
+
+  Widget messageTile(String text, bool isme, String time1, String time2,
+      String type, String url, String photo) {
     return SizedBox(
       width: 1.sw,
       child: Row(
@@ -153,7 +314,7 @@ class ChatingScreen extends StatelessWidget {
           isme
               ? CircleAvatar(
                   radius: 12.r,
-                  child: Image.asset(Assets.user1),
+                  backgroundImage: Image.network(photo).image,
                 )
               : const SizedBox(),
           5.horizontalSpace,
@@ -204,22 +365,27 @@ class ChatingScreen extends StatelessWidget {
                 )
               ],
             ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 14.0, vertical: 5),
-              child: SizedBox(
-                width: .35.sw,
-                child: Text(
-                  text,
-                  maxLines: null,
-                  style: TextStyle(
-                    color: textBlackColor,
-                    fontSize: 10.sp,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
+            child: SizedBox(
+              width: .35.sw,
+              child: type == 'url'
+                  ? Image.network(
+                      url,
+                      fit: BoxFit.cover,
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14.0, vertical: 5),
+                      child: Text(
+                        text,
+                        maxLines: null,
+                        style: TextStyle(
+                          color: textBlackColor,
+                          fontSize: 10.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
             ),
           ),
           5.horizontalSpace,

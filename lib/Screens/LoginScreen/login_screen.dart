@@ -132,7 +132,7 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 3.horizontalSpace,
                                 Text(
-                                  'Login with Social ID',
+                                  'Login with Social ID'.tr,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 10.sp,
@@ -159,7 +159,7 @@ class LoginScreen extends StatelessWidget {
                             20.verticalSpace,
                             IconRoundedButton(
                               onTap: () {
-                                Get.toNamed(Routes.bottomNavBar);
+                                Get.toNamed(Routes.joinFormScreen);
                               },
                               textColor: textWhiteColor,
                               icon: Image.asset(
@@ -171,7 +171,7 @@ class LoginScreen extends StatelessWidget {
                               bgColor: buttonBlackColor,
                               width: .9.sw,
                               height: 35.h,
-                              text: 'Sign in with Apple ID',
+                              text: 'Sign in with Apple ID'.tr,
                             ),
                             15.verticalSpace,
                             IconRoundedButton(
@@ -188,7 +188,7 @@ class LoginScreen extends StatelessWidget {
                               bgColor: buttonGreenColor,
                               width: .9.sw,
                               height: 35.h,
-                              text: 'Sign in with Line ID',
+                              text: 'Sign in with Line ID'.tr,
                             ),
                             15.verticalSpace,
                             IconRoundedButton(
@@ -216,7 +216,7 @@ class LoginScreen extends StatelessWidget {
                               bgColor: buttonBlueColor,
                               width: .9.sw,
                               height: 35.h,
-                              text: 'Sign in with Facebook ID',
+                              text: 'Sign in with Facebook ID'.tr,
                             ),
                             15.verticalSpace,
                             IconRoundedButton(
@@ -233,7 +233,7 @@ class LoginScreen extends StatelessWidget {
                               bgColor: buttonWhiteColor,
                               width: .9.sw,
                               height: 35.h,
-                              text: "Sign in with Google ID",
+                              text: "Sign in with Google ID".tr,
                             )
                           ],
                         ),

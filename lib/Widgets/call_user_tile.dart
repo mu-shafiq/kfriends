@@ -7,23 +7,25 @@ import 'package:kfriends/Utils/colors.dart';
 import '../Routes/get_routes.dart';
 
 class CallUserTile extends StatelessWidget {
-  final String asset;
+  final String profileUrl;
   final String username;
   final String about;
   final bool verified;
   final String status;
   final String date;
   final String time;
+  final Function() onCall;
 
   const CallUserTile(
       {super.key,
-      required this.asset,
+      required this.profileUrl,
       required this.username,
       required this.about,
       required this.verified,
       required this.status,
       required this.date,
-      required this.time});
+      required this.time,
+      required this.onCall});
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +57,13 @@ class CallUserTile extends StatelessWidget {
             contentPadding: EdgeInsets.only(left: 5.w, top: 10.h, bottom: 10.h),
             leading: CircleAvatar(
               radius: 35.r,
-              backgroundImage: Image.asset(
-                asset,
-              ).image,
+              backgroundImage: profileUrl.isURL
+                  ? Image.network(
+                      profileUrl,
+                    ).image
+                  : Image.asset(
+                      profileUrl,
+                    ).image,
             ),
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +111,7 @@ class CallUserTile extends StatelessWidget {
                           height: 0,
                         ),
                       )
-                    : status == 'recieved'
+                    : status == 'incoming'
                         ? Row(
                             children: [
                               Image.asset(Assets.incoming),
@@ -121,7 +127,7 @@ class CallUserTile extends StatelessWidget {
                               ),
                             ],
                           )
-                        : status == 'dialed'
+                        : status == 'outgoing'
                             ? Row(
                                 children: [
                                   Image.asset(Assets.outgoing),
@@ -141,9 +147,7 @@ class CallUserTile extends StatelessWidget {
               ],
             ),
             trailing: GestureDetector(
-              onTap: () {
-                Get.toNamed(Routes.userInfo);
-              },
+              onTap: onCall,
               child: SizedBox(
                 width: 70.w,
                 child: Padding(

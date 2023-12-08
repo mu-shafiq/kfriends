@@ -49,11 +49,20 @@ class CustomTextfield extends StatelessWidget {
       child: TextFormField(
         textAlignVertical: TextAlignVertical.top,
         controller: controller,
-        keyboardType: textInputType,
+        keyboardType: textInputType ?? TextInputType.text,
         onTap: ontap,
         onChanged: onChanged,
         expands: true,
         maxLines: null,
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        style: TextStyle(
+          fontFamily: "Pretendard",
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w600,
+          color: textBlackColor,
+        ),
         decoration: InputDecoration(
             contentPadding: EdgeInsets.all(8.h),
             suffixIcon: trailing ?? const SizedBox(),

@@ -24,7 +24,7 @@ class ReportSent extends StatelessWidget {
               },
               child: Image.asset(Assets.backArrow)),
           title: Text(
-            'USER REPORT',
+            'USER REPORT'.tr,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: textBlackColor,
@@ -45,7 +45,7 @@ class ReportSent extends StatelessWidget {
               Image.asset(Assets.blueTick2),
               5.verticalSpace,
               Text(
-                'Your report has been successfully sent!',
+                'Your report has been successfully sent!'.tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: textBlackColor,
@@ -57,7 +57,7 @@ class ReportSent extends StatelessWidget {
               ),
               20.verticalSpace,
               Text(
-                'Our Monitoring manager will check it and take appropriate action. ',
+                'Our Monitoring manager will check it and take appropriate action.'.tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: textBlackColor,
@@ -79,7 +79,7 @@ class ReportSent extends StatelessWidget {
                 selectedColor: buttonBlueColor2,
                 width: 160.w,
                 height: 35.h,
-                text: 'Back',
+                text: 'Back'.tr,
               ),
             ],
           ),

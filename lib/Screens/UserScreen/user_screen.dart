@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/colors.dart';
+import 'package:kfriends/Utils/keys.dart';
 import 'package:kfriends/Widgets/rounded_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
@@ -26,7 +28,7 @@ class _UserScreenState extends State<UserScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               InkWell(
-                onTap: () {
+                onTap: () async {
                   setState(() {
                     selected = 0;
                   });
@@ -100,8 +102,15 @@ class _UserScreenState extends State<UserScreen> {
                       ),
                       15.verticalSpace,
                       RoundedButton(
-                        onTap: () {
-                          Get.toNamed(Routes.loginScreen);
+                        onTap: () async {
+                          if (selected == 0) {
+                            Get.updateLocale(const Locale('en', 'US'));
+                            SharedPreferences sharedPreferences =
+                                await SharedPreferences.getInstance();
+                            sharedPreferences.setString(
+                                Keys.locale, Keys.english);
+                            Get.toNamed(Routes.loginScreen);
+                          }
                         },
                         textColor: textGreenColor,
                         shadow1: buttonBlackShadow1,
@@ -117,10 +126,14 @@ class _UserScreenState extends State<UserScreen> {
               ),
               40.verticalSpace,
               InkWell(
-                onTap: () {
+                onTap: () async {
                   setState(() {
                     selected = 1;
                   });
+                  Get.updateLocale(const Locale('ko', 'KR'));
+                  SharedPreferences sharedPreferences =
+                      await SharedPreferences.getInstance();
+                  sharedPreferences.setString(Keys.locale, Keys.korean);
                 },
                 child: Container(
                   width: .8.sw,
@@ -192,7 +205,9 @@ class _UserScreenState extends State<UserScreen> {
                       15.verticalSpace,
                       RoundedButton(
                         onTap: () {
-                          Get.toNamed(Routes.loginScreen);
+                          if (selected == 1) {
+                            Get.toNamed(Routes.loginScreen);
+                          }
                         },
                         textColor: textYellowColor,
                         shadow1: buttonBlackShadow1,

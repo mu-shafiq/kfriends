@@ -33,7 +33,7 @@ class _FriendsState extends State<Friends> {
                   },
                   child: Image.asset(Assets.backArrow)),
               title: Text(
-                'FRIENDS',
+                'FRIENDS'.tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: textBlackColor,
@@ -45,27 +45,29 @@ class _FriendsState extends State<Friends> {
               ),
               centerTitle: true,
               actions: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 15.0),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        Assets.appLogo2,
-                        scale: 15.sp,
-                      ),
-                      2.horizontalSpace,
-                      Text(
-                        'K-FRIENDS',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: textGreyColor,
-                          fontSize: 7.sp,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
+                GestureDetector(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          Assets.appLogo2,
+                          scale: 15.sp,
                         ),
-                      ),
-                    ],
+                        2.horizontalSpace,
+                        Text(
+                          'K-FRIENDS',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: textGreyColor,
+                            fontSize: 7.sp,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 )
               ],
@@ -84,7 +86,7 @@ class _FriendsState extends State<Friends> {
                   textColor: textBlackColor,
                   width: 135.w,
                   height: 37.h,
-                  text: 'My Friends',
+                  text: 'My Friends'.tr,
                 ),
                 10.horizontalSpace,
                 RoundedSmallButton(
@@ -97,7 +99,7 @@ class _FriendsState extends State<Friends> {
                   textColor: textBlackColor,
                   width: 135.w,
                   height: 37.h,
-                  text: 'Find New Friends',
+                  text: 'Find New Friends'.tr,
                 ),
               ],
             ),

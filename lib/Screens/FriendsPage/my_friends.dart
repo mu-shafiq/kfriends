@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,62 +16,59 @@ class MyFriends extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UsersController>(
-        init: UsersController(),
-        builder: (controller) {
-          return Column(
-            children: [
-              30.verticalSpace,
-              CustomTextfield(
-                height: 40.h,
-                width: .9.sw,
-                hint: 'Search by name',
-                hintSize: 12.sp,
-                trailing: Image.asset(Assets.search),
-                controller: controller.myFriendController,
-                onChanged: (String val) {
-                  controller.onSearchChanged(val);
-                },
-              ),
-              30.verticalSpace,
-              SizedBox(
-                width: .9.sw,
-                child: FutureBuilder<List<UserModel>>(
-                    future: controller.getMyFriends(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      List<UserModel> users = snapshot.data ?? [];
-                      if (users.isEmpty) {
-                        return const Center(child: Text('No friends'));
-                      }
-                      return ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: users.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            UserModel user = users[index];
-                            return InkWell(
-                              onTap: () {
-                                
-                                Get.toNamed(Routes.userInfo, arguments: user);
-                              },
-                              child: UserTile2(
-                                verified: user.userType == korean,
-                                asset: Assets.user1,
-                                username: user.username,
-                                about: user.intro!,
-                                agoraUid: user.agoraUid,
-                              ),
-                            );
-                          });
-                    }),
-              )
-            ],
-          );
-        });
+    return GetBuilder<UsersController>(builder: (controller) {
+      return Column(
+        children: [
+          5.verticalSpace,
+          CustomTextfield(
+            height: 40.h,
+            width: .9.sw,
+            hint: 'Search by name'.tr,
+            hintSize: 12.sp,
+            trailing: Image.asset(Assets.search),
+            controller: controller.myFriendController,
+            onChanged: (String val) {
+              controller.onSearchChanged(val);
+            },
+          ),
+          30.verticalSpace,
+          SizedBox(
+              width: .9.sw,
+              child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.myFollowing.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return FutureBuilder<UserModel>(
+                        future:
+                            controller.getUser(controller.myFollowing[index]),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            UserModel? user = snapshot.data;
+                            return user != null
+                                ? InkWell(
+                                    onTap: () {
+                                      Get.toNamed(Routes.userInfo,
+                                          arguments: user);
+                                    },
+                                    child: UserTile2(
+                                      verified: user.userType == korean,
+                                      asset: Assets.user1,
+                                      username: user.nickname,
+                                      about: user.intro!,
+                                      agoraUid: user.agoraUid,
+                                      userModel: user,
+                                    ),
+                                  )
+                                : const SizedBox();
+                          } else {
+                            return const SizedBox();
+                          }
+                        });
+                  }))
+        ],
+      );
+    });
   }
 }

@@ -25,7 +25,7 @@ class UserTile extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 35.r,
-              backgroundImage: Image.asset(
+              backgroundImage: Image.network(
                 asset,
               ).image,
             ),
@@ -63,33 +63,31 @@ class UserTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis),
               ),
             ),
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: '999  ',
-                    style: TextStyle(
-                      color: textPinkColor,
-                      fontSize: 8.sp,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w700,
-                      height: 0,
-                    ),
+            Row(
+              children: [
+                Text(
+                  followers.toString(),
+                  style: TextStyle(
+                    color: textPinkColor,
+                    fontSize: 8.sp,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w700,
+                    height: 0,
                   ),
-                  TextSpan(
-                    text: 'Followers',
-                    style: TextStyle(
-                      color: textGreyColor,
-                      fontSize: 9.sp,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w700,
-                      height: 0,
-                    ),
+                ),
+                3.horizontalSpace,
+                Text(
+                  'Followers',
+                  style: TextStyle(
+                    color: textGreyColor,
+                    fontSize: 9.sp,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w700,
+                    height: 0,
                   ),
-                ],
-              ),
-              textAlign: TextAlign.center,
-            )
+                ),
+              ],
+             )
           ],
         ));
   }
