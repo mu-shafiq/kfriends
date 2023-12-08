@@ -41,14 +41,19 @@ class CallsController extends GetxController {
   Future<void> makeACall(String receiverUserId) async {
     try {
       EasyLoading.show();
+      print('1');
       Map<String, dynamic>? res = await mongodbController.callFunction(
         Keys.makeCall,
         data: {
           'receiverUserId': receiverUserId,
         },
       );
+      print('2');
+      print(res);
+      print('reciver user id' + receiverUserId);
       EasyLoading.dismiss();
       if (res![Keys.status] == Keys.success) {
+        print('3');
         int agoraUid = res[Keys.data][Keys.uid];
         String token = res[Keys.data][Keys.token];
         String channelName = res[Keys.data][Keys.channelName];
@@ -56,6 +61,8 @@ class CallsController extends GetxController {
         String receiverName = res[Keys.data][Keys.receiverName];
         String receiverImage = res[Keys.data][Keys.receiverImage];
         String receiverUid = res[Keys.data][Keys.receiverUid];
+        print('4');
+
         Get.toNamed(
           Routes.voiceCallScreen,
           arguments: {

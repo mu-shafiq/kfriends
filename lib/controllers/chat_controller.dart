@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:kfriends/Controllers/mongodb_controller.dart';
 import 'package:kfriends/Utils/constants.dart';
 import 'package:kfriends/Utils/helper.dart';
@@ -16,33 +15,48 @@ class ChatController extends GetxController {
   MongoDBController mongodbController = Get.find<MongoDBController>();
 
   bool loading = true;
+  bool chatRoomloading = false;
   UserModel? selectedUser;
-  List<Message> selectedUserChat = [];
+  RxString chatTimeToDisplay =
+      DateFormat('yyyy-MM-dd').format(DateTime.now()).obs;
+  List<Message> selectedUserCha = [];
   ChatRoom? selectedChatRoom;
   List<ChatRoom> chatRooms = [];
   TextEditingController controller = TextEditingController();
+  Map<String, List<Message>> messages = <String, List<Message>>{};
 
   setSelectedUser(UserModel userModel,
       {bool isNew = false, ChatRoom? chatRoom}) async {
-    loading == true;
-    selectedUserChat.clear();
-    update();
     selectedUser = userModel;
+    update();
     SocketNew.socket.on('new_message', (data) {
       Message message = Message.fromJson(data);
-      selectedUserChat.addIf(message.senderId == selectedUser!.id, message);
+      List<Message> list = messages[message.chatRoomId] ?? [];
+      list.add(message);
+      list = list.toSet().toList();
+      messages.addAllIf(
+          message.senderId == selectedUser!.id, {message.chatRoomId: list});
       update();
     });
     isNew ? await initiateChatRoom() : setSelectedChatRoom(chatRoom!);
-    await getAllMessages();
 
-    loading = false;
     update();
+  }
+
+  chatTimeToBeDisplayed(int index) {
+    messages[selectedChatRoom!.id];
+    List<Message> list = messages[selectedChatRoom!.id]!;
+    Message message = list[index];
+    chatTimeToDisplay.value = message.timeSent;
   }
 
   setSelectedChatRoom(ChatRoom chatRoom) {
     selectedChatRoom = chatRoom;
-
+    messages[chatRoom.id]!.forEach(
+      (element) => element.readBy
+          .addIf(!element.readBy.contains(currentUser!.id), currentUser!.id),
+    );
+    loading = false;
     update();
   }
 
@@ -53,35 +67,25 @@ class ChatController extends GetxController {
         receiverId: selectedUser!.id!,
         msg: controller.text,
         attachmentUrl: url,
-        timeSent: DateTime.now().toString(),
+        readBy: [currentUser!.id],
+        timeSent: DateFormat('yyyy-MM-dd').format(DateTime.now()),
         senderId: Get.find<AuthController>().userModel!.id!,
         sort: DateTime.now().microsecondsSinceEpoch);
 
     SocketNew.sendMessageSocket(message);
-    selectedUserChat.add(message);
+    List<Message> list = messages[message.chatRoomId]!;
+    list.add(message);
+    list = list.toSet().toList();
+
+    messages.addAll({message.chatRoomId: list});
+    // selectedUserChat.add(message);
     controller.clear();
     update();
   }
 
-  getAllMessages({List<String>? queries}) async {
-    try {
-      Map<String, dynamic>? res =
-          await mongodbController.getDocument('chats', selectedChatRoom!.id!);
-      if (res![Keys.status] == Keys.success) {
-        selectedUserChat = List.from(res[Keys.data][Keys.message]).map((e) {
-          return Message.fromJson(e);
-        }).toList();
-      } else {
-        mongodbController.throwExpection(res);
-      }
-    } catch (e) {
-      printError(info: e.toString());
-      Helper().showToast("Error in getting messages");
-    }
-    update();
-  }
-
   initiateChatRoom() async {
+    loading = true;
+    update();
     try {
       ChatRoom chatRoom = ChatRoom(
           chatInitiator: currentUser!.id!,
@@ -91,32 +95,71 @@ class ChatController extends GetxController {
           await mongodbController.postDocument('chatRoom', chatRoom.toJson());
       if (res![Keys.status] == Keys.success) {
         selectedChatRoom = ChatRoom.fromJson(res[Keys.data]['chatRoom']);
+        List<Message> list =
+            await getMessagesForChatRoom(selectedChatRoom!.id!);
+        messages.addAll({chatRoom.id!: list});
+        loading = false;
         update();
       } else {
+        loading = false;
+        update();
         mongodbController.throwExpection(res);
       }
     } catch (e) {
+      loading = false;
+      update();
       Helper().showToast("Error in initiating chat room");
     }
     getMyChatRooms();
     update();
   }
 
-  getMyChatRooms() async {
+  Future<List<Message>> getMessagesForChatRoom(String chatRoomID) async {
     try {
       Map<String, dynamic>? res =
-          await mongodbController.getDocument('chatRoom', currentUser!.id!);
+          await mongodbController.getDocument('chats', chatRoomID);
       if (res![Keys.status] == Keys.success) {
-        chatRooms = List.from(res[Keys.data]['chatRooms']).map((e) {
-          return ChatRoom.fromJson(e);
+        return List.from(res[Keys.data][Keys.message]).map((e) {
+          return Message.fromJson(e);
         }).toList();
       } else {
         mongodbController.throwExpection(res);
+        return [];
       }
     } catch (e) {
-      Helper().showToast("Error in getting chat room");
+      Helper().showToast("Error while loading messages");
+      return [];
     }
-    update();
+  }
+
+  Future<void> getMyChatRooms() async {
+    try {
+      chatRoomloading = true;
+      chatRooms.clear();
+      update();
+      Map<String, dynamic>? res =
+          await mongodbController.getDocument('chatRoom', currentUser!.id!);
+      if (res![Keys.status] == Keys.success) {
+        for (var element in res[Keys.data]['chatRooms']) {
+          ChatRoom chatRoom = ChatRoom.fromJson(element);
+          chatRooms.add(chatRoom);
+          List<Message> list = await getMessagesForChatRoom(chatRoom.id!);
+
+          messages.addAll({chatRoom.id!: list});
+          update();
+          chatRoomloading = false;
+          update();
+        }
+      } else {
+        chatRoomloading = false;
+        update();
+        mongodbController.throwExpection(res);
+      }
+    } catch (e) {
+      chatRoomloading = false;
+      update();
+      Helper().showToast("Error while loading chats");
+    }
   }
 
   @override

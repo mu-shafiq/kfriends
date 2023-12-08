@@ -119,7 +119,7 @@ class ChatTile extends StatelessWidget {
                     backgroundColor: buttonGreenColor2,
                     child: Center(
                       child: Text(
-                        '2',
+                        chatCount.toString(),
                         style: TextStyle(
                           color: textBlackColor,
                           fontSize: 12.sp,

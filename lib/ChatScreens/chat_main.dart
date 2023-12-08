@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -51,7 +49,8 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
           actions: [
             GestureDetector(
               onTap: () {
-                Get.back();
+                // Get.back();
+                controller.getMyChatRooms();
               },
               child: Padding(
                   padding: const EdgeInsets.only(right: 15.0),
@@ -78,6 +77,31 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   20.verticalSpace,
+                  controller.chatRoomloading
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                radius: 5,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 1,
+                                )),
+                            3.horizontalSpace,
+                            Text(
+                              'Loading chats..',
+                              style: TextStyle(
+                                color: textBlackColor,
+                                fontSize: 10.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w600,
+                                height: 0,
+                              ),
+                            ),
+                          ],
+                        )
+                      : const SizedBox(),
                   SizedBox(
                     width: .94.sw,
                     height: .8.sh,
@@ -89,6 +113,7 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
                             itemBuilder: (context, index) {
                               ChatRoom chatRoom = controller.chatRooms[index];
                               chatRoom.userIds.remove(currentUser!.id);
+
                               return FutureBuilder<UserModel>(
                                   future: Get.find<UsersController>()
                                       .getUser(chatRoom.userIds[0]),
@@ -107,7 +132,15 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
                                                     Routes.chatingScreen);
                                               },
                                               child: ChatTile(
-                                                chatCount: 2,
+                                                chatCount: controller
+                                                    .messages[chatRoom.id]!
+                                                    .map((e) {
+                                                      return e.readBy.contains(
+                                                          currentUser!.id);
+                                                    })
+                                                    .toList()
+                                                    .where((e) => !e)
+                                                    .length,
                                                 verified: userModel.userType ==
                                                     'korean',
                                                 time: DateFormat('HH:mm')
@@ -125,18 +158,20 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
                                     }
                                   });
                             })
-                        : Center(
-                            child: Text(
-                              'No Conversation yet',
-                              style: TextStyle(
-                                color: textBlackColor,
-                                fontSize: 10.sp,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w600,
-                                height: 0,
+                        : controller.chatRoomloading
+                            ? const SizedBox()
+                            : Center(
+                                child: Text(
+                                  'No Conversation yet',
+                                  style: TextStyle(
+                                    color: textBlackColor,
+                                    fontSize: 10.sp,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w600,
+                                    height: 0,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
                   )
                 ],
               ),

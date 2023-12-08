@@ -212,7 +212,7 @@ class AuthController extends GetxController {
       );
 
       Response res = await Dio().post(
-        '${Keys.serverIP}:3000/api/v1/auth/register',
+        '${Keys.serverIP}/api/v1/auth/register',
         data: userModel.toJson(),
         options: Options(
           validateStatus: (status) {
@@ -228,6 +228,7 @@ class AuthController extends GetxController {
             key: Keys.userId, value: res.data[Keys.data][Keys.user][Keys.id]);
         currentUser = UserModel.fromJson(res.data[Keys.data][Keys.user]);
         userModel = currentUser!;
+        await getCurrentUser();
         update();
         Helper().showToast("User Registered Successfully");
 
@@ -256,7 +257,7 @@ class AuthController extends GetxController {
     try {
       EasyLoading.show();
       Response res = await Dio().post(
-        '${Keys.serverIP}:3000/api/v1/auth/login',
+        '${Keys.serverIP}/api/v1/auth/login',
         data: {
           "email": emailController.text.trim(),
           "password": passwordController.text,
@@ -267,6 +268,7 @@ class AuthController extends GetxController {
           },
         ),
       );
+      print(res);
       EasyLoading.dismiss();
       if (res.data[Keys.status] == Keys.success) {
         if (res.data[Keys.data] != null) {
@@ -300,7 +302,7 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       EasyLoading.dismiss();
-      printError(info: e.toString());
+      print(e.toString());
       Helper().showToast("Error in Logging In User");
     }
   }

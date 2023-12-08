@@ -92,8 +92,8 @@ class _CommunityMainState extends State<CommunityMain> {
             ),
             15.verticalSpace,
             timelineController.posts
-                    .where((element) =>
-                        element.interest == timelineController.selectedInterest)
+                    .where((element) => element.interest
+                        .contains(timelineController.selectedInterest))
                     .isNotEmpty
                 ? Container(
                     width: .92.sw,
@@ -123,27 +123,23 @@ class _CommunityMainState extends State<CommunityMain> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
+                              print(timelineController.posts.length);
                               Post post = timelineController.posts[index];
-                              return post.interest ==
-                                      timelineController.selectedInterest
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        timelineController.updateIndex(index);
-                                        Get.toNamed(Routes.postView);
-                                      },
-                                      child: PostTile(
-                                          postTitle: post.title,
-                                          postAssets:
-                                              Image.network(post.files[0]),
-                                          username: post.userName,
-                                          userAsset:
-                                              Image.network(post.userImage),
-                                          showBorder: false,
-                                          date: DateFormat('yyyy.MM.dd').format(
-                                              DateTime.parse(post.updatedAt!)
-                                                  .toUtc())),
-                                    )
-                                  : const SizedBox();
+                              return GestureDetector(
+                                onTap: () {
+                                  timelineController.updateIndex(index);
+                                  Get.toNamed(Routes.postView);
+                                },
+                                child: PostTile(
+                                    postTitle: post.title,
+                                    postAssets: Image.network(post.files[0]),
+                                    username: post.userName,
+                                    userAsset: Image.network(post.userImage),
+                                    showBorder: false,
+                                    date: DateFormat('yyyy.MM.dd').format(
+                                        DateTime.parse(post.updatedAt!)
+                                            .toUtc())),
+                              );
                             }),
                         15.verticalSpace,
                         GestureDetector(

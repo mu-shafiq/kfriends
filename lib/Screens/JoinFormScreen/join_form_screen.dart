@@ -173,9 +173,11 @@ class JoinFormScreen extends StatelessWidget {
                             ),
                             BirthdaySelector(
                               controller: TextEditingController(
-                                  text: controller.dateOfBirth
-                                      .toString()
-                                      .split(' ')[0]),
+                                  text: controller.dateOfBirth == null
+                                      ? 'YYYY-MM-DD'
+                                      : controller.dateOfBirth
+                                          .toString()
+                                          .split(' ')[0]),
                               width: .9.sw,
                               height: 40.h,
                               hintSize: 10.sp,
@@ -429,8 +431,8 @@ class JoinFormScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 RoundedSmallButton(
-                                  selected: controller.interests
-                                      .contains('K-TRAVEL'),
+                                  selected:
+                                      controller.interests.contains('K-TRAVEL'),
                                   onTap: () {
                                     controller.updateInterests('K-TRAVEL');
                                   },
@@ -490,8 +492,8 @@ class JoinFormScreen extends StatelessWidget {
                                   text: '#K-FOOD',
                                 ),
                                 RoundedSmallButton(
-                                  selected: controller.interests
-                                      .contains('K-BEAUTY'),
+                                  selected:
+                                      controller.interests.contains('K-BEAUTY'),
                                   onTap: () {
                                     controller.updateInterests('K-BEAUTY');
                                   },

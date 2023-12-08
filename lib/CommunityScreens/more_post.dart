@@ -336,14 +336,15 @@ class _MorePostsState extends State<MorePosts> {
                       itemCount: timelineController.posts.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
+                        print(timelineController.posts.length);
                         Post post = timelineController.posts[index];
                         return GestureDetector(
                           onTap: () {
                             timelineController.updateIndex(index);
                             Get.toNamed(Routes.postView);
                           },
-                          child: post.interest ==
-                                  timelineController.selectedInterest
+                          child: post.interest
+                                  .contains(timelineController.selectedInterest)
                               ? Padding(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 5.0),

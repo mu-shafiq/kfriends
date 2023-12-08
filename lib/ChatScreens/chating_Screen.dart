@@ -14,7 +14,6 @@ import 'package:kfriends/Utils/colors.dart';
 import 'package:kfriends/Utils/helper.dart';
 import 'package:kfriends/Utils/keys.dart';
 import 'package:kfriends/Widgets/bottom_bar.dart';
-import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/Widgets/textfield.dart';
 import 'package:kfriends/Controllers/auth_controller.dart';
 import 'package:kfriends/Controllers/chat_controller.dart';
@@ -27,23 +26,50 @@ class ChatingScreen extends StatefulWidget {
   State<ChatingScreen> createState() => _ChatingScreenState();
 }
 
-class _ChatingScreenState extends State<ChatingScreen> {
+class _ChatingScreenState extends State<ChatingScreen>
+    with WidgetsBindingObserver {
   final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.jumpTo(
-          _scrollController.position.maxScrollExtent,
-        );
-      }
+    WidgetsBinding.instance.addObserver(this);
+    _scrollController.addListener(() {
+      int index = (_scrollController.offset / 50).round();
+      Get.find<ChatController>().chatTimeToBeDisplayed(index);
     });
     super.initState();
+  }
+
+  bool isKeyboardOpen = false;
+
+  @override
+  void didChangeMetrics() {
+    final isKeyboardOpenNow =
+        WidgetsBinding.instance.window.viewInsets.bottom > 0;
+    setState(() {
+      isKeyboardOpen = isKeyboardOpenNow;
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ChatController>(builder: (controller) {
+      1.seconds.delay().then((value) {
+        print('1');
+        controller.loading == false
+            ? _scrollController.animateTo(
+                _scrollController.position.maxScrollExtent,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeOut,
+              )
+            : null;
+        print('2');
+      });
       return Scaffold(
         bottomNavigationBar: const BottomBar(index: 1),
         appBar: AppBar(
@@ -103,94 +129,12 @@ class _ChatingScreenState extends State<ChatingScreen> {
             )
           ],
         ),
-        floatingActionButton: Container(
-          decoration: const BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          width: .94.sw,
-          child: Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return Container(
-                          color: bgWhiteColor,
-                          height: 120.h,
-                          width: 1.sw,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                  child: Text(
-                                    'Camera',
-                                    style: TextStyle(
-                                        color: textBlackColor, fontSize: 15.sp),
-                                  ),
-                                  onPressed: () async {
-                                    Get.back();
-                                    File? file = await Helper()
-                                        .imagePicker(ImageSource.camera);
-                                    if (file != null) {
-                                      String url = (await Helper().uploadImage(
-                                          file, Keys.profileImage))!;
-                                      controller.sendMessage(
-                                          type: 'url', url: url);
-                                    }
-                                  }),
-                              TextButton(
-                                  child: Text(
-                                    'Gallery',
-                                    style: TextStyle(
-                                        color: textBlackColor, fontSize: 15.sp),
-                                  ),
-                                  onPressed: () async {
-                                    Get.back();
-                                    File? file = await Helper()
-                                        .imagePicker(ImageSource.gallery);
-                                    if (file != null) {
-                                      String url = (await Helper().uploadImage(
-                                          file, Keys.profileImage))!;
-                                      controller.sendMessage(
-                                          type: 'url', url: url);
-                                    }
-                                  }),
-                            ],
-                          ),
-                        );
-                      });
-                },
-                child: Image.asset(
-                  Assets.add,
-                  scale: .8,
-                ),
-              ),
-              6.horizontalSpace,
-              CustomTextfield(
-                  height: 40.h,
-                  width: .80.sw,
-                  hintSize: 10.sp,
-                  trailing: InkWell(
-                      onTap: () {
-                        controller.sendMessage();
-                      },
-                      child: const Icon(
-                        Icons.send,
-                        color: textPinkColor,
-                      )),
-                  hint: 'Enter your message here💬'.tr,
-                  controller: controller.controller)
-            ],
-          ),
-        ),
         body: controller.loading
             ? const Center(
                 child: CircularProgressIndicator(),
               )
             : Container(
-                height: 1.sh,
+                height: .81.sh,
                 width: 1.sw,
                 decoration: const BoxDecoration(
                     gradient: LinearGradient(
@@ -202,15 +146,12 @@ class _ChatingScreenState extends State<ChatingScreen> {
                       Color(0xffFFE6AF),
                       Color(0xffFFE6AF)
                     ])),
-                child: CupertinoScrollbar(
-                  controller: _scrollController,
-                  child: SingleChildScrollView(
-                    controller: _scrollController,
-                    child: Column(
-                      children: [
-                        10.verticalSpace,
-                        Text(
-                          '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Obx(
+                        () => Text(
+                          controller.chatTimeToDisplay.toString(),
                           style: TextStyle(
                             color: textBlackColor,
                             fontSize: 10.sp,
@@ -219,36 +160,141 @@ class _ChatingScreenState extends State<ChatingScreen> {
                             height: 0,
                           ),
                         ),
-                        20.verticalSpace,
-                        SizedBox(
-                          width: .94.sw,
-                          child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: controller.selectedUserChat.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                Message message =
-                                    controller.selectedUserChat[index];
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 8),
-                                  child: messageTile(
-                                      message.msg,
-                                      message.senderId !=
-                                          Get.find<AuthController>()
-                                              .userModel!
-                                              .id,
-                                      '15:43',
-                                      '15:43',
-                                      message.type,
-                                      message.attachmentUrl.toString(),
-                                      controller.selectedUser!.profileImage),
-                                );
-                              }),
-                        ),
-                        60.verticalSpace
-                      ],
-                    ),
+                      ),
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: isKeyboardOpen ? .41.sh : .7.sh,
+                            width: .94.sw,
+                            child: ListView.builder(
+                                controller: _scrollController,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                itemCount: controller
+                                    .messages[controller.selectedChatRoom!.id]!
+                                    .length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  Message message = controller.messages[
+                                      controller.selectedChatRoom!.id]![index];
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0, horizontal: 8),
+                                    child: messageTile(
+                                        message.msg,
+                                        message.senderId !=
+                                            Get.find<AuthController>()
+                                                .userModel!
+                                                .id,
+                                        '15:43',
+                                        '15:43',
+                                        message.type,
+                                        message.attachmentUrl.toString(),
+                                        controller.selectedUser!.profileImage),
+                                  );
+                                }),
+                          ),
+                          20.verticalSpace,
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            decoration: const BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            width: .94.sw,
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return Container(
+                                            color: bgWhiteColor,
+                                            height: 120.h,
+                                            width: 1.sw,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                TextButton(
+                                                    child: Text(
+                                                      'Camera',
+                                                      style: TextStyle(
+                                                          color: textBlackColor,
+                                                          fontSize: 15.sp),
+                                                    ),
+                                                    onPressed: () async {
+                                                      Get.back();
+                                                      File? file =
+                                                          await Helper()
+                                                              .imagePicker(
+                                                                  ImageSource
+                                                                      .camera);
+                                                      if (file != null) {
+                                                        String url = (await Helper()
+                                                            .uploadImage(file,
+                                                                Keys.profileImage))!;
+                                                        controller.sendMessage(
+                                                            type: 'url',
+                                                            url: url);
+                                                      }
+                                                    }),
+                                                TextButton(
+                                                    child: Text(
+                                                      'Gallery',
+                                                      style: TextStyle(
+                                                          color: textBlackColor,
+                                                          fontSize: 15.sp),
+                                                    ),
+                                                    onPressed: () async {
+                                                      Get.back();
+                                                      File? file =
+                                                          await Helper()
+                                                              .imagePicker(
+                                                                  ImageSource
+                                                                      .gallery);
+                                                      if (file != null) {
+                                                        String url = (await Helper()
+                                                            .uploadImage(file,
+                                                                Keys.profileImage))!;
+                                                        controller.sendMessage(
+                                                            type: 'url',
+                                                            url: url);
+                                                      }
+                                                    }),
+                                              ],
+                                            ),
+                                          );
+                                        });
+                                  },
+                                  child: Image.asset(
+                                    Assets.add,
+                                    scale: .8,
+                                  ),
+                                ),
+                                6.horizontalSpace,
+                                CustomTextfield(
+                                    height: 40.h,
+                                    width: .80.sw,
+                                    hintSize: 10.sp,
+                                    trailing: InkWell(
+                                        onTap: () {
+                                          controller.sendMessage();
+                                        },
+                                        child: const Icon(
+                                          Icons.send,
+                                          color: textPinkColor,
+                                        )),
+                                    hint: 'Enter your message here💬'.tr,
+                                    controller: controller.controller)
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),

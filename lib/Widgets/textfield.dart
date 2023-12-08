@@ -57,6 +57,12 @@ class CustomTextfield extends StatelessWidget {
         onTapOutside: (event) {
           FocusManager.instance.primaryFocus?.unfocus();
         },
+        style: TextStyle(
+          fontFamily: "Pretendard",
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w600,
+          color: textBlackColor,
+        ),
         decoration: InputDecoration(
             contentPadding: EdgeInsets.all(8.h),
             suffixIcon: trailing ?? const SizedBox(),

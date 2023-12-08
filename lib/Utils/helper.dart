@@ -59,7 +59,7 @@ class Helper {
     print(image.path);
     Map<String, dynamic>? response =
         await Get.find<MongoDBController>().uploadPNG(bytes, folder);
-    print('5');
+    print(response);
 
     if (response![Keys.status] == Keys.success) {
       print(response['data'].toString());

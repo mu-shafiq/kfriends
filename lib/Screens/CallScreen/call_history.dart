@@ -24,10 +24,10 @@ class _CallHistoryState extends State<CallHistory> {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        leading: selected != 2 && isEnglish
+        leading: selected == 0 && isEnglish
             ? GestureDetector(
                 onTap: () {
-                  Get.toNamed(Routes.bottomNavBar);
+                  Get.offAllNamed(Routes.bottomNavBar);
                 },
                 child: Image.asset(Assets.backArrow))
             : const SizedBox(),

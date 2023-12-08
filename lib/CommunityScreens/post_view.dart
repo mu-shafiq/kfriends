@@ -300,7 +300,7 @@ class PostView extends StatelessWidget {
                       bgColor: buttonWhiteColor,
                       width: 80.w,
                       height: 25.h,
-                      text: post.interest,
+                      text: post.interest.first,
                       selected: true,
                     ),
                   ),

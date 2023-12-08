@@ -1,7 +1,7 @@
 class Keys {
-  static String serverIP = 'http://192.168.18.90';
-  static String localHostIP = 'http://192.168.18.90';
-  static String localHostIPMacMini = 'http://192.168.18.146';
+  static String serverIP = 'http://192.168.18.90:3000';
+  static String localHostIP = 'http://192.168.18.90:3000';
+  static String localHostIPMacMini = 'http://192.168.18.146:3000';
 
   static String status = 'status';
   static String message = 'message';

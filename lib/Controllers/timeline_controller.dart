@@ -27,7 +27,7 @@ class TimelineController extends GetxController {
   List<File> filesToBeUploaded = <File>[];
   bool loading = false;
   int selectedPostIndex = 0;
-  String selectedInterest = 'K-CULTURE';
+  String selectedInterest = '#K-CULTURE';
 
   updateFile(File file) {
     filesToBeUploaded.contains(file)
@@ -54,7 +54,7 @@ class TimelineController extends GetxController {
 
   enableEdit() {
     print(posts[selectedPostIndex].files);
-    interestController.text = posts[selectedPostIndex].interest;
+    interestController.text = posts[selectedPostIndex].interest.first;
     titleController.text = posts[selectedPostIndex].title;
     contentController.text = posts[selectedPostIndex].content;
     files = posts[selectedPostIndex].files;
@@ -81,21 +81,26 @@ class TimelineController extends GetxController {
       EasyLoading.show();
       files.clear();
       for (var file in filesToBeUploaded) {
+        print('object');
         files.add((await Helper().uploadImage(file, Keys.profileImage))!);
       }
+      print('ff');
       Post post = Post(
           userId: currentUser!.id!,
           userName: currentUser!.nickname,
           userImage: currentUser!.profileImage,
           title: titleController.text,
-          interest: interestController.text,
+          interest: [interestController.text],
           content: contentController.text,
           files: files);
+      print('bbb');
       Map<String, dynamic>? res =
           await mongodbController.postDocument('timeline', post.toJson());
       if (res![Keys.status] == Keys.success) {
-        print('here is the res : ${res[Keys.data]['response']}');
+        // print('here is the res : ${res[Keys.data]['response']}');
         posts.add(Post.fromJson(res[Keys.data]['response']));
+        update();
+        print('fdgnkdfjngkjdnfg');
         Helper().showToast("Post uploaded successfully");
 
         clear();
@@ -148,7 +153,7 @@ class TimelineController extends GetxController {
       print(files);
       Post post = posts[selectedPostIndex];
       post.title = titleController.text;
-      post.interest = interestController.text;
+      post.interest = [interestController.text];
       post.content = contentController.text;
       post.files = files;
       Map<String, dynamic>? res = await mongodbController.patchDocument(
@@ -173,7 +178,7 @@ class TimelineController extends GetxController {
   addALike() async {
     try {
       Post post = posts[selectedPostIndex];
-      post.likes!.add(currentUser!.id);
+      post.likes!.add(currentUser!.id!);
       Map<String, dynamic>? res = await mongodbController.patchDocument(
           'timeline', posts[selectedPostIndex].id!, post.toJson());
       if (res![Keys.status] == Keys.success) {

@@ -3,7 +3,7 @@ class Post {
   String userId;
   String userName;
   String userImage;
-  String interest;
+  List interest;
   String title;
   String content;
   List files;
