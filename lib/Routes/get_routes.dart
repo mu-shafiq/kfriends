@@ -83,7 +83,7 @@ class Routes {
   static String searchTimeline = "/searchtimeline";
   static String timlineView = "/timelineview";
   static String writetimeline = "/writetimeline";
-  static String customerCenter = "/writetimeline";
+  static String customerCenter = "/customerCenter";
   static String inquirySent = "/inquirySent";
   static String editProfile = "/editProfile";
   static String seasonScreen = "/seasonScreen";

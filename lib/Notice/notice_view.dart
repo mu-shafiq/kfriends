@@ -117,7 +117,7 @@ class NoticeViews extends StatelessWidget {
             ),
             30.verticalSpace,
             SizedBox(
-                width: .9.sw,
+                width: .92.sw,
                 height: .65.sh,
                 child: Text.rich(TextSpan(children: [
                   TextSpan(
@@ -125,7 +125,7 @@ class NoticeViews extends StatelessWidget {
                         'Seoul is one of the hottest travel destinations in Asia offering a vibrant mix of old and new. The city has been the capital of Korea during many dynasties and is, therefore, home to various historic attractions. Moreover, the city is constantly changing with new architectural gems popping up year after year, such as Seoul is one of the hottest travel destinations in Asia offering a vibrant mix of old and new. The city has been the capital of Korea during many dynasties and is, therefore, home to various historic attractions. Moreover, the city is constantly changing with new architectural gems popping up year after year, such as Seoul is one of the hottest travel destinations in Asia offering a vibrant mix of old and new. The city has been the capital of Korea during many dynasties and is, therefore, home to various historic attractions. Moreover, the city is constantly changing with new architectural gems popping up year after year, such as Seoul is one of the hottest travel destinations in Asia offering a vibrant mix of old and new. The city has been the capital of Korea during many dynasties and is, therefore, home to various historic attractions. Moreover, the city is constantly changing with new architectural gems popping up year after year, such as ',
                     style: TextStyle(
                       color: textBlackColor,
-                      fontSize: 10.sp,
+                      fontSize: 11.sp,
                       fontFamily: 'Pretendard',
                       fontWeight: FontWeight.w500,
                     ),

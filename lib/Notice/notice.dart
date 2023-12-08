@@ -73,13 +73,13 @@ class Notice extends StatelessWidget {
           children: [
             CustomTextfield(
                 height: 40.h,
-                width: .9.sw,
+                width: .92.sw,
                 hint: 'Enter your keyword 👀',
                 trailing: Image.asset(Assets.search),
                 controller: TextEditingController()),
             30.verticalSpace,
             SizedBox(
-              width: .9.sw,
+              width: .92.sw,
               child: ListView.builder(
                   itemCount: 3,
                   shrinkWrap: true,
