@@ -1,13 +1,9 @@
-import 'dart:developer';
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kfriends/ImageView/image_view.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
@@ -33,6 +29,11 @@ class _ChatingScreenState extends State<ChatingScreen>
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     _scrollController.addListener(() {
+      if (_scrollController.position.pixels == 0) {
+        Get.snackbar('Load more', 'Tap here to load more', onTap: (snack) {
+          print('snack is pressed');
+        }, duration: const Duration(seconds: 3));
+      }
       int index = (_scrollController.offset / 50).round();
       Get.find<ChatController>().chatTimeToBeDisplayed(index);
     });
@@ -52,7 +53,11 @@ class _ChatingScreenState extends State<ChatingScreen>
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    1.seconds.delay().then((value) {
+      Get.find<ChatController>().unreadChat();
+      WidgetsBinding.instance.removeObserver(this);
+    });
+
     super.dispose();
   }
 
@@ -60,7 +65,6 @@ class _ChatingScreenState extends State<ChatingScreen>
   Widget build(BuildContext context) {
     return GetBuilder<ChatController>(builder: (controller) {
       1.seconds.delay().then((value) {
-        print('1');
         controller.loading == false
             ? _scrollController.animateTo(
                 _scrollController.position.maxScrollExtent,
@@ -68,7 +72,6 @@ class _ChatingScreenState extends State<ChatingScreen>
                 curve: Curves.easeOut,
               )
             : null;
-        print('2');
       });
       return Scaffold(
         bottomNavigationBar: const BottomBar(index: 1),
@@ -368,9 +371,17 @@ class _ChatingScreenState extends State<ChatingScreen>
             child: SizedBox(
               width: .35.sw,
               child: type == 'url'
-                  ? Image.network(
-                      url,
-                      fit: BoxFit.cover,
+                  ? GestureDetector(
+                      onTap: () {
+                        Get.to(ImageView(url: url),
+                            transition: Transition.downToUp,
+                            curve: Curves.bounceIn,
+                            duration: const Duration(milliseconds: 700));
+                      },
+                      child: Image.network(
+                        url,
+                        fit: BoxFit.cover,
+                      ),
                     )
                   : Padding(
                       padding: const EdgeInsets.symmetric(

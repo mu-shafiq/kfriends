@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:kfriends/Controllers/timeline_controller.dart';
+import 'package:kfriends/Controllers/post_controller.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
@@ -96,7 +96,7 @@ class EditPost extends StatelessWidget {
                 ],
               )
             : null,
-        body: GetBuilder<TimelineController>(builder: (timelineController) {
+        body: GetBuilder<PostController>(builder: (postController) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.0.sp),
             child: SingleChildScrollView(
@@ -290,21 +290,21 @@ class EditPost extends StatelessWidget {
                       hint: 'Title'.tr,
                       hintSize: 10.sp,
                       trailing: Image.asset(Assets.drop),
-                      controller: timelineController.interestController),
+                      controller: postController.interestController),
                   20.verticalSpace,
                   CustomTextfield(
                       height: 40.h,
                       width: .9.sw,
                       hint: 'Title'.tr,
                       hintSize: 10.sp,
-                      controller: timelineController.titleController),
+                      controller: postController.titleController),
                   20.verticalSpace,
                   CustomTextfield(
                       height: .4.sh,
                       width: .9.sw,
                       hint: 'Enter your Contents...'.tr,
                       hintSize: 10.sp,
-                      controller: timelineController.contentController),
+                      controller: postController.contentController),
                   Row(
                     children: [
                       Container(
@@ -312,13 +312,13 @@ class EditPost extends StatelessWidget {
                         height: 100.h,
                         child: ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount:
-                                timelineController.filesToBeUploaded.length +
-                                    timelineController.files.length,
+                            itemCount: postController.existingLinks.length +
+                                postController.filesToBeUploaded.length,
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
-                              int linkIndex = timelineController.files.length;
+                              int linkListLength =
+                                  postController.existingLinks.length;
                               return Padding(
                                 padding: EdgeInsets.only(right: 5.w),
                                 child: Stack(
@@ -330,16 +330,17 @@ class EditPost extends StatelessWidget {
                                       child: ClipRRect(
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(7)),
-                                          child: index < linkIndex
+                                          child: index < linkListLength
                                               ? Image.network(
-                                                  timelineController
-                                                      .files[index],
+                                                  postController
+                                                      .existingLinks[index],
                                                   scale: .5.sp,
                                                   fit: BoxFit.cover,
                                                 )
                                               : Image.file(
-                                                  timelineController
-                                                      .filesToBeUploaded[index],
+                                                  postController
+                                                          .filesToBeUploaded[
+                                                      index - linkListLength],
                                                   scale: .5.sp,
                                                   fit: BoxFit.cover,
                                                 )),
@@ -349,14 +350,15 @@ class EditPost extends StatelessWidget {
                                       right: 5.w,
                                       child: GestureDetector(
                                         onTap: () {
-                                          if (index >= linkIndex) {
-                                            timelineController.updateFile(
-                                                timelineController
-                                                    .filesToBeUploaded[index]);
+                                          if (index < linkListLength) {
+                                            postController.updateLinkFile(
+                                                postController
+                                                    .existingLinks[index]);
                                           } else {
-                                            timelineController.updateLinkFile(
-                                                timelineController
-                                                    .files[index]);
+                                            postController.updateFile(
+                                                postController
+                                                        .filesToBeUploaded[
+                                                    index - linkListLength]);
                                           }
                                         },
                                         child: Icon(
@@ -373,10 +375,9 @@ class EditPost extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          File? file =
-                              await timelineController.imagePickerDialog();
+                          File? file = await postController.imagePickerDialog();
                           if (file != null) {
-                            timelineController.updateFile(file);
+                            postController.updateFile(file);
                           }
                         },
                         child: Padding(
@@ -435,16 +436,18 @@ class EditPost extends StatelessWidget {
                       RoundedButton(
                         onTap: () {
                           String alertString = '';
-                          timelineController.interestController.text.isEmpty
-                              ? timelineController.updateInterest('K-CULTURE')
+                          postController.interestController.text.isEmpty
+                              ? postController.updateInterest('K-CULTURE')
                               : null;
-                          timelineController.titleController.text.isEmpty
+                          postController.titleController.text.isEmpty
                               ? alertString += '\nPlease add title'
                               : null;
-                          timelineController.contentController.text.isEmpty
+                          postController.contentController.text.isEmpty
                               ? alertString += '\nPlease add content'
                               : null;
-                          timelineController.filesToBeUploaded.isEmpty
+                          (postController.filesToBeUploaded.length +
+                                      postController.existingLinks.length) ==
+                                  0
                               ? alertString += '\nPlease add at least 1 file'
                               : null;
 
@@ -501,7 +504,7 @@ class EditPost extends StatelessWidget {
                               },
                             );
                           } else {
-                            timelineController.updateAPost();
+                            postController.updateAPost();
                           }
                         },
                         textColor: textWhiteColor,

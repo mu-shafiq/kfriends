@@ -17,6 +17,7 @@ class AuthInterceptor extends Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     const storage = FlutterSecureStorage();
     String? token = await storage.read(key: Keys.bearerToken);
+    print('token : ' + token.toString());
     options.headers["Authorization"] = "Bearer ${token ?? ""}";
     super.onRequest(options, handler);
   }
@@ -42,7 +43,7 @@ class MongoDBController extends GetxController {
       for (var query in queries) {
         queryString += "&$query";
       }
-      printInfo(info: baseUrl + collectionName + queryString);
+      print(baseUrl + collectionName + queryString);
       Response res = await dio.get(
         baseUrl + collectionName + queryString,
         options: Options(

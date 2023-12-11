@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:kfriends/Controllers/timeline_controller.dart';
+import 'package:kfriends/Controllers/post_controller.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
@@ -96,7 +96,7 @@ class AddPost extends StatelessWidget {
                 ],
               )
             : null,
-        body: GetBuilder<TimelineController>(builder: (timelineController) {
+        body: GetBuilder<PostController>(builder: (postController) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.0.sp),
             child: SingleChildScrollView(
@@ -290,21 +290,21 @@ class AddPost extends StatelessWidget {
                       hint: 'Title'.tr,
                       hintSize: 10.sp,
                       trailing: Image.asset(Assets.drop),
-                      controller: timelineController.interestController),
+                      controller: postController.interestController),
                   20.verticalSpace,
                   CustomTextfield(
                       height: 40.h,
                       width: .9.sw,
                       hint: 'Title'.tr,
                       hintSize: 10.sp,
-                      controller: timelineController.titleController),
+                      controller: postController.titleController),
                   20.verticalSpace,
                   CustomTextfield(
                       height: .4.sh,
                       width: .9.sw,
                       hint: 'Enter your Contents...'.tr,
                       hintSize: 10.sp,
-                      controller: timelineController.contentController),
+                      controller: postController.contentController),
                   Row(
                     children: [
                       Container(
@@ -312,8 +312,7 @@ class AddPost extends StatelessWidget {
                         height: 100.h,
                         child: ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount:
-                                timelineController.filesToBeUploaded.length,
+                            itemCount: postController.filesToBeUploaded.length,
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
@@ -327,9 +326,9 @@ class AddPost extends StatelessWidget {
                                       width: 60.w,
                                       child: ClipRRect(
                                           borderRadius: const BorderRadius.all(
-                                              Radius.circular(7)),
+                                              Radius.circular(8)),
                                           child: Image.file(
-                                            timelineController
+                                            postController
                                                 .filesToBeUploaded[index],
                                             scale: .5.sp,
                                             fit: BoxFit.cover,
@@ -340,8 +339,8 @@ class AddPost extends StatelessWidget {
                                       right: 5.w,
                                       child: GestureDetector(
                                         onTap: () {
-                                          timelineController.updateFile(
-                                              timelineController
+                                          postController.updateFile(
+                                              postController
                                                   .filesToBeUploaded[index]);
                                         },
                                         child: Icon(
@@ -358,10 +357,9 @@ class AddPost extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          File? file =
-                              await timelineController.imagePickerDialog();
+                          File? file = await postController.imagePickerDialog();
                           if (file != null) {
-                            timelineController.updateFile(file);
+                            postController.updateFile(file);
                           }
                         },
                         child: Padding(
@@ -420,16 +418,16 @@ class AddPost extends StatelessWidget {
                       RoundedButton(
                         onTap: () {
                           String alertString = '';
-                          timelineController.interestController.text.isEmpty
-                              ? timelineController.updateInterest('K-CULTURE')
+                          postController.interestController.text.isEmpty
+                              ? postController.updateInterest('K-CULTURE')
                               : null;
-                          timelineController.titleController.text.isEmpty
+                          postController.titleController.text.isEmpty
                               ? alertString += '\nPlease add title'
                               : null;
-                          timelineController.contentController.text.isEmpty
+                          postController.contentController.text.isEmpty
                               ? alertString += '\nPlease add content'
                               : null;
-                          timelineController.filesToBeUploaded.isEmpty
+                          postController.filesToBeUploaded.isEmpty
                               ? alertString += '\nPlease add at least 1 file'
                               : null;
 
@@ -486,7 +484,7 @@ class AddPost extends StatelessWidget {
                               },
                             );
                           } else {
-                            timelineController.addAPost();
+                            postController.addAPost();
                           }
                         },
                         textColor: textWhiteColor,
