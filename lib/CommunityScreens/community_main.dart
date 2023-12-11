@@ -264,7 +264,7 @@ class _CommunityMainState extends State<CommunityMain> {
               thinkingController.thinkings.isNotEmpty
                   ? SizedBox(
                       width: 1.sw,
-                      height: .49.sh,
+                      // height: .49.sh,
                       child: CarouselSlider.builder(
                           itemCount: thinkingController.thinkings.length,
                           options: CarouselOptions(
@@ -298,7 +298,7 @@ class _CommunityMainState extends State<CommunityMain> {
                               child: Padding(
                                 padding: EdgeInsets.only(right: 0.w),
                                 child: Container(
-                                  height: .485.sh,
+                                  // height: .485.sh,
                                   width: .9.sw,
                                   decoration: ShapeDecoration(
                                     color: Colors.white,
@@ -379,7 +379,7 @@ class _CommunityMainState extends State<CommunityMain> {
                                             horizontal: 19.0.w),
                                         child: Text(
                                           thinking.content,
-                                          maxLines: 1,
+                                          maxLines: null,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             color: textBlackColor,
