@@ -213,6 +213,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           useMaterial3: true,
         ),
         home: const SplashScreen(),
