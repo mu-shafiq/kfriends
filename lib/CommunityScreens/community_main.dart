@@ -94,10 +94,9 @@ class _CommunityMainState extends State<CommunityMain> {
                     }),
               ),
               15.verticalSpace,
-              postController.posts
-                      .where((element) => element.interest
-                          .contains(postController.selectedInterest))
-                      .isNotEmpty
+              postController.posts.where((element) => element.interest
+                          .contains(postController.selectedInterest)) !=
+                      0
                   ? Container(
                       width: .92.sw,
                       decoration: ShapeDecoration(
@@ -128,6 +127,7 @@ class _CommunityMainState extends State<CommunityMain> {
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
+                                print(postController.posts.length);
                                 Post post = postController.posts[index];
                                 return post.interest.contains(
                                         postController.selectedInterest)
