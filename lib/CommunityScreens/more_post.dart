@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:kfriends/Controllers/timeline_controller.dart';
+import 'package:kfriends/Controllers/post_controller.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
@@ -285,7 +285,7 @@ class _MorePostsState extends State<MorePosts> {
             ),
           ),
         ),
-        body: GetBuilder<TimelineController>(builder: (timelineController) {
+        body: GetBuilder<PostController>(builder: (postController) {
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -311,8 +311,7 @@ class _MorePostsState extends State<MorePosts> {
                             padding: EdgeInsets.only(left: index == 0 ? 15 : 0),
                             child: RoundedSmallButton2(
                               onTap: () {
-                                timelineController
-                                    .updateInterest(interests[index]);
+                                postController.updateInterest(interests[index]);
                               },
                               textColor: textBlackColor,
                               shadow1: buttonBlackShadow1,
@@ -321,7 +320,7 @@ class _MorePostsState extends State<MorePosts> {
                               width: 85.w,
                               height: 22.h,
                               text: interests[index],
-                              selected: timelineController.selectedInterest ==
+                              selected: postController.selectedInterest ==
                                   interests[index],
                             ),
                           ),
@@ -333,18 +332,17 @@ class _MorePostsState extends State<MorePosts> {
                   width: .9.sw,
                   child: ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: timelineController.posts.length,
+                      itemCount: postController.posts.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        print(timelineController.posts.length);
-                        Post post = timelineController.posts[index];
+                        Post post = postController.posts[index];
                         return GestureDetector(
                           onTap: () {
-                            timelineController.updateIndex(index);
+                            postController.updateIndex(index);
                             Get.toNamed(Routes.postView);
                           },
                           child: post.interest
-                                  .contains(timelineController.selectedInterest)
+                                  .contains(postController.selectedInterest)
                               ? Padding(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 5.0),

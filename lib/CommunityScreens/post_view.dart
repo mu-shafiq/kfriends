@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kfriends/CommunityScreens/edit_post.dart';
-import 'package:kfriends/Controllers/timeline_controller.dart';
+import 'package:kfriends/Controllers/post_controller.dart';
 import 'package:kfriends/Routes/get_routes.dart';
 import 'package:kfriends/Utils/assets.dart';
 import 'package:kfriends/Utils/colors.dart';
@@ -98,9 +98,8 @@ class PostView extends StatelessWidget {
                 ],
               )
             : null,
-        body: GetBuilder<TimelineController>(builder: (timelineController) {
-          Post post =
-              timelineController.posts[timelineController.selectedPostIndex];
+        body: GetBuilder<PostController>(builder: (postController) {
+          Post post = postController.posts[postController.selectedPostIndex];
           print(post.likes);
           print(currentUser!.id);
           return Padding(
@@ -379,14 +378,53 @@ class PostView extends StatelessWidget {
                                       children: [
                                         GestureDetector(
                                             onTap: () {
-                                              timelineController.deleteAPosts();
+                                              showDialog<void>(
+                                                context: context,
+                                                barrierDismissible:
+                                                    false, // user must tap button!
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: const Text(
+                                                        'Deleting Post?'),
+                                                    content:
+                                                        const SingleChildScrollView(
+                                                      child: ListBody(
+                                                        children: <Widget>[
+                                                          Text(
+                                                              'You will no longer be able to see this post.'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        child: const Text(
+                                                            'Cancel'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                      TextButton(
+                                                        child: const Text(
+                                                            'Delete'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          postController
+                                                              .deleteAPosts();
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
                                             },
                                             child: Image.asset(Assets.delete)),
                                         20.horizontalSpace,
                                         GestureDetector(
                                             onTap: () async {
-                                              await timelineController
-                                                  .enableEdit();
+                                              await postController.enableEdit();
                                               Get.to(EditPost());
                                             },
                                             child: Image.asset(Assets.edit)),
@@ -397,15 +435,17 @@ class PostView extends StatelessWidget {
                           ),
                         ),
                         10.verticalSpace,
-                        Container(
-                          height: .4.sh,
-                          width: .9.sw,
-                          child: Image.network(
-                            post.files[0],
-                            scale: .5,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        post.files.isNotEmpty
+                            ? Container(
+                                height: .4.sh,
+                                width: .9.sw,
+                                child: Image.network(
+                                  post.files[0],
+                                  scale: .5,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : const SizedBox(),
                         10.verticalSpace,
                         SizedBox(
                           height: .13.sh,
@@ -459,9 +499,9 @@ class PostView extends StatelessWidget {
                                         onTap: () {
                                           if (!post.likes!
                                               .contains(currentUser!.id)) {
-                                            timelineController.addALike();
+                                            postController.addALike();
                                           } else {
-                                            timelineController.removeALike();
+                                            postController.removeALike();
                                           }
                                         },
                                         child: post.likes!

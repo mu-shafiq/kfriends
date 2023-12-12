@@ -13,10 +13,8 @@ import 'package:kfriends/Utils/helper.dart';
 import 'package:kfriends/Utils/keys.dart';
 import 'package:kfriends/Widgets/small_button.dart';
 import 'package:kfriends/model/post.dart';
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
 
-class TimelineController extends GetxController {
+class PostController extends GetxController {
   TextEditingController interestController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
@@ -24,6 +22,7 @@ class TimelineController extends GetxController {
 
   List<Post> posts = [];
   List files = [];
+  List existingLinks = [];
   List<File> filesToBeUploaded = <File>[];
   bool loading = false;
   int selectedPostIndex = 0;
@@ -37,7 +36,9 @@ class TimelineController extends GetxController {
   }
 
   updateLinkFile(String file) {
-    files.contains(file) ? files.remove(file) : files.add(file);
+    existingLinks.contains(file)
+        ? existingLinks.remove(file)
+        : existingLinks.add(file);
     update();
   }
 
@@ -53,27 +54,12 @@ class TimelineController extends GetxController {
   }
 
   enableEdit() {
-    print(posts[selectedPostIndex].files);
     interestController.text = posts[selectedPostIndex].interest.first;
     titleController.text = posts[selectedPostIndex].title;
     contentController.text = posts[selectedPostIndex].content;
-    files = posts[selectedPostIndex].files;
+    existingLinks = List.from(posts[selectedPostIndex].files);
     filesToBeUploaded.clear();
-    // posts[selectedPostIndex].files.map((e) async {
-    //   File file = await urlToFile(e);
-    //   filesToBeUploaded.add(file);
-    // });
     update();
-  }
-
-  Future<File> urlToFile(String imageUrl) async {
-    var rng = Random();
-    Directory tempDir = await getTemporaryDirectory();
-    String tempPath = tempDir.path;
-    File file = File('$tempPath${rng.nextInt(100)}.png');
-    http.Response response = await http.get(Uri.parse(imageUrl));
-    await file.writeAsBytes(response.bodyBytes);
-    return file;
   }
 
   addAPost() async {
@@ -81,10 +67,8 @@ class TimelineController extends GetxController {
       EasyLoading.show();
       files.clear();
       for (var file in filesToBeUploaded) {
-        print('object');
         files.add((await Helper().uploadImage(file, Keys.profileImage))!);
       }
-      print('ff');
       Post post = Post(
           userId: currentUser!.id!,
           userName: currentUser!.nickname,
@@ -93,14 +77,11 @@ class TimelineController extends GetxController {
           interest: [interestController.text],
           content: contentController.text,
           files: files);
-      print('bbb');
       Map<String, dynamic>? res =
-          await mongodbController.postDocument('timeline', post.toJson());
+          await mongodbController.postDocument(Keys.posting, post.toJson());
       if (res![Keys.status] == Keys.success) {
-        // print('here is the res : ${res[Keys.data]['response']}');
         posts.add(Post.fromJson(res[Keys.data]['response']));
         update();
-        print('fdgnkdfjngkjdnfg');
         Helper().showToast("Post uploaded successfully");
 
         clear();
@@ -112,7 +93,6 @@ class TimelineController extends GetxController {
       }
     } catch (e) {
       EasyLoading.dismiss();
-      print(e.toString());
       Helper().showToast(e.toString());
     }
   }
@@ -122,7 +102,8 @@ class TimelineController extends GetxController {
       loading = true;
       update();
       Map<String, dynamic>? res = await mongodbController.getCollection(
-        'timeline',
+        Keys.posting,
+        // queries: ['limit=1']
       );
       if (res![Keys.status] == Keys.success) {
         posts = List.from(res[Keys.data]['response'])
@@ -138,31 +119,30 @@ class TimelineController extends GetxController {
     } catch (e) {
       loading = false;
       update();
-      // TODO
     }
   }
 
   updateAPost() async {
     try {
-      print(filesToBeUploaded);
       EasyLoading.show();
-      files.clear();
       for (var file in filesToBeUploaded) {
-        files.add((await Helper().uploadImage(file, Keys.profileImage))!);
+        existingLinks
+            .add((await Helper().uploadImage(file, Keys.profileImage))!);
       }
-      print(files);
+
       Post post = posts[selectedPostIndex];
       post.title = titleController.text;
       post.interest = [interestController.text];
       post.content = contentController.text;
-      post.files = files;
+      post.files = existingLinks;
       Map<String, dynamic>? res = await mongodbController.patchDocument(
-          'timeline', posts[selectedPostIndex].id!, post.toJson());
+          Keys.posting, posts[selectedPostIndex].id!, post.toJson());
       if (res![Keys.status] == Keys.success) {
         posts[selectedPostIndex] = post;
         Helper().showToast("Post updated successfully");
         clear();
         EasyLoading.dismiss();
+        update();
         Get.back();
       } else {
         mongodbController.throwExpection(res);
@@ -170,7 +150,6 @@ class TimelineController extends GetxController {
     } catch (e) {
       EasyLoading.dismiss();
       Get.back();
-      print(e.toString());
       Helper().showToast(e.toString());
     }
   }
@@ -180,7 +159,7 @@ class TimelineController extends GetxController {
       Post post = posts[selectedPostIndex];
       post.likes!.add(currentUser!.id!);
       Map<String, dynamic>? res = await mongodbController.patchDocument(
-          'timeline', posts[selectedPostIndex].id!, post.toJson());
+          Keys.posting, posts[selectedPostIndex].id!, post.toJson());
       if (res![Keys.status] == Keys.success) {
         posts[selectedPostIndex] = post;
         update();
@@ -199,7 +178,7 @@ class TimelineController extends GetxController {
       Post post = posts[selectedPostIndex];
       post.likes!.remove(currentUser!.id);
       Map<String, dynamic>? res = await mongodbController.patchDocument(
-          'timeline', posts[selectedPostIndex].id!, post.toJson());
+          Keys.posting, posts[selectedPostIndex].id!, post.toJson());
       if (res![Keys.status] == Keys.success) {
         posts[selectedPostIndex] = post;
         update();
@@ -216,12 +195,8 @@ class TimelineController extends GetxController {
     try {
       loading = true;
       update();
-      print(posts);
-      print(selectedPostIndex);
-      print(posts[selectedPostIndex]);
       Map<String, dynamic>? res = await mongodbController.deleteDocument(
-          'timeline', posts[selectedPostIndex].id!);
-      print(res);
+          Keys.posting, posts[selectedPostIndex].id!);
       if (res![Keys.status] == Keys.success) {
         Helper().showToast('Post deleted successfully');
         posts.removeAt(selectedPostIndex);

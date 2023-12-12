@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kfriends/Controllers/mongodb_controller.dart';
@@ -29,7 +32,9 @@ class ChatController extends GetxController {
       {bool isNew = false, ChatRoom? chatRoom}) async {
     selectedUser = userModel;
     update();
+    SocketNew.socket.off('new_message');
     SocketNew.socket.on('new_message', (data) {
+      log('new message');
       Message message = Message.fromJson(data);
       List<Message> list = messages[message.chatRoomId] ?? [];
       list.add(message);
@@ -52,12 +57,31 @@ class ChatController extends GetxController {
 
   setSelectedChatRoom(ChatRoom chatRoom) {
     selectedChatRoom = chatRoom;
-    messages[chatRoom.id]!.forEach(
+    unreadChat();
+    loading = false;
+    update();
+  }
+
+  unreadChat() async {
+    messages[selectedChatRoom!.id]!.forEach(
       (element) => element.readBy
           .addIf(!element.readBy.contains(currentUser!.id), currentUser!.id),
     );
-    loading = false;
     update();
+    try {
+      Map<String, dynamic>? res = await mongodbController.patchDocument(
+          'chatRoom', selectedChatRoom!.id!, {'readBy': currentUser!.id});
+      if (res![Keys.status] == Keys.success) {
+        print(res);
+      } else {
+        mongodbController.throwExpection(res);
+        return [];
+      }
+    } catch (e) {
+      print(e);
+      Helper().showToast("Error while unreading chat");
+      return [];
+    }
   }
 
   sendMessage({String type = 'text', String? url}) {
@@ -94,7 +118,8 @@ class ChatController extends GetxController {
       Map<String, dynamic>? res =
           await mongodbController.postDocument('chatRoom', chatRoom.toJson());
       if (res![Keys.status] == Keys.success) {
-        selectedChatRoom = ChatRoom.fromJson(res[Keys.data]['chatRoom']);
+        chatRoom = ChatRoom.fromJson(res[Keys.data]['chatRoom']);
+        selectedChatRoom = chatRoom;
         List<Message> list =
             await getMessagesForChatRoom(selectedChatRoom!.id!);
         messages.addAll({chatRoom.id!: list});
@@ -106,12 +131,33 @@ class ChatController extends GetxController {
         mongodbController.throwExpection(res);
       }
     } catch (e) {
+      print(e);
       loading = false;
       update();
       Helper().showToast("Error in initiating chat room");
     }
     getMyChatRooms();
     update();
+  }
+
+  deleteChatRoom(String chatRoomID) async {
+    EasyLoading.show();
+    try {
+      Map<String, dynamic>? res =
+          await mongodbController.deleteDocument('chatRoom', chatRoomID);
+      if (res![Keys.status] == Keys.success) {
+        chatRooms.removeWhere((element) => element.id == chatRoomID);
+        messages.remove(chatRoomID);
+        update();
+        Helper().showToast("Chat deleted successfully.");
+        EasyLoading.dismiss();
+      } else {
+        mongodbController.throwExpection(res);
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      Helper().showToast("Error in deleting chat");
+    }
   }
 
   Future<List<Message>> getMessagesForChatRoom(String chatRoomID) async {
@@ -137,8 +183,10 @@ class ChatController extends GetxController {
       chatRoomloading = true;
       chatRooms.clear();
       update();
+
       Map<String, dynamic>? res =
           await mongodbController.getDocument('chatRoom', currentUser!.id!);
+
       if (res![Keys.status] == Keys.success) {
         for (var element in res[Keys.data]['chatRooms']) {
           ChatRoom chatRoom = ChatRoom.fromJson(element);
@@ -147,15 +195,17 @@ class ChatController extends GetxController {
 
           messages.addAll({chatRoom.id!: list});
           update();
-          chatRoomloading = false;
-          update();
         }
+        chatRoomloading = false;
+        update();
       } else {
         chatRoomloading = false;
         update();
         mongodbController.throwExpection(res);
       }
     } catch (e) {
+      print('5');
+
       chatRoomloading = false;
       update();
       Helper().showToast("Error while loading chats");

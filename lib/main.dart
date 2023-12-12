@@ -1,4 +1,3 @@
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_callkit_incoming/entities/entities.dart';
@@ -9,7 +8,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kfriends/Controllers/auth_controller.dart';
 import 'package:kfriends/Controllers/calls_controller.dart';
-import 'package:kfriends/Controllers/timeline_controller.dart';
+import 'package:kfriends/Controllers/post_controller.dart';
+import 'package:kfriends/Controllers/thinking_controller.dart';
 import 'package:kfriends/Controllers/users_controller.dart';
 import 'package:kfriends/Languages/languages.dart';
 import 'package:kfriends/Routes/get_routes.dart';
@@ -207,7 +207,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           Get.put(
             UsersController(),
           );
-          Get.put(TimelineController(), permanent: true);
+          Get.put(PostController(), permanent: true);
+          Get.put(ThinkingController(), permanent: true);
         }),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

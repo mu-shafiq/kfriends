@@ -49,8 +49,8 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
           actions: [
             GestureDetector(
               onTap: () {
-                // Get.back();
-                controller.getMyChatRooms();
+                Get.back();
+                // controller.getMyChatRooms();
               },
               child: Padding(
                   padding: const EdgeInsets.only(right: 15.0),
@@ -154,7 +154,12 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
                                             )
                                           : const SizedBox();
                                     } else {
-                                      return const SizedBox();
+                                      return SizedBox(
+                                          height: .8.sh,
+                                          width: 1.sw,
+                                          child: const Center(
+                                              child:
+                                                  CircularProgressIndicator()));
                                     }
                                   });
                             })
